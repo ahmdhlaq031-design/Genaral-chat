@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>General Chat | منصة المحادثة - General Sahel TV</title>
-    <meta name="description" content="General Chat - منصة المحادثة الحرة. تحدث مع الجميع، أنشئ محادثات خاصة، وتواصل بحرية.">
+    <meta name="description" content="General Chat - منصة المحادثة الحرة.">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -223,296 +223,298 @@
     try { firebase.initializeApp(firebaseConfig2, "app2"); } catch(e) {}
     const db1 = firebase.app("app1").database();
     const db2 = firebase.app("app2").database();
-</script>
-// ==================== الجزء الثاني: المتغيرات + الدوال الأساسية + المحادثة العامة ====================
-let currentUser = null;
-let allUsers = {};
-let privateChatPartner = null;
-let privateChatId = null;
-let currentTheme = localStorage.getItem('gc_theme') || 'dark';
-let publicMessagesListener = null;
-let privateChatListener = null;
-let onlineUsersListener = null;
-let editMessageKey = null;
-let notificationSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACAf39/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4=');
-let notificationsEnabled = localStorage.getItem('gc_notifications') !== 'false';
 
-function toast(msg, err) { const t=document.getElementById('toast'); t.textContent=msg; if(err)t.classList.add('error');else t.classList.remove('error'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
-function copyToClipboard(text,name) { navigator.clipboard.writeText(text).then(()=>toast('✅ تم نسخ '+name)); }
-function loadAllUsers() { return db1.ref('users').once('value').then(s=>{ if(s.exists())allUsers=s.val(); else allUsers={}; }); }
-function generateUniqueId() { let m=9999; Object.keys(allUsers).forEach(k=>{ if(allUsers[k].id&&allUsers[k].id>m)m=allUsers[k].id; }); return m+1; }
-function isNameTaken(name) { let t=false; Object.keys(allUsers).forEach(k=>{ if(allUsers[k].name&&allUsers[k].name.toLowerCase()===name.toLowerCase())t=true; }); return t; }
-function getRandomColor() { const c=['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6','#ec4899','#06b6d4','#f97316','#6366f1','#14b8a6']; return c[Math.floor(Math.random()*c.length)]; }
-function escapeHtml(text) { if(!text)return ''; return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function formatTime(ts) { if(!ts)return ''; const d=new Date(ts),n=new Date(),diff=Math.floor((n-d)/1000); if(diff<60)return 'الآن'; if(diff<3600)return 'قبل '+Math.floor(diff/60)+' دقيقة'; if(diff<86400)return 'قبل '+Math.floor(diff/3600)+' ساعة'; return d.toLocaleDateString('ar')+' '+d.toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'}); }
-function setTheme(th) { document.body.classList.remove('light-mode','gold-mode'); if(th==='light')document.body.classList.add('light-mode'); if(th==='gold')document.body.classList.add('gold-mode'); currentTheme=th; localStorage.setItem('gc_theme',th); }
-function openSidebar(side) { closeAllSidebars(); if(side==='right')document.getElementById('sidebarRight').classList.add('open'); else document.getElementById('sidebarLeft').classList.add('open'); document.getElementById('overlay').classList.add('active'); }
-function closeAllSidebars() { document.getElementById('sidebarRight').classList.remove('open'); document.getElementById('sidebarLeft').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
-function clearChat() { const p=prompt('🔐 أدخل كلمة مرور المدير:'); if(p==='0937318709Aa@'){ if(confirm('⚠️ مسح جميع رسائل المحادثة العامة؟')){ db1.ref('publicMessages').remove().then(()=>{ document.getElementById('publicMessages').innerHTML=''; toast('🗑️ تم المسح'); }); } } else if(p) toast('❌ خطأ',true); }
-function closeEditModal() { document.getElementById('editModal').classList.add('hidden'); editMessageKey=null; }
+    let currentUser = null;
+    let allUsers = {};
+    let privateChatPartner = null;
+    let privateChatId = null;
+    let currentTheme = localStorage.getItem('gc_theme') || 'dark';
+    let publicMessagesListener = null;
+    let privateChatListener = null;
+    let onlineUsersListener = null;
+    let editMessageKey = null;
+    let editPrivateKey = null;
+    let notificationSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACAf39/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4B/f3+Af39/gH9/f4=');
+    let notificationsEnabled = localStorage.getItem('gc_notifications') !== 'false';
 
-async function registerUser() {
-    const name=document.getElementById('playerNameInput').value.trim();
-    if(!name){ toast('⚠️ أدخل اسماً!',true); return; }
-    if(name.length<2){ toast('⚠️ الاسم قصير!',true); return; }
-    await loadAllUsers();
-    if(isNameTaken(name)){ toast('⚠️ هذا الاسم مستخدم!',true); return; }
-    const uid=generateUniqueId(), userKey=name.replace(/[.#$\[\]]/g,'_');
-    currentUser={id:uid,name:name,key:userKey,color:getRandomColor(),online:true};
-    await db1.ref('users/'+userKey).set(currentUser);
-    localStorage.setItem('gc_user',JSON.stringify(currentUser));
-    document.getElementById('nameModal').style.display='none';
-    document.getElementById('currentUserName').textContent='👤 '+name;
-    document.getElementById('publicMessageInput').focus();
-    toast('✅ أهلاً '+name+'! #'+uid);
-    listenPublic(); listenOnline(); listenPrivateNotifications();
-    window.addEventListener('beforeunload',()=>{ if(currentUser)db1.ref('users/'+currentUser.key+'/online').set(false); });
-}
+    function toast(msg, err) { const t=document.getElementById('toast'); t.textContent=msg; if(err)t.classList.add('error');else t.classList.remove('error'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+    function copyToClipboard(text,name) { navigator.clipboard.writeText(text).then(()=>toast('✅ تم نسخ '+name)); }
+    function loadAllUsers() { return db1.ref('users').once('value').then(s=>{ if(s.exists())allUsers=s.val(); else allUsers={}; }); }
+    function generateUniqueId() { let m=9999; Object.keys(allUsers).forEach(k=>{ if(allUsers[k].id&&allUsers[k].id>m)m=allUsers[k].id; }); return m+1; }
+    function isNameTaken(name) { let t=false; Object.keys(allUsers).forEach(k=>{ if(allUsers[k].name&&allUsers[k].name.toLowerCase()===name.toLowerCase())t=true; }); return t; }
+    function getRandomColor() { const c=['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6','#ec4899','#06b6d4','#f97316','#6366f1','#14b8a6']; return c[Math.floor(Math.random()*c.length)]; }
+    function escapeHtml(text) { if(!text)return ''; return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function formatTime(ts) { if(!ts)return ''; const d=new Date(ts),n=new Date(),diff=Math.floor((n-d)/1000); if(diff<60)return 'الآن'; if(diff<3600)return 'قبل '+Math.floor(diff/60)+' دقيقة'; if(diff<86400)return 'قبل '+Math.floor(diff/3600)+' ساعة'; return d.toLocaleDateString('ar')+' '+d.toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'}); }
+    function setTheme(th) { document.body.classList.remove('light-mode','gold-mode'); if(th==='light')document.body.classList.add('light-mode'); if(th==='gold')document.body.classList.add('gold-mode'); currentTheme=th; localStorage.setItem('gc_theme',th); }
+    function openSidebar(side) { closeAllSidebars(); if(side==='right')document.getElementById('sidebarRight').classList.add('open'); else document.getElementById('sidebarLeft').classList.add('open'); document.getElementById('overlay').classList.add('active'); }
+    function closeAllSidebars() { document.getElementById('sidebarRight').classList.remove('open'); document.getElementById('sidebarLeft').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
+    function clearChat() { const p=prompt('🔐 أدخل كلمة مرور المدير:'); if(p==='0937318709Aa@'){ if(confirm('⚠️ مسح جميع رسائل المحادثة العامة؟')){ db1.ref('publicMessages').remove().then(()=>{ document.getElementById('publicMessages').innerHTML=''; toast('🗑️ تم المسح'); }); } } else if(p) toast('❌ خطأ',true); }
+    function closeEditModal() { document.getElementById('editModal').classList.add('hidden'); editMessageKey=null; editPrivateKey=null; document.getElementById('saveEditBtn').onclick=null; }
 
-function initUser() {
-    const saved=localStorage.getItem('gc_user');
-    if(saved){ currentUser=JSON.parse(saved); loadAllUsers().then(()=>{ if(!allUsers[currentUser.key])db1.ref('users/'+currentUser.key).set(currentUser); else db1.ref('users/'+currentUser.key+'/online').set(true); document.getElementById('nameModal').style.display='none'; document.getElementById('currentUserName').textContent='👤 '+currentUser.name; listenPublic(); listenOnline(); listenPrivateNotifications(); window.addEventListener('beforeunload',()=>{ if(currentUser)db1.ref('users/'+currentUser.key+'/online').set(false); }); }); }
-    else { document.getElementById('nameModal').style.display='flex'; }
-}
+    async function registerUser() {
+        const name=document.getElementById('playerNameInput').value.trim();
+        if(!name){ toast('⚠️ أدخل اسماً!',true); return; }
+        if(name.length<2){ toast('⚠️ الاسم قصير!',true); return; }
+        await loadAllUsers();
+        if(isNameTaken(name)){ toast('⚠️ هذا الاسم مستخدم!',true); return; }
+        const uid=generateUniqueId(), userKey=name.replace(/[.#$\[\]]/g,'_');
+        currentUser={id:uid,name:name,key:userKey,color:getRandomColor(),online:true};
+        await db1.ref('users/'+userKey).set(currentUser);
+        localStorage.setItem('gc_user',JSON.stringify(currentUser));
+        document.getElementById('nameModal').style.display='none';
+        document.getElementById('currentUserName').textContent='👤 '+name;
+        document.getElementById('publicMessageInput').focus();
+        toast('✅ أهلاً '+name+'! #'+uid);
+        listenPublic(); listenOnline(); listenPrivateNotifications();
+        window.addEventListener('beforeunload',()=>{ if(currentUser)db1.ref('users/'+currentUser.key+'/online').set(false); });
+    }
 
-function listenOnline() {
-    db1.ref('users').on('value',s=>{
-        let count=0; if(s.exists()){ const users=s.val(); Object.keys(users).forEach(k=>{ if(users[k].online)count++; }); }
-        document.getElementById('onlineNumber').textContent=count;
-    });
-}
+    function initUser() {
+        const saved=localStorage.getItem('gc_user');
+        if(saved){ currentUser=JSON.parse(saved); loadAllUsers().then(()=>{ if(!allUsers[currentUser.key])db1.ref('users/'+currentUser.key).set(currentUser); else db1.ref('users/'+currentUser.key+'/online').set(true); document.getElementById('nameModal').style.display='none'; document.getElementById('currentUserName').textContent='👤 '+currentUser.name; listenPublic(); listenOnline(); listenPrivateNotifications(); window.addEventListener('beforeunload',()=>{ if(currentUser)db1.ref('users/'+currentUser.key+'/online').set(false); }); }); }
+        else { document.getElementById('nameModal').style.display='flex'; }
+    }
 
-function listenPublic() {
-    if(publicMessagesListener)db1.ref('publicMessages').off('child_added',publicMessagesListener);
-    publicMessagesListener=db1.ref('publicMessages').orderByChild('timestamp').limitToLast(100).on('child_added',snap=>{
-        const msg=snap.val(); displayPublicMessage(snap.key,msg);
-        const el=document.getElementById('publicMessages'); if(el)el.scrollTop=el.scrollHeight;
-    });
-}
+    function listenOnline() {
+        db1.ref('users').on('value',s=>{
+            let count=0; if(s.exists()){ const users=s.val(); Object.keys(users).forEach(k=>{ if(users[k].online)count++; }); }
+            document.getElementById('onlineNumber').textContent=count;
+        });
+    }
 
-function displayPublicMessage(key,msg) {
-    const container=document.getElementById('publicMessages'); if(!container)return;
-    const div=document.createElement('div'); div.className='message-bubble'; div.id='msg-'+key;
-    const liked=msg.likes&&currentUser&&msg.likes[currentUser.key];
-    const isOwner=currentUser&&msg.userKey===currentUser.key;
-    const isAdmin=currentUser&&currentUser.key==='admin_sahel';
-    div.innerHTML=
-        '<div class="msg-actions">'+
-            (isOwner||isAdmin?'<button class="msg-action-btn" onclick="editMessage(\''+key+'\',\''+escapeHtml(msg.text||'').replace(/'/g,"\\'")+'\')" title="تعديل">✏️</button>':'')+
-            (isOwner||isAdmin?'<button class="msg-action-btn" onclick="deleteMessage(\''+key+'\',\'public\')" title="حذف">🗑️</button>':'')+
-        '</div>'+
-        '<div class="message-header">'+
-            '<span class="message-sender" style="color:'+(msg.color||'var(--primary)')+';" onclick="startPrivateChat(\''+(msg.userKey||'')+'\')">👤 '+escapeHtml(msg.name||'')+(msg.uid?' <small style="color:var(--text-muted);">#'+msg.uid+'</small>':'')+'</span>'+
-            '<span class="message-time">'+formatTime(msg.timestamp)+'</span>'+
-        '</div>'+
-        '<div class="message-text" id="text-'+key+'">'+escapeHtml(msg.text||'')+'</div>'+
-        '<div class="message-actions">'+
-            '<button class="like-btn '+(liked?'liked':'')+'" onclick="toggleLike(\''+key+'\')">'+(liked?'❤️':'🤍')+' <span id="like-count-'+key+'">'+(msg.likeCount||0)+'</span></button>'+
-            '<button class="reply-btn" onclick="startPrivateChat(\''+(msg.userKey||'')+'\')">💬 رد</button>'+
-        '</div>';
-    container.appendChild(div);
-}
+    function listenPublic() {
+        if(publicMessagesListener)db1.ref('publicMessages').off('child_added',publicMessagesListener);
+        publicMessagesListener=db1.ref('publicMessages').orderByChild('timestamp').limitToLast(100).on('child_added',snap=>{
+            const msg=snap.val(); displayPublicMessage(snap.key,msg);
+            const el=document.getElementById('publicMessages'); if(el)el.scrollTop=el.scrollHeight;
+        });
+    }
 
-function sendPublicMessage() {
-    if(!currentUser){ toast('⚠️ انتظر!',true); return; }
-    const input=document.getElementById('publicMessageInput'), text=input.value.trim();
-    if(!text)return;
-    const msg={name:currentUser.name,uid:currentUser.id,userKey:currentUser.key,color:currentUser.color,text:text,timestamp:Date.now(),likeCount:0,likes:{}};
-    db1.ref('publicMessages').push(msg).then(()=>{input.value='';}).catch(()=>{db2.ref('publicMessages').push(msg).then(()=>{input.value='';}).catch(()=>toast('❌ فشل',true));});
-}
+    function displayPublicMessage(key,msg) {
+        const container=document.getElementById('publicMessages'); if(!container)return;
+        const div=document.createElement('div'); div.className='message-bubble'; div.id='msg-'+key;
+        const liked=msg.likes&&currentUser&&msg.likes[currentUser.key];
+        const isOwner=currentUser&&msg.userKey===currentUser.key;
+        const isAdmin=currentUser&&currentUser.key==='admin_sahel';
+        div.innerHTML=
+            '<div class="msg-actions">'+
+                (isOwner||isAdmin?'<button class="msg-action-btn" onclick="editMessage(\''+key+'\',\''+escapeHtml(msg.text||'').replace(/'/g,"\\'")+'\')" title="تعديل">✏️</button>':'')+
+                (isOwner||isAdmin?'<button class="msg-action-btn" onclick="deleteMessage(\''+key+'\',\'public\')" title="حذف">🗑️</button>':'')+
+            '</div>'+
+            '<div class="message-header">'+
+                '<span class="message-sender" style="color:'+(msg.color||'var(--primary)')+';" onclick="startPrivateChat(\''+(msg.userKey||'')+'\')">👤 '+escapeHtml(msg.name||'')+(msg.uid?' <small style="color:var(--text-muted);">#'+msg.uid+'</small>':'')+'</span>'+
+                '<span class="message-time">'+formatTime(msg.timestamp)+'</span>'+
+            '</div>'+
+            '<div class="message-text" id="text-'+key+'">'+escapeHtml(msg.text||'')+'</div>'+
+            '<div class="message-actions">'+
+                '<button class="like-btn '+(liked?'liked':'')+'" onclick="toggleLike(\''+key+'\')">'+(liked?'❤️':'🤍')+' <span id="like-count-'+key+'">'+(msg.likeCount||0)+'</span></button>'+
+                '<button class="reply-btn" onclick="startPrivateChat(\''+(msg.userKey||'')+'\')">💬 رد</button>'+
+            '</div>';
+        container.appendChild(div);
+    }
 
-function toggleLike(msgKey) {
-    if(!currentUser)return;
-    db1.ref('publicMessages/'+msgKey).once('value').then(s=>{if(s.exists()){const msg=s.val(),likes=msg.likes||{}; if(likes[currentUser.key]){delete likes[currentUser.key];db1.ref('publicMessages/'+msgKey).update({likes:likes,likeCount:Math.max(0,(msg.likeCount||1)-1)});}else{likes[currentUser.key]=true;db1.ref('publicMessages/'+msgKey).update({likes:likes,likeCount:(msg.likeCount||0)+1});}}});
-}
+    function sendPublicMessage() {
+        if(!currentUser){ toast('⚠️ انتظر!',true); return; }
+        const input=document.getElementById('publicMessageInput'), text=input.value.trim();
+        if(!text)return;
+        const msg={name:currentUser.name,uid:currentUser.id,userKey:currentUser.key,color:currentUser.color,text:text,timestamp:Date.now(),likeCount:0,likes:{}};
+        db1.ref('publicMessages').push(msg).then(()=>{input.value='';}).catch(()=>{db2.ref('publicMessages').push(msg).then(()=>{input.value='';}).catch(()=>toast('❌ فشل',true));});
+    }
 
-function editMessage(key,oldText) {
-    editMessageKey=key; document.getElementById('editMessageInput').value=oldText;
-    document.getElementById('editModal').classList.remove('hidden');
-}
+    function toggleLike(msgKey) {
+        if(!currentUser)return;
+        db1.ref('publicMessages/'+msgKey).once('value').then(s=>{if(s.exists()){const msg=s.val(),likes=msg.likes||{}; if(likes[currentUser.key]){delete likes[currentUser.key];db1.ref('publicMessages/'+msgKey).update({likes:likes,likeCount:Math.max(0,(msg.likeCount||1)-1)});}else{likes[currentUser.key]=true;db1.ref('publicMessages/'+msgKey).update({likes:likes,likeCount:(msg.likeCount||0)+1});}}});
+    }
 
-function saveEditMessage() {
-    if(!editMessageKey)return; const newText=document.getElementById('editMessageInput').value.trim();
-    if(!newText)return;
-    db1.ref('publicMessages/'+editMessageKey).update({text:newText,edited:true}).then(()=>{
-        const el=document.getElementById('text-'+editMessageKey); if(el)el.textContent=newText;
-        closeEditModal(); toast('✅ تم التعديل');
-    });
-}
+    function editMessage(key,oldText) {
+        editMessageKey=key; editPrivateKey=null;
+        document.getElementById('editMessageInput').value=oldText;
+        document.getElementById('editModal').classList.remove('hidden');
+        document.getElementById('saveEditBtn').onclick=saveEditMessage;
+    }
 
-function deleteMessage(key,type) {
-    if(!confirm('⚠️ حذف الرسالة؟'))return;
-    if(type==='public'){ db1.ref('publicMessages/'+key).remove().then(()=>{const el=document.getElementById('msg-'+key);if(el)el.remove();toast('🗑️ تم الحذف');}); }
-    else if(type==='private'&&privateChatId){ db2.ref('privateMessages/'+privateChatId+'/'+key).remove().then(()=>{const el=document.getElementById('pmsg-'+key);if(el)el.remove();toast('🗑️ تم الحذف');}); }
-}
+    function saveEditMessage() {
+        if(!editMessageKey)return; const newText=document.getElementById('editMessageInput').value.trim();
+        if(!newText)return;
+        db1.ref('publicMessages/'+editMessageKey).update({text:newText,edited:true}).then(()=>{
+            const el=document.getElementById('text-'+editMessageKey); if(el)el.textContent=newText;
+            closeEditModal(); toast('✅ تم التعديل');
+        });
+    }
 
-function showPublicChat() {
-    document.getElementById('publicChatSection').classList.remove('hidden');
-    document.getElementById('privateListSection').classList.add('hidden');
-    document.getElementById('privateChatSection').classList.add('hidden');
-    document.getElementById('adminSection').classList.add('hidden');
-    privateChatPartner=null; privateChatId=null;
-    if(privateChatListener){db2.ref('privateMessages/'+privateChatId).off('child_added',privateChatListener);privateChatListener=null;}
-    document.getElementById('newMessageDot').classList.add('hidden'); closeAllSidebars();
-    document.getElementById('publicMessageInput').focus();
-}
-// ==================== الجزء الثالث: المحادثة الخاصة + لوحة المدير + الأحداث ====================
-function showPrivateList() {
-    document.getElementById('publicChatSection').classList.add('hidden');
-    document.getElementById('privateListSection').classList.remove('hidden');
-    document.getElementById('privateChatSection').classList.add('hidden');
-    document.getElementById('adminSection').classList.add('hidden');
-    privateChatPartner=null; privateChatId=null;
-    if(privateChatListener){db2.ref('privateMessages/'+privateChatId).off('child_added',privateChatListener);privateChatListener=null;}
-    document.getElementById('newMessageDot').classList.add('hidden'); closeAllSidebars();
-    loadAllUsers().then(()=>{renderPrivateList();});
-}
+    function deleteMessage(key,type) {
+        if(!confirm('⚠️ حذف الرسالة؟'))return;
+        if(type==='public'){ db1.ref('publicMessages/'+key).remove().then(()=>{const el=document.getElementById('msg-'+key);if(el)el.remove();toast('🗑️ تم الحذف');}); }
+        else if(type==='private'&&privateChatId){ db2.ref('privateMessages/'+privateChatId+'/'+key).remove().then(()=>{const el=document.getElementById('pmsg-'+key);if(el)el.remove();toast('🗑️ تم الحذف');}); }
+    }
 
-function renderPrivateList() {
-    const container=document.getElementById('privateListContainer'); if(!container)return;
-    const users=[]; Object.keys(allUsers).forEach(k=>{if(k!==(currentUser?currentUser.key:''))users.push(allUsers[k]);});
-    if(users.length===0){container.innerHTML='<p style="color:var(--text-muted);text-align:center;">لا يوجد مستخدمون بعد.</p>';return;}
-    let html=''; users.forEach(u=>{html+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-card);border-radius:12px;margin:6px 0;cursor:pointer;" onclick="startPrivateChat(\''+(u.key||'')+'\')"><span style="width:12px;height:12px;border-radius:50%;background:'+(u.online?'var(--success)':'var(--text-muted)')+';flex-shrink:0;"></span><span style="color:'+(u.color||'var(--primary)')+';font-weight:600;">👤 '+escapeHtml(u.name||'')+' <small style="color:var(--text-muted);">#'+(u.id||'')+'</small></span><span style="margin-right:auto;font-size:0.75rem;color:var(--text-muted);">'+(u.online?'🟢 متصل':'⚫ غير متصل')+'</span></div>';});
-    container.innerHTML=html;
-}
+    function showPublicChat() {
+        document.getElementById('publicChatSection').classList.remove('hidden');
+        document.getElementById('privateListSection').classList.add('hidden');
+        document.getElementById('privateChatSection').classList.add('hidden');
+        document.getElementById('adminSection').classList.add('hidden');
+        privateChatPartner=null; privateChatId=null;
+        if(privateChatListener){db2.ref('privateMessages/'+privateChatId).off('child_added',privateChatListener);privateChatListener=null;}
+        document.getElementById('newMessageDot').classList.add('hidden'); closeAllSidebars();
+        document.getElementById('publicMessageInput').focus();
+    }
 
-function startPrivateChat(userKey) {
-    if(!currentUser)return; if(userKey===currentUser.key){toast('⚠️ لا يمكنك مراسلة نفسك!',true);return;}
-    const partner=allUsers[userKey]; if(!partner){toast('⚠️ المستخدم غير موجود!',true);return;}
-    privateChatPartner=partner; const keys=[currentUser.key,partner.key].sort(); privateChatId=keys.join('_');
-    document.getElementById('publicChatSection').classList.add('hidden');
-    document.getElementById('privateListSection').classList.add('hidden');
-    document.getElementById('privateChatSection').classList.remove('hidden');
-    document.getElementById('adminSection').classList.add('hidden');
-    document.getElementById('privateChatTitle').textContent='💬 '+partner.name+' #'+(partner.id||'');
-    document.getElementById('privateMessages').innerHTML=''; listenToPrivateChat();
-}
+    function showPrivateList() {
+        document.getElementById('publicChatSection').classList.add('hidden');
+        document.getElementById('privateListSection').classList.remove('hidden');
+        document.getElementById('privateChatSection').classList.add('hidden');
+        document.getElementById('adminSection').classList.add('hidden');
+        privateChatPartner=null; privateChatId=null;
+        if(privateChatListener){db2.ref('privateMessages/'+privateChatId).off('child_added',privateChatListener);privateChatListener=null;}
+        document.getElementById('newMessageDot').classList.add('hidden'); closeAllSidebars();
+        loadAllUsers().then(()=>{renderPrivateList();});
+    }
 
-function listenToPrivateChat() {
-    if(!privateChatId)return;
-    if(privateChatListener)db2.ref('privateMessages/'+privateChatId).off('child_added',privateChatListener);
-    privateChatListener=db2.ref('privateMessages/'+privateChatId).orderByChild('timestamp').limitToLast(100).on('child_added',snap=>{
-        const msg=snap.val(); displayPrivateMessage(snap.key,msg);
-        const el=document.getElementById('privateMessages'); if(el)el.scrollTop=el.scrollHeight;
-        if(notificationsEnabled&&currentUser&&msg.userKey!==currentUser.key){
-            notificationSound.play().catch(()=>{});
-        }
-    });
-}
+    function renderPrivateList() {
+        const container=document.getElementById('privateListContainer'); if(!container)return;
+        const users=[]; Object.keys(allUsers).forEach(k=>{if(k!==(currentUser?currentUser.key:''))users.push(allUsers[k]);});
+        if(users.length===0){container.innerHTML='<p style="color:var(--text-muted);text-align:center;">لا يوجد مستخدمون بعد.</p>';return;}
+        let html=''; users.forEach(u=>{html+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-card);border-radius:12px;margin:6px 0;cursor:pointer;" onclick="startPrivateChat(\''+(u.key||'')+'\')"><span style="width:12px;height:12px;border-radius:50%;background:'+(u.online?'var(--success)':'var(--text-muted)')+';flex-shrink:0;"></span><span style="color:'+(u.color||'var(--primary)')+';font-weight:600;">👤 '+escapeHtml(u.name||'')+' <small style="color:var(--text-muted);">#'+(u.id||'')+'</small></span><span style="margin-right:auto;font-size:0.75rem;color:var(--text-muted);">'+(u.online?'🟢 متصل':'⚫ غير متصل')+'</span></div>';});
+        container.innerHTML=html;
+    }
 
-function displayPrivateMessage(key,msg) {
-    const container=document.getElementById('privateMessages'); if(!container)return;
-    const div=document.createElement('div'); div.className='message-bubble'; div.id='pmsg-'+key;
-    const isMe=currentUser&&msg.userKey===currentUser.key;
-    const isAdmin=currentUser&&currentUser.key==='admin_sahel';
-    div.innerHTML=
-        '<div class="msg-actions">'+
-            (isMe?'<button class="msg-action-btn" onclick="editPrivateMessage(\''+key+'\',\''+escapeHtml(msg.text||'').replace(/'/g,"\\'")+'\')" title="تعديل">✏️</button>':'')+
-            (isMe||isAdmin?'<button class="msg-action-btn" onclick="deletePrivateMessage(\''+key+'\')" title="حذف">🗑️</button>':'')+
-        '</div>'+
-        '<div class="message-header"><span style="color:'+(msg.color||'var(--primary)')+';font-weight:700;">'+(isMe?'أنت':escapeHtml(msg.name||''))+'</span><span class="message-time">'+formatTime(msg.timestamp)+'</span></div>'+
-        '<div class="message-text" id="ptext-'+key+'">'+escapeHtml(msg.text||'')+'</div>';
-    container.appendChild(div);
-}
+    function startPrivateChat(userKey) {
+        if(!currentUser)return; if(userKey===currentUser.key){toast('⚠️ لا يمكنك مراسلة نفسك!',true);return;}
+        const partner=allUsers[userKey]; if(!partner){toast('⚠️ المستخدم غير موجود!',true);return;}
+        privateChatPartner=partner; const keys=[currentUser.key,partner.key].sort(); privateChatId=keys.join('_');
+        document.getElementById('publicChatSection').classList.add('hidden');
+        document.getElementById('privateListSection').classList.add('hidden');
+        document.getElementById('privateChatSection').classList.remove('hidden');
+        document.getElementById('adminSection').classList.add('hidden');
+        document.getElementById('privateChatTitle').textContent='💬 '+partner.name+' #'+(partner.id||'');
+        document.getElementById('privateMessages').innerHTML=''; listenToPrivateChat();
+    }
 
-let editPrivateKey=null;
-function editPrivateMessage(key,oldText) {
-    editPrivateKey=key; document.getElementById('editMessageInput').value=oldText;
-    document.getElementById('editModal').classList.remove('hidden');
-    const saveBtn=document.getElementById('saveEditBtn');
-    saveBtn.onclick=function(){
+    function listenToPrivateChat() {
+        if(!privateChatId)return;
+        if(privateChatListener)db2.ref('privateMessages/'+privateChatId).off('child_added',privateChatListener);
+        privateChatListener=db2.ref('privateMessages/'+privateChatId).orderByChild('timestamp').limitToLast(100).on('child_added',snap=>{
+            const msg=snap.val(); displayPrivateMessage(snap.key,msg);
+            const el=document.getElementById('privateMessages'); if(el)el.scrollTop=el.scrollHeight;
+            if(notificationsEnabled&&currentUser&&msg.userKey!==currentUser.key){
+                notificationSound.play().catch(()=>{});
+            }
+        });
+    }
+
+    function displayPrivateMessage(key,msg) {
+        const container=document.getElementById('privateMessages'); if(!container)return;
+        const div=document.createElement('div'); div.className='message-bubble'; div.id='pmsg-'+key;
+        const isMe=currentUser&&msg.userKey===currentUser.key;
+        const isAdmin=currentUser&&currentUser.key==='admin_sahel';
+        div.innerHTML=
+            '<div class="msg-actions">'+
+                (isMe?'<button class="msg-action-btn" onclick="editPrivateMessage(\''+key+'\',\''+escapeHtml(msg.text||'').replace(/'/g,"\\'")+'\')" title="تعديل">✏️</button>':'')+
+                (isMe||isAdmin?'<button class="msg-action-btn" onclick="deletePrivateMessage(\''+key+'\')" title="حذف">🗑️</button>':'')+
+            '</div>'+
+            '<div class="message-header"><span style="color:'+(msg.color||'var(--primary)')+';font-weight:700;">'+(isMe?'أنت':escapeHtml(msg.name||''))+'</span><span class="message-time">'+formatTime(msg.timestamp)+'</span></div>'+
+            '<div class="message-text" id="ptext-'+key+'">'+escapeHtml(msg.text||'')+'</div>';
+        container.appendChild(div);
+    }
+
+    function editPrivateMessage(key,oldText) {
+        editPrivateKey=key; editMessageKey=null;
+        document.getElementById('editMessageInput').value=oldText;
+        document.getElementById('editModal').classList.remove('hidden');
+        document.getElementById('saveEditBtn').onclick=saveEditPrivateMessage;
+    }
+
+    function saveEditPrivateMessage() {
         if(!editPrivateKey||!privateChatId)return;
         const newText=document.getElementById('editMessageInput').value.trim(); if(!newText)return;
         db2.ref('privateMessages/'+privateChatId+'/'+editPrivateKey).update({text:newText,edited:true}).then(()=>{
             const el=document.getElementById('ptext-'+editPrivateKey); if(el)el.textContent=newText;
-            closeEditModal(); editPrivateKey=null; toast('✅ تم التعديل');
+            closeEditModal(); toast('✅ تم التعديل');
         });
-    };
-}
+    }
 
-function deletePrivateMessage(key) {
-    if(!privateChatId)return;
-    if(!confirm('⚠️ حذف الرسالة؟'))return;
-    db2.ref('privateMessages/'+privateChatId+'/'+key).remove().then(()=>{
-        const el=document.getElementById('pmsg-'+key); if(el)el.remove(); toast('🗑️ تم الحذف');
+    function deletePrivateMessage(key) {
+        if(!privateChatId)return;
+        if(!confirm('⚠️ حذف الرسالة؟'))return;
+        db2.ref('privateMessages/'+privateChatId+'/'+key).remove().then(()=>{
+            const el=document.getElementById('pmsg-'+key); if(el)el.remove(); toast('🗑️ تم الحذف');
+        });
+    }
+
+    function listenPrivateNotifications() {
+        db2.ref('privateMessages').on('child_added',snap=>{
+            const chatId=snap.key;
+            if(chatId&&currentUser&&chatId.includes(currentUser.key)&&!privateChatId){
+                document.getElementById('newMessageDot').classList.remove('hidden');
+            }
+        });
+    }
+
+    function sendPrivateMessage() {
+        if(!currentUser||!privateChatPartner||!privateChatId)return;
+        const input=document.getElementById('privateMessageInput'), text=input.value.trim(); if(!text)return;
+        const msg={name:currentUser.name,userKey:currentUser.key,color:currentUser.color,text:text,timestamp:Date.now()};
+        db2.ref('privateMessages/'+privateChatId).push(msg).then(()=>{input.value='';}).catch(()=>{db1.ref('privateMessages/'+privateChatId).push(msg).then(()=>{input.value='';}).catch(()=>toast('❌ فشل',true));});
+    }
+
+    function showAdminPanel() {
+        document.getElementById('publicChatSection').classList.add('hidden');
+        document.getElementById('privateListSection').classList.add('hidden');
+        document.getElementById('privateChatSection').classList.add('hidden');
+        document.getElementById('adminSection').classList.remove('hidden'); closeAllSidebars();
+    }
+
+    function adminLogin() {
+        const pass=document.getElementById('adminPasswordInput').value;
+        if(pass==='0937318709Aa@'){
+            document.getElementById('adminLoginForm').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            loadAllUsers().then(()=>{renderAdminUserList();}); toast('🔓 مرحباً!');
+        } else { toast('❌ خطأ',true); }
+    }
+
+    function renderAdminUserList() {
+        const container=document.getElementById('adminUserList'); if(!container)return;
+        const users=[]; Object.keys(allUsers).forEach(k=>{users.push(allUsers[k]);});
+        if(users.length===0){container.innerHTML='<p style="color:var(--text-muted);">لا يوجد مستخدمون.</p>';return;}
+        let html=''; users.forEach(u=>{html+='<div class="user-row"><span style="color:'+(u.color||'var(--primary)')+';font-weight:600;">👤 '+escapeHtml(u.name||'')+'</span><small style="color:var(--text-muted);">#'+(u.id||'')+'</small><span style="margin-right:auto;font-size:0.7rem;">'+(u.online?'🟢':'⚫')+'</span></div>';});
+        container.innerHTML=html;
+    }
+
+    document.getElementById('registerBtn').addEventListener('click', registerUser);
+    document.getElementById('publicSendBtn').addEventListener('click', sendPublicMessage);
+    document.getElementById('privateSendBtn').addEventListener('click', sendPrivateMessage);
+    document.getElementById('privateChatsBtn').addEventListener('click', showPrivateList);
+    document.getElementById('backToPublicBtn').addEventListener('click', showPublicChat);
+    document.getElementById('backToPrivateListBtn').addEventListener('click', showPrivateList);
+    document.getElementById('rightMenuBtn').addEventListener('click', ()=>{ openSidebar('right'); });
+    document.getElementById('leftMenuBtn').addEventListener('click', ()=>{ openSidebar('left'); });
+    document.getElementById('overlay').addEventListener('click', closeAllSidebars);
+    document.getElementById('themeToggleBtn').addEventListener('click', ()=>{
+        const n=currentTheme==='dark'?'light':currentTheme==='light'?'gold':'dark'; setTheme(n);
     });
-}
+    document.getElementById('publicMessageInput').addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPublicMessage();} });
+    document.getElementById('privateMessageInput').addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPrivateMessage();} });
 
-function listenPrivateNotifications() {
-    db2.ref('privateMessages').on('child_added',snap=>{
-        const chatId=snap.key;
-        if(chatId&&currentUser&&chatId.includes(currentUser.key)&&!privateChatId){
-            document.getElementById('newMessageDot').classList.remove('hidden');
-        }
+    window.startPrivateChat=startPrivateChat;
+    window.toggleLike=toggleLike;
+    window.showPublicChat=showPublicChat;
+    window.showPrivateList=showPrivateList;
+    window.showAdminPanel=showAdminPanel;
+    window.clearChat=clearChat;
+    window.copyToClipboard=copyToClipboard;
+    window.editMessage=editMessage;
+    window.deleteMessage=deleteMessage;
+    window.editPrivateMessage=editPrivateMessage;
+    window.deletePrivateMessage=deletePrivateMessage;
+    window.saveEditMessage=saveEditMessage;
+    window.saveEditPrivateMessage=saveEditPrivateMessage;
+    window.closeEditModal=closeEditModal;
+    window.adminLogin=adminLogin;
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+        setTheme(currentTheme); initUser();
     });
-}
-
-function sendPrivateMessage() {
-    if(!currentUser||!privateChatPartner||!privateChatId)return;
-    const input=document.getElementById('privateMessageInput'), text=input.value.trim(); if(!text)return;
-    const msg={name:currentUser.name,userKey:currentUser.key,color:currentUser.color,text:text,timestamp:Date.now()};
-    db2.ref('privateMessages/'+privateChatId).push(msg).then(()=>{input.value='';}).catch(()=>{db1.ref('privateMessages/'+privateChatId).push(msg).then(()=>{input.value='';}).catch(()=>toast('❌ فشل',true));});
-}
-
-function showAdminPanel() {
-    document.getElementById('publicChatSection').classList.add('hidden');
-    document.getElementById('privateListSection').classList.add('hidden');
-    document.getElementById('privateChatSection').classList.add('hidden');
-    document.getElementById('adminSection').classList.remove('hidden'); closeAllSidebars();
-}
-
-function adminLogin() {
-    const pass=document.getElementById('adminPasswordInput').value;
-    if(pass==='0937318709Aa@'){
-        document.getElementById('adminLoginForm').classList.add('hidden');
-        document.getElementById('adminDashboard').classList.remove('hidden');
-        loadAllUsers().then(()=>{renderAdminUserList();}); toast('🔓 مرحباً!');
-    } else { toast('❌ خطأ',true); }
-}
-
-function renderAdminUserList() {
-    const container=document.getElementById('adminUserList'); if(!container)return;
-    const users=[]; Object.keys(allUsers).forEach(k=>{users.push(allUsers[k]);});
-    if(users.length===0){container.innerHTML='<p style="color:var(--text-muted);">لا يوجد مستخدمون.</p>';return;}
-    let html=''; users.forEach(u=>{html+='<div class="user-row"><span style="color:'+(u.color||'var(--primary)')+';font-weight:600;">👤 '+escapeHtml(u.name||'')+'</span><small style="color:var(--text-muted);">#'+(u.id||'')+'</small><span style="margin-right:auto;font-size:0.7rem;">'+(u.online?'🟢':'⚫')+'</span></div>';});
-    container.innerHTML=html;
-}
-
-// ==================== أحداث الأزرار ====================
-document.getElementById('registerBtn').addEventListener('click', registerUser);
-document.getElementById('publicSendBtn').addEventListener('click', sendPublicMessage);
-document.getElementById('privateSendBtn').addEventListener('click', sendPrivateMessage);
-document.getElementById('privateChatsBtn').addEventListener('click', showPrivateList);
-document.getElementById('backToPublicBtn').addEventListener('click', showPublicChat);
-document.getElementById('backToPrivateListBtn').addEventListener('click', showPrivateList);
-document.getElementById('rightMenuBtn').addEventListener('click', ()=>{ openSidebar('right'); });
-document.getElementById('leftMenuBtn').addEventListener('click', ()=>{ openSidebar('left'); });
-document.getElementById('overlay').addEventListener('click', closeAllSidebars);
-document.getElementById('themeToggleBtn').addEventListener('click', ()=>{
-    const n=currentTheme==='dark'?'light':currentTheme==='light'?'gold':'dark'; setTheme(n);
-});
-document.getElementById('publicMessageInput').addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPublicMessage();} });
-document.getElementById('privateMessageInput').addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPrivateMessage();} });
-document.getElementById('saveEditBtn').addEventListener('click', function(){
-    if(editMessageKey) saveEditMessage();
-    else if(editPrivateKey) document.getElementById('saveEditBtn').onclick();
-});
-
-window.startPrivateChat=startPrivateChat;
-window.toggleLike=toggleLike;
-window.showPublicChat=showPublicChat;
-window.showPrivateList=showPrivateList;
-window.showAdminPanel=showAdminPanel;
-window.clearChat=clearChat;
-window.copyToClipboard=copyToClipboard;
-window.editMessage=editMessage;
-window.deleteMessage=deleteMessage;
-window.editPrivateMessage=editPrivateMessage;
-window.deletePrivateMessage=deletePrivateMessage;
-
-document.addEventListener('DOMContentLoaded', ()=>{
-    setTheme(currentTheme); initUser();
-});
 </script>
 </body>
 </html>
