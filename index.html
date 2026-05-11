@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#0f172a">
+    <title>حائط العرب | Arab Wall - General Sahel TV</title>
+    <meta name="description" content="حائط العرب - منصة التواصل الحر. تحدث مع الجميع، أنشئ محادثات خاصة، وتواصل بحرية.">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0f172a; --bg-secondary: #1e293b; --bg-card: rgba(30,41,59,0.92);
+            --bg-input: #334155; --text-primary: #f1f5f9; --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8; --border-color: #334155; --primary: #f59e0b;
+            --primary-dark: #b45309; --primary-glow: rgba(245,158,11,0.25);
+            --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
+            --shadow-lg: 0 15px 40px rgba(0,0,0,0.5); --radius-md: 18px; --radius-lg: 28px;
+            --transition: all 0.3s ease; --gradient-1: linear-gradient(135deg, #f59e0b, #b45309);
+            --gradient-2: linear-gradient(135deg, #0ea5e9, #3b82f6, #6366f1);
+        }
+        body.light-mode {
+            --bg-primary: #f8fafc; --bg-secondary: #ffffff; --bg-card: rgba(255,255,255,0.95);
+            --bg-input: #f1f5f9; --text-primary: #0f172a; --text-secondary: #334155;
+            --text-muted: #64748b; --border-color: #e2e8f0;
+        }
+        body.gold-mode {
+            --bg-primary: #1a1500; --bg-secondary: #2d2600; --bg-card: rgba(45,38,0,0.92);
+            --bg-input: #3d3500; --text-primary: #ffd700; --text-secondary: #ffed4a;
+            --text-muted: #b8941a; --border-color: #6b5500; --primary: #ffd700;
+            --primary-dark: #b8941a; --gradient-1: linear-gradient(135deg, #ffd700, #b8941a);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body { font-family:'Cairo',sans-serif; background:var(--bg-primary); color:var(--text-primary); transition:var(--transition); height:100dvh; display:flex; flex-direction:column; overflow:hidden; }
+
+        header { flex-shrink:0; z-index:100; background:var(--bg-secondary); border-bottom:1px solid var(--border-color); padding:clamp(4px,1vw,8px) clamp(8px,2vw,16px); display:flex; align-items:center; justify-content:space-between; gap:8px; backdrop-filter:blur(20px); }
+        .logo { display:flex; align-items:center; gap:6px; } .logo i { font-size:clamp(16px,3vw,22px); color:var(--primary); } .logo h1 { font-size:clamp(0.8rem,2vw,1.1rem); font-weight:800; color:var(--primary); }
+        .nav-actions { display:flex; gap:6px; align-items:center; }
+        .icon-btn { background:var(--bg-primary); border:1px solid var(--border-color); width:clamp(28px,5vw,36px); height:clamp(28px,5vw,36px); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:var(--transition); color:var(--text-primary); font-size:clamp(0.7rem,1.5vw,0.9rem); position:relative; }
+        .icon-btn:hover { background:var(--primary); color:white; }
+        .badge-dot { position:absolute; top:4px; right:4px; width:8px; height:8px; border-radius:50%; background:var(--danger); }
+
+        .main-content { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+
+        .public-chat { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+        .chat-messages { flex:1; overflow-y:auto; padding:clamp(8px,1.5vw,15px); display:flex; flex-direction:column; gap:clamp(4px,0.8vw,8px); }
+        .message-bubble { background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:clamp(8px,1.5vw,15px); transition:var(--transition); animation:slideIn 0.3s ease; max-width:100%; }
+        @keyframes slideIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .message-header { display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap; }
+        .message-sender { font-weight:700; cursor:pointer; transition:var(--transition); padding:2px 8px; border-radius:12px; font-size:clamp(0.75rem,1.3vw,0.9rem); display:inline-flex; align-items:center; gap:4px; }
+        .message-sender:hover { background:var(--primary-glow); }
+        .message-time { font-size:clamp(0.6rem,1vw,0.7rem); color:var(--text-muted); }
+        .message-text { font-size:clamp(0.8rem,1.4vw,0.95rem); color:var(--text-secondary); word-break:break-word; }
+        .message-actions { display:flex; gap:8px; margin-top:6px; align-items:center; }
+        .like-btn { background:none; border:none; cursor:pointer; font-size:clamp(0.9rem,1.5vw,1.1rem); transition:var(--transition); padding:2px 6px; border-radius:15px; display:flex; align-items:center; gap:4px; color:var(--text-muted); font-family:'Cairo'; }
+        .like-btn:hover { color:var(--danger); transform:scale(1.1); }
+        .like-btn.liked { color:var(--danger); }
+        .like-count { font-size:clamp(0.7rem,1.1vw,0.8rem); font-weight:600; }
+        .reply-btn { background:none; border:none; cursor:pointer; font-size:clamp(0.8rem,1.3vw,0.95rem); transition:var(--transition); padding:2px 8px; border-radius:15px; color:var(--text-muted); font-family:'Cairo'; }
+        .reply-btn:hover { color:var(--primary); }
+
+        .chat-input-area { background:var(--bg-secondary); border-top:1px solid var(--border-color); padding:clamp(8px,1.5vw,12px); display:flex; gap:8px; align-items:center; flex-shrink:0; }
+        .chat-input { flex:1; padding:clamp(8px,1.5vw,12px); border-radius:25px; border:1px solid var(--border-color); background:var(--bg-input); color:var(--text-primary); font-family:'Cairo'; font-size:clamp(0.8rem,1.3vw,0.9rem); outline:none; transition:var(--transition); }
+        .chat-input:focus { border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-glow); }
+        .send-btn { background:var(--gradient-1); color:white; border:none; width:clamp(36px,6vw,44px); height:clamp(36px,6vw,44px); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:var(--transition); font-size:clamp(0.9rem,1.5vw,1.1rem); flex-shrink:0; }
+        .send-btn:hover { transform:scale(1.05); }
+
+        .private-chat { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+        .private-header { background:var(--bg-secondary); padding:clamp(8px,1.5vw,12px); display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border-color); flex-shrink:0; }
+        .back-btn { background:var(--bg-input); border:1px solid var(--border-color); padding:clamp(4px,0.8vw,8px) clamp(8px,1.5vw,14px); border-radius:25px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:4px; color:var(--text-primary); transition:var(--transition); font-family:'Cairo'; font-size:clamp(0.7rem,1.2vw,0.8rem); }
+        .back-btn:hover { background:var(--primary); color:white; }
+
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:2000; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .modal { background:var(--bg-card); border-radius:var(--radius-lg); padding:clamp(15px,3vw,25px); max-width:min(420px,95vw); width:100%; border:1px solid var(--border-color); text-align:center; }
+        .modal h3 { margin-bottom:12px; color:var(--primary); font-size:clamp(1rem,2vw,1.3rem); }
+        .modal input { width:100%; padding:clamp(8px,1.5vw,12px); border-radius:25px; border:1px solid var(--border-color); background:var(--bg-input); color:var(--text-primary); font-family:'Cairo'; margin-bottom:10px; outline:none; text-align:center; font-size:clamp(0.8rem,1.4vw,0.95rem); }
+        .btn { display:inline-flex; align-items:center; gap:6px; padding:clamp(8px,1.2vw,10px) clamp(16px,2.5vw,22px); border-radius:30px; font-weight:700; font-family:'Cairo'; cursor:pointer; transition:var(--transition); border:none; font-size:clamp(0.8rem,1.3vw,0.9rem); text-decoration:none; }
+        .btn-primary { background:var(--gradient-1); color:white; } .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); }
+
+        .hidden { display:none !important; }
+        .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--success); color:white; padding:10px 24px; border-radius:30px; font-weight:700; z-index:10000; opacity:0; transition:0.3s; pointer-events:none; font-size:clamp(0.7rem,1.2vw,0.85rem); }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); } .toast.error { background:var(--danger); }
+
+        @media (max-width:480px) { .message-bubble { padding:10px; } .chat-input-area { padding:6px; gap:6px; } }
+    </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="nameModal">
+    <div class="modal">
+        <h3>🧱 حائط العرب</h3>
+        <p style="color:var(--text-muted);margin-bottom:12px;font-size:clamp(0.7rem,1.2vw,0.85rem);">اختر اسمك للدخول إلى المنصة</p>
+        <input type="text" id="playerNameInput" placeholder="اكتب اسمك هنا..." maxlength="20">
+        <button class="btn btn-primary" id="registerBtn">✅ دخول</button>
+    </div>
+</div>
+
+<header>
+    <div class="logo">
+        <i class="fas fa-comments"></i>
+        <div><h1>🧱 حائط العرب</h1></div>
+    </div>
+    <div class="nav-actions">
+        <span id="currentUserName" style="font-size:clamp(0.7rem,1.2vw,0.8rem);color:var(--primary);font-weight:600;"></span>
+        <button class="icon-btn" id="themeToggleBtn">🌙</button>
+        <button class="icon-btn" id="privateChatsBtn" title="المحادثات الخاصة">
+            <i class="fas fa-envelope"></i>
+            <span class="badge-dot hidden" id="newMessageDot"></span>
+        </button>
+    </div>
+</header>
+
+<div class="main-content">
+    <section id="publicChatSection" class="public-chat">
+        <div class="chat-messages" id="publicMessages"></div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="publicMessageInput" placeholder="اكتب رسالتك للجميع..." maxlength="500">
+            <button class="send-btn" id="publicSendBtn">📢</button>
+        </div>
+    </section>
+
+    <section id="privateListSection" class="hidden" style="padding:15px;overflow-y:auto;">
+        <button class="back-btn" id="backToPublicBtn" style="margin-bottom:15px;">⬅️ العودة للمحادثة العامة</button>
+        <h3 style="margin-bottom:15px;color:var(--primary);">📩 المحادثات الخاصة</h3>
+        <div id="privateListContainer"></div>
+    </section>
+
+    <section id="privateChatSection" class="private-chat hidden">
+        <div class="private-header">
+            <button class="back-btn" id="backToPrivateListBtn">⬅️ العودة</button>
+            <span id="privateChatTitle" style="font-weight:700;color:var(--primary);"></span>
+        </div>
+        <div class="chat-messages" id="privateMessages"></div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="privateMessageInput" placeholder="اكتب رسالتك الخاصة..." maxlength="500">
+            <button class="send-btn" id="privateSendBtn">📩</button>
+        </div>
+    </section>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script>
+    const firebaseConfig1 = {
+        apiKey: "AIzaSyAOgrjnezEk4fJgRkIYZcnAdfFChpmlWII",
+        authDomain: "genzi11.firebaseapp.com",
+        databaseURL: "https://genzi11-default-rtdb.firebaseio.com",
+        projectId: "genzi11",
+        storageBucket: "genzi11.firebasestorage.app",
+        messagingSenderId: "166021453533",
+        appId: "1:166021453533:web:334633940d7418edc4ad34"
+    };
+    const firebaseConfig2 = {
+        apiKey: "AIzaSyBRJfoxfrrxLmOxzKjHVUJRbRB_8iUmS_o",
+        authDomain: "chat-web-2c47b.firebaseapp.com",
+        databaseURL: "https://chat-web-2c47b-default-rtdb.firebaseio.com",
+        projectId: "chat-web-2c47b",
+        storageBucket: "chat-web-2c47b.firebasestorage.app",
+        messagingSenderId: "37377993564",
+        appId: "1:37377993564:web:ea1481135f9b23ec172f99"
+    };
+
+    try { firebase.initializeApp(firebaseConfig1, "app1"); } catch(e) {}
+    try { firebase.initializeApp(firebaseConfig2, "app2"); } catch(e) {}
+
+    const db1 = firebase.app("app1").database();
+    const db2 = firebase.app("app2").database();
+
+    let currentUser = null;
+    let allUsers = {};
+    let privateChatPartner = null;
+    let privateChatId = null;
+    let currentTheme = localStorage.getItem('aw_theme') || 'dark';
+    let publicMessagesLoaded = false;
+    let privateMessagesLoaded = false;
+
+    function toast(msg, err) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        if (err) t.classList.add('error'); else t.classList.remove('error');
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 2000);
+    }
+
+    function loadAllUsers() {
+        return db1.ref('users').once('value').then(function(snapshot) {
+            if (snapshot.exists()) allUsers = snapshot.val();
+            else allUsers = {};
+        });
+    }
+
+    function generateUniqueId() {
+        var maxId = 9999;
+        var users = allUsers;
+        Object.keys(users).forEach(function(k) {
+            if (users[k].id && users[k].id > maxId) maxId = users[k].id;
+        });
+        return maxId + 1;
+    }
+
+    function isNameTaken(name) {
+        var users = allUsers;
+        var taken = false;
+        Object.keys(users).forEach(function(k) {
+            if (users[k].name && users[k].name.toLowerCase() === name.toLowerCase()) taken = true;
+        });
+        return taken;
+    }
+
+    function getRandomColor() {
+        var colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6','#ec4899','#06b6d4','#f97316','#6366f1','#14b8a6'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    async function registerUser() {
+        var name = document.getElementById('playerNameInput').value.trim();
+        if (!name) { toast('⚠️ أدخل اسماً!', true); return; }
+        if (name.length < 2) { toast('⚠️ الاسم قصير جداً!', true); return; }
+
+        await loadAllUsers();
+        if (isNameTaken(name)) { toast('⚠️ هذا الاسم مستخدم بالفعل!', true); return; }
+
+        var uid = generateUniqueId();
+        var userKey = name.replace(/[.#$\[\]]/g, '_');
+        currentUser = { id: uid, name: name, key: userKey, color: getRandomColor(), online: true };
+
+        await db1.ref('users/' + userKey).set(currentUser);
+        localStorage.setItem('aw_user', JSON.stringify(currentUser));
+
+        document.getElementById('nameModal').style.display = 'none';
+        document.getElementById('currentUserName').textContent = '👤 ' + name;
+        document.getElementById('publicMessageInput').focus();
+        toast('✅ أهلاً بك ' + name + '! رقمك: ' + uid);
+        listenToPublicMessages();
+        listenToPrivateMessages();
+        window.addEventListener('beforeunload', function() {
+            if (currentUser) db1.ref('users/' + currentUser.key + '/online').set(false);
+        });
+    }
+
+    function initUser() {
+        var saved = localStorage.getItem('aw_user');
+        if (saved) {
+            currentUser = JSON.parse(saved);
+            loadAllUsers().then(function() {
+                if (!allUsers[currentUser.key]) {
+                    db1.ref('users/' + currentUser.key).set(currentUser);
+                } else {
+                    db1.ref('users/' + currentUser.key + '/online').set(true);
+                }
+                document.getElementById('nameModal').style.display = 'none';
+                document.getElementById('currentUserName').textContent = '👤 ' + currentUser.name;
+                listenToPublicMessages();
+                listenToPrivateMessages();
+                window.addEventListener('beforeunload', function() {
+                    if (currentUser) db1.ref('users/' + currentUser.key + '/online').set(false);
+                });
+            });
+        } else {
+            document.getElementById('nameModal').style.display = 'flex';
+        }
+    }
+
+    function listenToPublicMessages() {
+        if (publicMessagesLoaded) return;
+        publicMessagesLoaded = true;
+        db1.ref('publicMessages').orderByChild('timestamp').limitToLast(100).on('child_added', function(snapshot) {
+            var msg = snapshot.val();
+            displayPublicMessage(snapshot.key, msg);
+            var el = document.getElementById('publicMessages');
+            if (el) el.scrollTop = el.scrollHeight;
+        });
+    }
+
+    function displayPublicMessage(key, msg) {
+        var container = document.getElementById('publicMessages');
+        if (!container) return;
+        var div = document.createElement('div');
+        div.className = 'message-bubble';
+        div.id = 'msg-' + key;
+        var liked = msg.likes && currentUser && msg.likes[currentUser.key];
+        div.innerHTML =
+            '<div class="message-header">' +
+                '<span class="message-sender" style="color:' + (msg.color || 'var(--primary)') + ';" onclick="startPrivateChat(\'' + (msg.userKey || '') + '\')">' +
+                    '👤 ' + escapeHtml(msg.name || '') +
+                    (msg.uid ? ' <small style="color:var(--text-muted);">#' + msg.uid + '</small>' : '') +
+                '</span>' +
+                '<span class="message-time">' + formatTime(msg.timestamp) + '</span>' +
+            '</div>' +
+            '<div class="message-text">' + escapeHtml(msg.text || '') + '</div>' +
+            '<div class="message-actions">' +
+                '<button class="like-btn ' + (liked ? 'liked' : '') + '" onclick="toggleLike(\'' + key + '\')">' +
+                    (liked ? '❤️' : '🤍') + ' <span class="like-count">' + (msg.likeCount || 0) + '</span>' +
+                '</button>' +
+                '<button class="reply-btn" onclick="startPrivateChat(\'' + (msg.userKey || '') + '\')">💬 رد</button>' +
+            '</div>';
+        container.appendChild(div);
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function formatTime(timestamp) {
+        if (!timestamp) return '';
+        var d = new Date(timestamp);
+        var now = new Date();
+        var diff = Math.floor((now - d) / 1000);
+        if (diff < 60) return 'الآن';
+        if (diff < 3600) return 'قبل ' + Math.floor(diff / 60) + ' دقيقة';
+        if (diff < 86400) return 'قبل ' + Math.floor(diff / 3600) + ' ساعة';
+        return d.toLocaleDateString('ar') + ' ' + d.toLocaleTimeString('ar', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function sendPublicMessage() {
+        if (!currentUser) { toast('⚠️ انتظر تحميل حسابك!', true); return; }
+        var input = document.getElementById('publicMessageInput');
+        var text = input.value.trim();
+        if (!text) return;
+        var msg = {
+            name: currentUser.name,
+            uid: currentUser.id,
+            userKey: currentUser.key,
+            color: currentUser.color,
+            text: text,
+            timestamp: Date.now(),
+            likeCount: 0,
+            likes: {}
+        };
+        db1.ref('publicMessages').push(msg).then(function() {
+            input.value = '';
+        }).catch(function() {
+            db2.ref('publicMessages').push(msg).then(function() {
+                input.value = '';
+            }).catch(function() {
+                toast('❌ فشل الإرسال. حاول مرة أخرى.', true);
+            });
+        });
+    }
+
+    function toggleLike(msgKey) {
+        if (!currentUser) return;
+        db1.ref('publicMessages/' + msgKey).once('value').then(function(snapshot) {
+            if (snapshot.exists()) {
+                var msg = snapshot.val();
+                var likes = msg.likes || {};
+                if (likes[currentUser.key]) {
+                    delete likes[currentUser.key];
+                    db1.ref('publicMessages/' + msgKey).update({ likes: likes, likeCount: (msg.likeCount || 1) - 1 });
+                } else {
+                    likes[currentUser.key] = true;
+                    db1.ref('publicMessages/' + msgKey).update({ likes: likes, likeCount: (msg.likeCount || 0) + 1 });
+                }
+            }
+        });
+    }
+
+    function showPublicChat() {
+        document.getElementById('publicChatSection').classList.remove('hidden');
+        document.getElementById('privateListSection').classList.add('hidden');
+        document.getElementById('privateChatSection').classList.add('hidden');
+        privateChatPartner = null;
+        privateChatId = null;
+        document.getElementById('newMessageDot').classList.add('hidden');
+    }
+
+    function showPrivateList() {
+        document.getElementById('publicChatSection').classList.add('hidden');
+        document.getElementById('privateListSection').classList.remove('hidden');
+        document.getElementById('privateChatSection').classList.add('hidden');
+        privateChatPartner = null;
+        privateChatId = null;
+        document.getElementById('newMessageDot').classList.add('hidden');
+        loadAllUsers().then(function() { renderPrivateList(); });
+    }
+
+    function renderPrivateList() {
+        var container = document.getElementById('privateListContainer');
+        if (!container) return;
+        var users = [];
+        Object.keys(allUsers).forEach(function(k) {
+            if (k !== (currentUser ? currentUser.key : '')) users.push(allUsers[k]);
+        });
+        if (users.length === 0) {
+            container.innerHTML = '<p style="color:var(--text-muted);text-align:center;">لا يوجد مستخدمون بعد.</p>';
+            return;
+        }
+        var html = '';
+        users.forEach(function(u) {
+            html +=
+                '<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg-card);border-radius:12px;margin:6px 0;cursor:pointer;" onclick="startPrivateChat(\'' + (u.key || '') + '\')">' +
+                    '<span style="width:12px;height:12px;border-radius:50%;background:' + (u.online ? 'var(--success)' : 'var(--text-muted)') + ';flex-shrink:0;"></span>' +
+                    '<span style="color:' + (u.color || 'var(--primary)') + ';font-weight:600;">👤 ' + escapeHtml(u.name || '') + ' <small style="color:var(--text-muted);">#' + (u.id || '') + '</small></span>' +
+                    '<span style="margin-right:auto;font-size:0.7rem;color:var(--text-muted);">' + (u.online ? '🟢 متصل' : '⚫ غير متصل') + '</span>' +
+                '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function startPrivateChat(userKey) {
+        if (!currentUser) return;
+        if (userKey === currentUser.key) { toast('⚠️ لا يمكنك مراسلة نفسك!', true); return; }
+        var partner = allUsers[userKey];
+        if (!partner) { toast('⚠️ المستخدم غير موجود!', true); return; }
+        privateChatPartner = partner;
+        var keys = [currentUser.key, partner.key].sort();
+        privateChatId = keys.join('_');
+        document.getElementById('publicChatSection').classList.add('hidden');
+        document.getElementById('privateListSection').classList.add('hidden');
+        document.getElementById('privateChatSection').classList.remove('hidden');
+        document.getElementById('privateChatTitle').textContent = '💬 ' + partner.name + ' #' + (partner.id || '');
+        document.getElementById('privateMessages').innerHTML = '';
+        listenToPrivateChat();
+    }
+
+    function listenToPrivateChat() {
+        if (!privateChatId) return;
+        db2.ref('privateMessages/' + privateChatId).orderByChild('timestamp').limitToLast(100).off();
+        db2.ref('privateMessages/' + privateChatId).orderByChild('timestamp').limitToLast(100).on('child_added', function(snapshot) {
+            var msg = snapshot.val();
+            displayPrivateMessage(msg);
+            var el = document.getElementById('privateMessages');
+            if (el) el.scrollTop = el.scrollHeight;
+        });
+    }
+
+    function displayPrivateMessage(msg) {
+        var container = document.getElementById('privateMessages');
+        if (!container) return;
+        var div = document.createElement('div');
+        div.className = 'message-bubble';
+        var isMe = currentUser && msg.userKey === currentUser.key;
+        div.innerHTML =
+            '<div class="message-header">' +
+                '<span style="color:' + (msg.color || 'var(--primary)') + ';font-weight:700;">' + (isMe ? 'أنت' : escapeHtml(msg.name || '')) + '</span>' +
+                '<span class="message-time">' + formatTime(msg.timestamp) + '</span>' +
+            '</div>' +
+            '<div class="message-text">' + escapeHtml(msg.text || '') + '</div>';
+        container.appendChild(div);
+    }
+
+    function listenToPrivateMessages() {
+        if (privateMessagesLoaded) return;
+        privateMessagesLoaded = true;
+        db2.ref('privateMessages').on('child_added', function(snapshot) {
+            var chatId = snapshot.key;
+            if (chatId && currentUser && chatId.includes(currentUser.key) && !privateChatId) {
+                document.getElementById('newMessageDot').classList.remove('hidden');
+            }
+        });
+    }
+
+    function sendPrivateMessage() {
+        if (!currentUser || !privateChatPartner || !privateChatId) return;
+        var input = document.getElementById('privateMessageInput');
+        var text = input.value.trim();
+        if (!text) return;
+        var msg = {
+            name: currentUser.name,
+            userKey: currentUser.key,
+            color: currentUser.color,
+            text: text,
+            timestamp: Date.now()
+        };
+        db2.ref('privateMessages/' + privateChatId).push(msg).then(function() {
+            input.value = '';
+        }).catch(function() {
+            db1.ref('privateMessages/' + privateChatId).push(msg).then(function() {
+                input.value = '';
+            }).catch(function() {
+                toast('❌ فشل الإرسال.', true);
+            });
+        });
+    }
+
+    function setTheme(th) {
+        document.body.classList.remove('light-mode', 'gold-mode');
+        if (th === 'light') document.body.classList.add('light-mode');
+        if (th === 'gold') document.body.classList.add('gold-mode');
+        currentTheme = th;
+        localStorage.setItem('aw_theme', th);
+    }
+
+    document.getElementById('registerBtn').addEventListener('click', registerUser);
+    document.getElementById('publicSendBtn').addEventListener('click', sendPublicMessage);
+    document.getElementById('privateSendBtn').addEventListener('click', sendPrivateMessage);
+    document.getElementById('privateChatsBtn').addEventListener('click', showPrivateList);
+    document.getElementById('backToPublicBtn').addEventListener('click', showPublicChat);
+    document.getElementById('backToPrivateListBtn').addEventListener('click', showPrivateList);
+    document.getElementById('themeToggleBtn').addEventListener('click', function() {
+        var n = currentTheme === 'dark' ? 'light' : currentTheme === 'light' ? 'gold' : 'dark';
+        setTheme(n);
+    });
+
+    document.getElementById('publicMessageInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendPublicMessage(); }
+    });
+    document.getElementById('privateMessageInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendPrivateMessage(); }
+    });
+
+    window.startPrivateChat = startPrivateChat;
+    window.toggleLike = toggleLike;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTheme(currentTheme);
+        initUser();
+    });
+</script>
+</body>
+</html>
