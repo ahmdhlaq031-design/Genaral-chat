@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b141a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Nexus — تواصل بلا حدود</title>
-<link rel="manifest" href='data:application/manifest+json,{"name":"Nexus","short_name":"Nexus","start_url":"./","display":"standalone","background_color":"%230b141a","theme_color":"%2300a884","lang":"ar","dir":"rtl"}'>
 <style>
 :root{
   --bg:#0b141a;--panelS:#202c33;--glass:rgba(255,255,255,.04);--glass2:rgba(255,255,255,.08);
@@ -24,239 +21,79 @@ body.light{
 html,body{height:100%;height:100dvh;font-family:'Segoe UI',system-ui,-apple-system,'Tajawal',sans-serif;background:var(--bg);color:var(--txt);overflow:hidden;font-size:var(--fs);overscroll-behavior:none}
 body{-webkit-font-smoothing:antialiased}
 
-/* ==================== شاشة الدخول الجديدة ==================== */
+/* شاشة الدخول */
 #setup{
-  position:fixed;inset:0;
-  display:none;
-  justify-content:center;align-items:center;
-  padding:16px;
-  overflow-y:auto;
+  position:fixed;inset:0;display:none;justify-content:center;align-items:center;
+  padding:16px;overflow-y:auto;
   background:radial-gradient(circle at 20% 20%, rgba(0,168,132,.15) 0%, transparent 50%),
              radial-gradient(circle at 80% 80%, rgba(83,189,235,.12) 0%, transparent 50%),
-             radial-gradient(circle at 50% 50%, rgba(6,207,156,.08) 0%, transparent 60%),
              var(--bg);
-  position:relative;
 }
 #setup.active{display:flex}
-#setup::before{
-  content:'';position:absolute;inset:0;
-  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="1" fill="%2300a884" opacity="0.15"/></svg>');
-  background-size:60px 60px;pointer-events:none;opacity:.6;
-}
-
-.setup-wrap{
-  width:100%;max-width:440px;
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;gap:16px;
-  animation:setupIn .6s cubic-bezier(.34,1.56,.64,1);
-  padding:12px 0;
-}
+.setup-wrap{width:100%;max-width:440px;display:flex;flex-direction:column;gap:16px;padding:12px 0;animation:setupIn .6s cubic-bezier(.34,1.56,.64,1)}
 @keyframes setupIn{from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-
-/* شعار + ترحيب */
 .setup-hero{text-align:center;margin-bottom:6px}
-.setup-logo{
-  width:88px;height:88px;margin:0 auto 14px;
-  border-radius:28px;
-  background:linear-gradient(135deg,var(--a1) 0%,var(--a2) 50%,var(--a3) 100%);
-  display:flex;align-items:center;justify-content:center;
-  font-size:44px;
-  box-shadow:0 15px 40px rgba(0,168,132,.4), 0 0 0 1px rgba(255,255,255,.1) inset;
-  position:relative;
-  animation:logoFloat 3s ease-in-out infinite;
-}
+.setup-logo{width:88px;height:88px;margin:0 auto 14px;border-radius:28px;background:linear-gradient(135deg,var(--a1) 0%,var(--a2) 50%,var(--a3) 100%);display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 15px 40px rgba(0,168,132,.4);position:relative;animation:logoFloat 3s ease-in-out infinite}
 @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.setup-logo::after{
-  content:'';position:absolute;inset:-6px;border-radius:34px;
-  background:linear-gradient(135deg,var(--a1),var(--a2),var(--a3));
-  opacity:.25;filter:blur(20px);z-index:-1;
-  animation:logoGlow 3s ease-in-out infinite;
-}
-@keyframes logoGlow{0%,100%{opacity:.25}50%{opacity:.5}}
-.setup-title{
-  font-size:32px;font-weight:700;letter-spacing:-1px;
-  background:linear-gradient(135deg,var(--a1),var(--a2),var(--a3));
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:6px;
-}
-.setup-subtitle{color:var(--dim);font-size:14px;font-weight:500;letter-spacing:.3px}
-
-/* بطاقة الإعداد */
-.setup-card{
-  background:var(--panelS);
-  border:1px solid var(--brd2);
-  border-radius:24px;
-  padding:26px 22px;
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-.setup-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--a1),transparent);
-  opacity:.5;
-}
-
-.setup-step{
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:14px;margin-top:4px;
-}
+.setup-title{font-size:32px;font-weight:700;background:linear-gradient(135deg,var(--a1),var(--a2),var(--a3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.setup-subtitle{color:var(--dim);font-size:14px;font-weight:500}
+.setup-card{background:var(--panelS);border:1px solid var(--brd2);border-radius:24px;padding:26px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.setup-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--a1),transparent);opacity:.5}
+.setup-step{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:4px}
 .setup-step:first-child{margin-top:0}
-.step-num{
-  width:26px;height:26px;border-radius:50%;
-  background:linear-gradient(135deg,var(--a1),var(--a2));
-  color:#fff;font-size:13px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;box-shadow:0 4px 12px rgba(0,168,132,.35);
-}
+.step-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-label{font-size:14px;font-weight:600;color:var(--txt)}
 .step-hint{font-size:11.5px;color:var(--dim);font-weight:400;margin-right:auto}
-
-/* معاينة الأفاتار الكبيرة */
-.avatar-preview-wrap{
-  display:flex;justify-content:center;margin-bottom:16px;
-  position:relative;
-}
-.avatar-preview-big{
-  width:110px;height:110px;border-radius:50%;
-  background:linear-gradient(135deg,#6b7c85,#4a5a63);
-  display:flex;align-items:center;justify-content:center;
-  font-size:56px;
-  position:relative;
-  box-shadow:0 15px 35px rgba(0,0,0,.35), 0 0 0 4px var(--panelS), 0 0 0 5px var(--a1);
-  transition:.4s cubic-bezier(.34,1.56,.64,1);
-  overflow:hidden;
-}
+.avatar-preview-wrap{display:flex;justify-content:center;margin-bottom:16px;position:relative}
+.avatar-preview-big{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,#6b7c85,#4a5a63);display:flex;align-items:center;justify-content:center;font-size:56px;position:relative;box-shadow:0 15px 35px rgba(0,0,0,.35), 0 0 0 4px var(--panelS), 0 0 0 5px var(--a1);transition:.4s;overflow:hidden}
 .avatar-preview-big img{width:100%;height:100%;object-fit:cover}
 .avatar-preview-big.pulse{animation:avatarPulse .5s ease}
 @keyframes avatarPulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-.avatar-upload-btn{
-  position:absolute;bottom:0;right:calc(50% - 55px + 5px);
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,var(--a1),var(--a2));
-  color:#fff;border:3px solid var(--panelS);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:14px;
-  box-shadow:0 4px 12px rgba(0,168,132,.5);
-  transition:.2s;
-}
+.avatar-upload-btn{position:absolute;bottom:0;right:calc(50% - 55px + 5px);width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;border:3px solid var(--panelS);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;box-shadow:0 4px 12px rgba(0,168,132,.5);transition:.2s}
 .avatar-upload-btn:hover{transform:scale(1.1)}
 .avatar-upload-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-
-/* اختيار الإيموجي */
-.emoji-grid{
-  display:grid;grid-template-columns:repeat(8,1fr);
-  gap:6px;margin-bottom:20px;
-}
-.emoji-opt{
-  aspect-ratio:1;border-radius:12px;
-  background:var(--glass);border:1.5px solid var(--brd);
-  cursor:pointer;font-size:20px;
-  display:flex;align-items:center;justify-content:center;
-  transition:.2s;
-  user-select:none;
-}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:20px}
+.emoji-opt{aspect-ratio:1;border-radius:12px;background:var(--glass);border:1.5px solid var(--brd);cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:.2s;user-select:none}
 .emoji-opt:hover{transform:scale(1.12);border-color:var(--a1);background:var(--glass2)}
-.emoji-opt.sel{
-  border-color:var(--a1);background:rgba(0,168,132,.15);
-  box-shadow:0 0 0 2px rgba(0,168,132,.3),0 4px 12px rgba(0,168,132,.2);
-  transform:scale(1.08);
-}
-
-/* حقل الاسم */
+.emoji-opt.sel{border-color:var(--a1);background:rgba(0,168,132,.15);box-shadow:0 0 0 2px rgba(0,168,132,.3);transform:scale(1.08)}
 .name-input-wrap{position:relative;margin-bottom:10px}
-.name-input{
-  width:100%;padding:16px 52px 16px 18px;
-  background:var(--glass);
-  border:1.5px solid var(--brd);
-  border-radius:14px;
-  color:var(--txt);font-size:16px;font-family:inherit;
-  transition:.25s;font-weight:500;
-}
-.name-input:focus{
-  outline:none;border-color:var(--a1);
-  background:rgba(0,168,132,.05);
-  box-shadow:0 0 0 4px rgba(0,168,132,.12);
-}
+.name-input{width:100%;padding:16px 52px 16px 18px;background:var(--glass);border:1.5px solid var(--brd);border-radius:14px;color:var(--txt);font-size:16px;font-family:inherit;transition:.25s;font-weight:500}
+.name-input:focus{outline:none;border-color:var(--a1);background:rgba(0,168,132,.05);box-shadow:0 0 0 4px rgba(0,168,132,.12)}
 .name-input.error{border-color:var(--red);background:rgba(241,92,109,.06)}
-.name-input.error:focus{box-shadow:0 0 0 4px rgba(241,92,109,.15)}
-.name-counter{
-  position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  font-size:12px;color:var(--dim);font-weight:500;
-  font-family:'Space Grotesk',monospace;
-  pointer-events:none;
-}
+.name-counter{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--dim);font-weight:500;pointer-events:none}
 .name-counter.warn{color:#f5b942}
 .name-counter.full{color:var(--red)}
-.name-error{
-  font-size:12.5px;color:var(--red);margin-top:6px;margin-right:4px;
-  display:none;align-items:center;gap:5px;
-  animation:shake .35s;
-}
+.name-error{font-size:12.5px;color:var(--red);margin-top:6px;margin-right:4px;display:none;align-items:center;gap:5px;animation:shake .35s}
 .name-error.show{display:flex}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-
-/* زر البدء */
-.btn-start{
-  width:100%;padding:16px;
-  border:none;border-radius:14px;
-  background:linear-gradient(135deg,var(--a1) 0%,var(--a2) 100%);
-  color:#fff;font-size:16px;font-weight:700;
-  font-family:inherit;cursor:pointer;
-  margin-top:6px;
-  box-shadow:0 8px 24px rgba(0,168,132,.35);
-  transition:.25s;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  position:relative;overflow:hidden;
-}
+.btn-start{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--a1) 0%,var(--a2) 100%);color:#fff;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:6px;box-shadow:0 8px 24px rgba(0,168,132,.35);transition:.25s;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden}
 .btn-start:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,168,132,.5)}
-.btn-start:active:not(:disabled){transform:translateY(0)}
 .btn-start:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
 .btn-start svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .btn-start.loading{pointer-events:none}
-.btn-start.loading::after{
-  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
-  animation:shimmer 1.5s infinite;
-}
-@keyframes shimmer{to{left:100%}}
-
-/* شريط التقدم */
-.setup-progress{
-  display:none;margin-top:16px;
-}
+.setup-progress{display:none;margin-top:16px}
 .setup-progress.show{display:block}
-.setup-progress .bar{
-  height:4px;background:var(--glass2);border-radius:2px;overflow:hidden;
-}
-.setup-progress .fill{
-  height:100%;width:0%;background:linear-gradient(90deg,var(--a1),var(--a2));
-  border-radius:2px;transition:width .3s;
-  box-shadow:0 0 12px rgba(0,168,132,.6);
-}
-.setup-progress .text{
-  font-size:12px;color:var(--dim);text-align:center;margin-top:8px;
-}
+.setup-progress .bar{height:4px;background:var(--glass2);border-radius:2px;overflow:hidden}
+.setup-progress .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--a1),var(--a2));border-radius:2px;transition:width .3s;box-shadow:0 0 12px rgba(0,168,132,.6)}
+.setup-progress .text{font-size:12px;color:var(--dim);text-align:center;margin-top:8px}
+.setup-footer{text-align:center;font-size:12px;color:var(--dim);padding:8px;line-height:1.6}
+.setup-footer .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:12px;background:var(--glass);border:1px solid var(--brd);margin:0 3px;font-size:11px;font-weight:500}
+.setup-footer .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--a1);animation:pulseDot 1.5s infinite}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* تذييل */
-.setup-footer{
-  text-align:center;font-size:12px;color:var(--dim);
-  padding:8px;line-height:1.6;
+/* شريط تشخيص */
+.diag-bar{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(90deg,#f5b942,#f15c6d);
+  color:#fff;padding:8px 14px;font-size:12.5px;font-weight:600;
+  display:none;align-items:center;gap:8px;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
 }
-.setup-footer .badge{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:4px 10px;border-radius:12px;
-  background:var(--glass);border:1px solid var(--brd);
-  margin:0 3px;font-size:11px;font-weight:500;
-}
-.setup-footer .badge .dot{
-  width:6px;height:6px;border-radius:50%;background:var(--a1);
-  animation:pulseDot 1.5s infinite;
-}
-@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.diag-bar.show{display:flex}
+.diag-bar.ok{background:linear-gradient(90deg,var(--a1),var(--a2))}
+.diag-bar button{background:rgba(0,0,0,.2);border:none;color:#fff;padding:3px 8px;border-radius:6px;font-size:11px;cursor:pointer;margin-right:auto;font-weight:700}
 
-/* ==================== بقية التطبيق ==================== */
+/* التطبيق */
 .screen{position:fixed;inset:0;display:none;overflow:hidden}
 .screen.active{display:flex}
 #app{flex-direction:column;background:var(--bg);width:100%;height:100dvh;position:relative}
@@ -266,21 +103,17 @@ body{-webkit-font-smoothing:antialiased}
 .wa-header .wa-actions button{background:none;border:none;color:var(--txt);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:50%}
 .wa-header .wa-actions button:hover{background:var(--glass2)}
 .wa-header .wa-actions button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
 .wa-search{padding:0 12px 10px;background:var(--panelS);flex-shrink:0}
 .wa-search .search-box{background:var(--bg);border-radius:24px;display:flex;align-items:center;padding:0 14px;height:42px;gap:10px}
 body.light .wa-search .search-box{background:#fff}
-.wa-search .search-box svg{width:18px;height:18px;stroke:var(--dim);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wa-search .search-box svg{width:18px;height:18px;stroke:var(--dim);fill:none;stroke-width:2}
 .wa-search .search-box input{flex:1;background:transparent;border:none;color:var(--txt);font-family:inherit;font-size:15px;outline:none}
-
-.wa-chat-list{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:100px;background:var(--bg);-webkit-overflow-scrolling:touch}
+.wa-chat-list{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:100px;background:var(--bg)}
 .wa-chat-list::-webkit-scrollbar{width:4px}
 .wa-chat-list::-webkit-scrollbar-thumb{background:rgba(134,150,160,.25);border-radius:2px}
-.wa-section-title{padding:10px 20px 6px;font-size:13px;color:var(--a1);font-weight:600;display:flex;align-items:center;gap:6px;position:sticky;top:0;background:var(--bg);z-index:5}
-.wa-section-title svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.wa-chat{display:flex;align-items:center;padding:9px 16px;gap:12px;cursor:pointer;transition:.12s;position:relative}
+.wa-section-title{padding:10px 20px 6px;font-size:13px;color:var(--a1);font-weight:600;position:sticky;top:0;background:var(--bg);z-index:5}
+.wa-chat{display:flex;align-items:center;padding:9px 16px;gap:12px;cursor:pointer;transition:.12s}
 .wa-chat:hover{background:var(--glass)}
-.wa-chat:active{background:var(--glass2)}
 .wa-chat .wa-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#6b7c85,#4a5a63);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:21px;color:#fff;flex-shrink:0;position:relative;overflow:hidden}
 .wa-chat .wa-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .wa-chat .wa-avatar .online-dot{position:absolute;bottom:1px;left:1px;width:12px;height:12px;border-radius:50%;background:var(--a1);border:2px solid var(--bg)}
@@ -295,12 +128,9 @@ body.light .wa-search .search-box{background:#fff}
 .wa-chat .wa-preview .read-check{width:16px;height:16px;stroke:var(--a3);fill:none;stroke-width:2.5;flex-shrink:0}
 .wa-chat .wa-badge{background:var(--a1);color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;flex-shrink:0}
 .wa-chat .wa-pin{width:16px;height:16px;stroke:var(--dim);fill:none;stroke-width:2;flex-shrink:0}
-.wa-chat .wa-mute{width:14px;height:14px;stroke:var(--dim);fill:none;stroke-width:2;flex-shrink:0}
-
 .wa-fab{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));right:20px;width:56px;height:56px;border-radius:16px;background:var(--a1);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,168,132,.4);z-index:20}
 .wa-fab:hover{background:var(--a2);transform:scale(1.05)}
 .wa-fab svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-
 .wa-bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--panelS);display:flex;justify-content:space-around;align-items:center;padding:6px 0 max(6px,env(safe-area-inset-bottom));border-top:1px solid var(--brd);z-index:18}
 .wa-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 8px;cursor:pointer;color:var(--dim);transition:.2s;border-radius:10px;min-width:56px;position:relative;flex:1;max-width:100px}
 .wa-nav-item.active{color:var(--a1)}
@@ -313,14 +143,13 @@ body.light .wa-search .search-box{background:#fff}
 .chat-screen{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:30;height:100dvh}
 .chat-screen.active{display:flex}
 body.light .chat-screen{background:#efeae2}
-#chatBg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:.4;pointer-events:none;transition:opacity .4s,background-image .6s;z-index:0}
+#chatBg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:.4;pointer-events:none;transition:opacity .4s;z-index:0}
 #chatBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,20,26,.5) 0%,rgba(11,20,26,.3) 50%,rgba(11,20,26,.6) 100%)}
 body.light #chatBg::after{background:linear-gradient(180deg,rgba(239,234,226,.5) 0%,rgba(239,234,226,.3) 50%,rgba(239,234,226,.6) 100%)}
-
 .chat-header{padding:8px 8px;padding-top:max(8px,env(safe-area-inset-top));background:var(--panelS);display:flex;align-items:center;gap:8px;min-height:60px;position:relative;z-index:2;flex-shrink:0}
 .chat-header .back-btn{background:none;border:none;color:var(--txt);cursor:pointer;padding:6px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .chat-header .back-btn:hover{background:var(--glass2)}
-.chat-header .back-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.chat-header .back-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2}
 .chat-header .chat-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6b7c85,#4a5a63);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:18px;color:#fff;flex-shrink:0;overflow:hidden;cursor:pointer}
 .chat-header .chat-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .chat-header .chat-info{flex:1;min-width:0;cursor:pointer}
@@ -331,12 +160,11 @@ body.light #chatBg::after{background:linear-gradient(180deg,rgba(239,234,226,.5)
 .chat-header .header-actions{display:flex;gap:0;align-items:center;flex-shrink:0}
 .chat-header .header-actions button{background:none;border:none;color:var(--txt);cursor:pointer;padding:8px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .chat-header .header-actions button:hover{background:var(--glass2)}
-.chat-header .header-actions button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.messages{flex:1;overflow-y:auto;padding:14px 4% 8px;display:flex;flex-direction:column;gap:2px;position:relative;z-index:1;-webkit-overflow-scrolling:touch;will-change:transform}
+.chat-header .header-actions button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.messages{flex:1;overflow-y:auto;padding:14px 4% 8px;display:flex;flex-direction:column;gap:2px;position:relative;z-index:1}
 .messages::-webkit-scrollbar{width:5px}
 .messages::-webkit-scrollbar-thumb{background:rgba(134,150,160,.25);border-radius:3px}
-.msg{padding:7px 10px 8px;border-radius:8px;max-width:82%;word-wrap:break-word;font-size:14.5px;line-height:1.45;animation:msgIn .2s ease;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.13);margin-bottom:2px;transition:transform .15s}
+.msg{padding:7px 10px 8px;border-radius:8px;max-width:82%;word-wrap:break-word;font-size:14.5px;line-height:1.45;animation:msgIn .2s ease;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.13);margin-bottom:2px}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .msg.mine{align-self:flex-start;background:var(--bubM);border-top-right-radius:0}
 body.light .msg.mine{color:#111b21}
@@ -360,42 +188,31 @@ body.light .msg .audio-bubble audio{filter:none}
 .msg .reactions{position:absolute;bottom:-10px;right:8px;background:var(--panelS);border:1px solid var(--brd2);border-radius:12px;padding:2px 6px;font-size:13px;display:flex;gap:2px;box-shadow:0 2px 6px rgba(0,0,0,.3);z-index:2;cursor:pointer}
 .msg.theirs .reactions{right:auto;left:8px}
 .msg.pinned-msg{border:1px solid var(--a1)}
-.msg .swipe-reply-icon{position:absolute;top:50%;left:-60px;transform:translateY(-50%);color:var(--a1);opacity:0;transition:opacity .15s;font-size:22px}
-.msg.swiping .swipe-reply-icon{opacity:1}
-
 .reply-bar{display:none;padding:8px 12px;background:var(--panelS);border-top:1px solid var(--brd);align-items:center;gap:10px;flex-shrink:0;position:relative;z-index:2}
 .reply-bar.show{display:flex}
 .reply-bar .reply-content{flex:1;min-width:0;border-right:3px solid var(--a1);padding-right:10px}
 .reply-bar .reply-content strong{font-size:12px;color:var(--a1);font-weight:600;display:block;margin-bottom:2px}
 .reply-bar .reply-content span{font-size:13px;color:var(--dim);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .reply-bar .close-reply{background:none;border:none;color:var(--dim);cursor:pointer;padding:6px;font-size:18px}
-
 .pinned-bar{display:none;padding:8px 12px;background:var(--panelS);border-top:1px solid var(--brd);align-items:center;gap:10px;flex-shrink:0;position:relative;z-index:2}
 .pinned-bar.show{display:flex}
 .pinned-bar .pin-content{flex:1;min-width:0;cursor:pointer}
 .pinned-bar .pin-content strong{font-size:11.5px;color:var(--a1);font-weight:600;display:block;margin-bottom:2px}
 .pinned-bar .pin-content span{font-size:13px;color:var(--dim);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pinned-bar .pin-actions{display:flex;gap:4px}
 .pinned-bar .pin-actions button{background:none;border:none;color:var(--dim);cursor:pointer;padding:6px;font-size:14px}
-
 .msg-search{display:none;padding:8px 12px;background:var(--panelS);border-top:1px solid var(--brd);align-items:center;gap:8px;flex-shrink:0}
 .msg-search.show{display:flex}
 .msg-search input{flex:1;padding:8px 12px;background:var(--bg);border:1px solid var(--brd);border-radius:20px;color:var(--txt);font-family:inherit;font-size:14px;outline:none}
-.msg-search .nav-btns{display:flex;gap:4px}
 .msg-search .nav-btns button{background:none;border:none;color:var(--dim);cursor:pointer;padding:6px;border-radius:50%}
-.msg-search .nav-btns button:hover{background:var(--glass2)}
 .msg.highlight{background:rgba(83,189,235,.25)!important}
-
 .chat-input-bar{padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));background:var(--panelS);display:flex;gap:6px;align-items:flex-end;position:relative;z-index:2;flex-shrink:0}
 .chat-input-bar .input-wrap{flex:1;background:var(--panelS);border-radius:24px;display:flex;align-items:center;padding:0 4px;min-height:44px;border:1px solid var(--brd);overflow:hidden}
 .chat-input-bar .input-wrap input{flex:1;padding:11px 8px;background:transparent;border:none;color:var(--txt);font-family:inherit;font-size:15px;outline:none;min-width:0}
 .chat-input-bar .icon-btn{width:38px;height:38px;border:none;border-radius:50%;background:transparent;color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .chat-input-bar .icon-btn:hover{background:var(--glass2);color:var(--txt)}
-.chat-input-bar .icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chat-input-bar .icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
 .chat-input-bar .send-btn{width:44px;height:44px;border:none;border-radius:50%;background:var(--a1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(0,168,132,.3)}
-.chat-input-bar .send-btn:hover{background:var(--a2)}
 .chat-input-bar .send-btn svg{width:20px;height:20px;fill:currentColor}
-
 .rec-bar{display:none;flex:1;background:var(--panelS);border-radius:24px;align-items:center;padding:0 10px;gap:8px;min-height:44px;border:1px solid var(--brd)}
 .rec-bar.show{display:flex}
 .rec-bar .dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:recPulse 1s infinite;flex-shrink:0}
@@ -406,108 +223,88 @@ body.light .msg .audio-bubble audio{filter:none}
 .call-screen{position:fixed;inset:0;z-index:500;background:#0a0f13;display:none;flex-direction:column;overflow:hidden}
 .call-screen.active{display:flex}
 #remoteVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;z-index:1}
-#localVideo{position:absolute;top:max(60px,env(safe-area-inset-top));right:16px;width:110px;height:150px;object-fit:cover;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:#000;z-index:3;box-shadow:0 6px 20px rgba(0,0,0,.5);cursor:pointer;transition:.3s}
+#localVideo{position:absolute;top:max(60px,env(safe-area-inset-top));right:16px;width:110px;height:150px;object-fit:cover;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:#000;z-index:3;cursor:pointer;transition:.3s}
 #localVideo.hidden{display:none}
-#localVideo.expanded{top:0;right:0;width:100%;height:100%;border-radius:0;border:none;z-index:10}
 .call-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:max(30px,env(safe-area-inset-top)) 20px max(30px,env(safe-area-inset-bottom));z-index:5;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,transparent 30%,transparent 70%,rgba(0,0,0,.7) 100%);pointer-events:none}
 .call-overlay>*{pointer-events:auto}
 .call-top{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;color:#fff}
-.call-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#6b7c85,#4a5a63);display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.5);border:3px solid rgba(255,255,255,.15)}
+.call-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#6b7c85,#4a5a63);display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;overflow:hidden;border:3px solid rgba(255,255,255,.15)}
 .call-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.call-name{font-size:24px;font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.call-status{font-size:14px;color:rgba(255,255,255,.8);font-weight:500;letter-spacing:.5px}
-.call-status.connecting::after{content:'';display:inline-block;width:4px;height:4px;background:#fff;border-radius:50%;margin-right:6px;animation:blink 1.4s infinite}
-@keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
+.call-name{font-size:24px;font-weight:600;color:#fff}
+.call-status{font-size:14px;color:rgba(255,255,255,.8);font-weight:500}
 .call-top.video-mode .call-avatar,.call-top.video-mode .call-name{display:none}
-.call-top.video-mode{flex-direction:row;justify-content:flex-start;background:rgba(0,0,0,.5);padding:12px 18px;border-radius:30px;backdrop-filter:blur(20px);margin:0 auto;width:fit-content;align-self:flex-start}
-.call-top.video-mode .call-status{font-size:15px;color:#fff}
+.call-top.video-mode{flex-direction:row;background:rgba(0,0,0,.5);padding:12px 18px;border-radius:30px;backdrop-filter:blur(20px);margin:0 auto;width:fit-content;align-self:flex-start}
 .call-controls{display:flex;justify-content:center;align-items:center;gap:16px;padding:20px 0}
 .call-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(20px);transition:.2s;border:1px solid rgba(255,255,255,.1)}
 .call-btn:hover{background:rgba(255,255,255,.25);transform:scale(1.05)}
-.call-btn:active{transform:scale(.95)}
 .call-btn.active{background:#fff;color:#0a0f13}
-.call-btn svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call-btn.end{background:#f15c6d;width:70px;height:70px;box-shadow:0 6px 20px rgba(241,92,109,.4)}
-.call-btn.end:hover{background:#e04e5e}
+.call-btn svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2}
+.call-btn.end{background:#f15c6d;width:70px;height:70px}
 .call-btn.end svg{width:28px;height:28px}
 
-.incoming-call{position:fixed;inset:0;z-index:600;background:linear-gradient(160deg,#0b141a 0%,#0a1f1a 100%);display:none;flex-direction:column;justify-content:space-between;padding:max(60px,env(safe-area-inset-top)) 24px max(60px,env(safe-area-inset-bottom));animation:fadeIn .3s}
+.incoming-call{position:fixed;inset:0;z-index:600;background:linear-gradient(160deg,#0b141a 0%,#0a1f1a 100%);display:none;flex-direction:column;justify-content:space-between;padding:max(60px,env(safe-area-inset-top)) 24px max(60px,env(safe-area-inset-bottom))}
 .incoming-call.active{display:flex}
 .incoming-call .info{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;color:#fff}
-.incoming-call .pulse-ring{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));display:flex;align-items:center;justify-content:center;font-size:56px;color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(0,168,132,.5);animation:ringPulse 2s infinite}
-.incoming-call .pulse-ring img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,168,132,.5),0 10px 40px rgba(0,168,132,.4)}50%{box-shadow:0 0 0 30px rgba(0,168,132,0),0 10px 40px rgba(0,168,132,.4)}}
+.incoming-call .pulse-ring{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));display:flex;align-items:center;justify-content:center;font-size:56px;color:#fff;position:relative;overflow:hidden;animation:ringPulse 2s infinite}
+@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,168,132,.5)}50%{box-shadow:0 0 0 30px rgba(0,168,132,0)}}
 .incoming-call .name{font-size:26px;font-weight:600;margin-top:8px}
 .incoming-call .type{font-size:15px;color:rgba(255,255,255,.7)}
 .incoming-call .controls{display:flex;justify-content:space-around;align-items:center;gap:40px}
 .incoming-call .ctrl{display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff}
-.incoming-call .ctrl button{width:70px;height:70px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
-.incoming-call .ctrl button:hover{transform:scale(1.05)}
-.incoming-call .ctrl button:active{transform:scale(.95)}
-.incoming-call .ctrl button svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.incoming-call .ctrl.accept button{background:var(--a1);color:#fff;box-shadow:0 6px 20px rgba(0,168,132,.5);animation:acceptPulse 1.5s infinite}
-@keyframes acceptPulse{0%,100%{box-shadow:0 6px 20px rgba(0,168,132,.5)}50%{box-shadow:0 6px 30px rgba(0,168,132,.8)}}
-.incoming-call .ctrl.reject button{background:#f15c6d;color:#fff;box-shadow:0 6px 20px rgba(241,92,109,.5)}
+.incoming-call .ctrl button{width:70px;height:70px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.incoming-call .ctrl button svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2}
+.incoming-call .ctrl.accept button{background:var(--a1);color:#fff}
+.incoming-call .ctrl.reject button{background:#f15c6d;color:#fff}
 .incoming-call .ctrl span{font-size:13px;font-weight:500}
 
-.modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;animation:fadeIn .2s;overflow-y:auto}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
 .modal.show{display:flex}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.mc{background:var(--panelS);border:1px solid var(--brd2);border-radius:12px;padding:22px;max-width:420px;width:100%;max-height:90dvh;overflow-y:auto;animation:cardIn .25s ease;box-shadow:var(--shadow)}
-@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.mc{background:var(--panelS);border:1px solid var(--brd2);border-radius:12px;padding:22px;max-width:420px;width:100%;max-height:90dvh;overflow-y:auto;box-shadow:var(--shadow)}
 .mc h2{font-size:18px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .mc h2 .ico{width:32px;height:32px;border-radius:50%;background:var(--a1);display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;flex-shrink:0}
 .mc p{color:var(--dim);font-size:13.5px;margin-bottom:14px;line-height:1.6}
 .mc label{display:block;color:var(--dim);font-size:11.5px;margin-bottom:6px;font-weight:600;text-transform:uppercase}
 .mc input,.mc select{width:100%;padding:11px 14px;background:var(--glass);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:inherit;font-size:14px;margin-bottom:12px}
-.mc input:focus,.mc select:focus{outline:none;border-color:var(--a1)}
+.mc input:focus{outline:none;border-color:var(--a1)}
 .ma{display:flex;gap:8px;margin-top:6px}
 .ma button{flex:1;padding:12px;border-radius:8px;border:none;font-family:inherit;font-weight:600;cursor:pointer;font-size:14px}
 .bc{background:var(--glass);color:var(--txt);border:1px solid var(--brd)}
-.bc:hover{background:var(--glass2)}
 .bk{background:var(--a1);color:#fff}
-.bk:hover{background:var(--a2)}
 
 .cm{position:fixed;z-index:250;background:var(--panelS);border:1px solid var(--brd2);border-radius:8px;padding:5px;display:none;box-shadow:0 10px 30px rgba(0,0,0,.5);min-width:200px;max-width:280px}
 .cm.show{display:block}
 .cm button{display:flex;width:100%;padding:11px 14px;background:none;border:none;color:var(--txt);text-align:right;font-family:inherit;font-size:14px;cursor:pointer;border-radius:6px;font-weight:500;align-items:center;gap:12px}
 .cm button:hover{background:var(--glass2)}
 .cm button.danger{color:var(--red)}
-.cm button.danger:hover{background:rgba(241,92,109,.1)}
-.cm button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.cm button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
 
 .reaction-picker{position:fixed;z-index:260;background:var(--panelS);border:1px solid var(--brd2);border-radius:30px;padding:6px 8px;display:none;box-shadow:0 10px 30px rgba(0,0,0,.5);gap:4px}
 .reaction-picker.show{display:flex}
-.reaction-picker button{background:none;border:none;font-size:22px;cursor:pointer;padding:4px 6px;border-radius:50%;transition:.15s}
-.reaction-picker button:hover{background:var(--glass2);transform:scale(1.2)}
+.reaction-picker button{background:none;border:none;font-size:22px;cursor:pointer;padding:4px 6px;border-radius:50%}
 
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--panelS);color:var(--txt);padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;border:1px solid var(--brd2);box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transition:all .3s ease;z-index:400;max-width:90vw;text-align:center}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--panelS);color:var(--txt);padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;border:1px solid var(--brd2);box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transition:all .3s;z-index:400;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
 .upload-progress{display:none;align-items:center;gap:10px;padding:8px 16px;background:var(--panelS);border-top:1px solid var(--brd);font-size:12.5px}
 .upload-progress.show{display:flex}
 .upload-progress .bar{flex:1;height:4px;background:var(--glass2);border-radius:2px;overflow:hidden}
 .upload-progress .bar-fill{height:100%;background:var(--a1);width:0%;transition:width .2s}
 .upload-progress .pct{font-family:monospace;font-size:11px;color:var(--dim);min-width:36px;text-align:left}
-
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--dim);padding:40px;text-align:center}
 .empty-state .icon{font-size:64px;opacity:.2}
 .empty-state h3{font-size:20px;color:var(--txt);font-weight:500}
 .empty-state p{font-size:13.5px;max-width:340px;line-height:1.6}
-
 .profile-avatar-preview{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:42px;cursor:pointer;position:relative;overflow:hidden;border:3px solid var(--a1)}
 .profile-avatar-preview img{width:100%;height:100%;object-fit:cover}
 .profile-avatar-preview .edit-overlay{position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--a1);color:#fff;display:flex;align-items:center;justify-content:center;border:3px solid var(--panelS);font-size:14px}
 
 .bg-picker-screen{position:fixed;inset:0;z-index:450;background:var(--bg);display:none;flex-direction:column;height:100dvh}
 .bg-picker-screen.active{display:flex}
-.bg-picker-header{padding:14px 16px;padding-top:max(14px,env(safe-area-inset-top));background:var(--panelS);display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--brd);flex-shrink:0}
+.bg-picker-header{padding:14px 16px;padding-top:max(14px,env(safe-area-inset-top));background:var(--panelS);display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--brd)}
 .bg-picker-header .back{background:none;border:none;color:var(--txt);cursor:pointer;padding:6px;border-radius:50%}
 .bg-picker-header .title{font-size:17px;font-weight:600;flex:1}
 .bg-picker-content{flex:1;overflow-y:auto;padding:16px 12px 100px}
 .bg-picker-section-title{font-size:13px;color:var(--dim);font-weight:600;margin:8px 8px 12px;text-transform:uppercase}
 .bg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
-@media(min-width:500px){.bg-grid{grid-template-columns:repeat(4,1fr)}}
 .bg-option{aspect-ratio:9/16;border-radius:12px;background-size:cover;background-position:center;cursor:pointer;border:3px solid transparent;transition:.2s;position:relative;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.3)}
 .bg-option.selected{border-color:var(--a1);box-shadow:0 0 0 3px rgba(0,168,132,.3)}
 .bg-option.selected::after{content:'✓';position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:var(--a1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700}
@@ -536,14 +333,11 @@ body.light .msg .audio-bubble audio{filter:none}
 .status-item .info{flex:1;min-width:0}
 .status-item .name{font-weight:500;font-size:15px;margin-bottom:2px}
 .status-item .time{font-size:12px;color:var(--dim)}
-.status-item .count{font-size:12px;color:var(--a1);background:rgba(0,168,132,.15);padding:2px 8px;border-radius:10px}
-
 .status-viewer{position:fixed;inset:0;z-index:500;background:#000;display:none;flex-direction:column}
 .status-viewer.active{display:flex}
 .status-viewer .progress-bars{display:flex;gap:3px;padding:12px 12px 0;padding-top:max(12px,env(safe-area-inset-top));position:absolute;top:0;left:0;right:0;z-index:2}
 .status-viewer .progress-bars .bar{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:2px;overflow:hidden}
-.status-viewer .progress-bars .bar .fill{height:100%;background:#fff;width:0%;transition:width .1s linear}
-.status-viewer .bar .fill.done{width:100%}
+.status-viewer .progress-bars .bar .fill{height:100%;background:#fff;width:0%}
 .status-viewer .bar .fill.active{animation:statusProgress 5s linear forwards}
 @keyframes statusProgress{from{width:0%}to{width:100%}}
 .status-viewer .header{position:absolute;top:max(30px,env(safe-area-inset-top));left:0;right:0;padding:12px 16px;display:flex;align-items:center;gap:12px;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,transparent 100%)}
@@ -553,19 +347,17 @@ body.light .msg .audio-bubble audio{filter:none}
 .status-viewer .header .info .name{font-size:15px;font-weight:600}
 .status-viewer .header .info .time{font-size:12px;opacity:.8}
 .status-viewer .header .close{background:rgba(0,0,0,.4);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px}
-.status-viewer .content{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
-.status-viewer .content img,.status-viewer .content video{max-width:100%;max-height:100%;object-fit:contain}
+.status-viewer .content{flex:1;display:flex;align-items:center;justify-content:center}
+.status-viewer .content img{max-width:100%;max-height:100%;object-fit:contain}
 .status-viewer .content .text-status{color:#fff;font-size:28px;text-align:center;padding:40px;font-weight:500;line-height:1.5}
 .status-viewer .nav{position:absolute;top:0;bottom:0;width:30%;cursor:pointer;z-index:1}
 .status-viewer .nav.prev{left:0}
 .status-viewer .nav.next{right:0}
 .status-viewer .footer{position:absolute;bottom:max(20px,env(safe-area-inset-bottom));left:0;right:0;padding:12px 16px;display:flex;gap:8px;z-index:2}
-.status-viewer .footer input{flex:1;padding:10px 16px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;color:#fff;font-family:inherit;font-size:14px;outline:none;backdrop-filter:blur(20px)}
-.status-viewer .footer input::placeholder{color:rgba(255,255,255,.6)}
+.status-viewer .footer input{flex:1;padding:10px 16px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;color:#fff;font-family:inherit;font-size:14px;outline:none}
 
 .member-list{max-height:200px;overflow-y:auto;margin-bottom:12px;border:1px solid var(--brd);border-radius:8px;padding:6px}
 .member-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:6px;cursor:pointer}
-.member-item:hover{background:var(--glass2)}
 .member-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--a1)}
 .member-item .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6b7c85,#4a5a63);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;overflow:hidden;flex-shrink:0}
 .member-item .avatar img{width:100%;height:100%;object-fit:cover}
@@ -577,10 +369,9 @@ body.light .msg .audio-bubble audio{filter:none}
   .setup-card{padding:20px 18px}
   .avatar-preview-big{width:90px;height:90px;font-size:46px}
   .avatar-upload-btn{right:calc(50% - 45px + 5px)}
-  .emoji-grid{grid-template-columns:repeat(8,1fr);gap:4px}
+  .emoji-grid{gap:4px}
   .emoji-opt{font-size:16px}
 }
-@media(max-height:600px){.wa-header{padding:8px 12px}.wa-chat .wa-avatar{width:44px;height:44px;font-size:19px}.messages{padding:10px 3%}}
 @media(min-width:600px){
   #app{max-width:480px;margin:0 auto;box-shadow:0 0 40px rgba(0,0,0,.5)}
   .wa-fab{right:calc(50% - 240px + 20px)}
@@ -594,7 +385,13 @@ body.light .msg .audio-bubble audio{filter:none}
 </head>
 <body>
 
-<!-- ==================== شاشة الدخول الجديدة ==================== -->
+<!-- شريط التشخيص -->
+<div class="diag-bar" id="diagBar">
+  <span id="diagText">جارٍ اختبار الاتصال بـ Firebase...</span>
+  <button onclick="document.getElementById('diagBar').classList.remove('show')">✕</button>
+</div>
+
+<!-- شاشة الدخول -->
 <div id="setup" class="screen active">
   <div class="setup-wrap">
     <div class="setup-hero">
@@ -604,13 +401,11 @@ body.light .msg .audio-bubble audio{filter:none}
     </div>
 
     <div class="setup-card">
-      <!-- الخطوة 1: الصورة الرمزية -->
       <div class="setup-step">
         <div class="step-num">1</div>
         <div class="step-label">اختر صورتك الرمزية</div>
         <div class="step-hint">أو ارفع صورة</div>
       </div>
-
       <div class="avatar-preview-wrap">
         <div class="avatar-preview-big" id="avatarPreviewBig">😎</div>
         <label class="avatar-upload-btn" for="setupAvatarInput">
@@ -618,7 +413,6 @@ body.light .msg .audio-bubble audio{filter:none}
         </label>
         <input type="file" id="setupAvatarInput" accept="image/*" style="display:none">
       </div>
-
       <div class="emoji-grid" id="avatarPicker">
         <div class="emoji-opt sel" onclick="pickAvatar(this,'😎')">😎</div>
         <div class="emoji-opt" onclick="pickAvatar(this,'🦊')">🦊</div>
@@ -638,37 +432,25 @@ body.light .msg .audio-bubble audio{filter:none}
         <div class="emoji-opt" onclick="pickAvatar(this,'💎')">💎</div>
       </div>
 
-      <!-- الخطوة 2: الاسم -->
       <div class="setup-step">
         <div class="step-num">2</div>
         <div class="step-label">ما اسمك؟</div>
         <div class="step-hint">سيظهر للآخرين</div>
       </div>
-
       <div class="name-input-wrap">
-        <input 
-          id="nameInput" 
-          class="name-input" 
-          placeholder="اكتب اسمك هنا..." 
-          maxlength="30" 
-          autocomplete="off"
-          oninput="onNameInput(this)"
-        >
+        <input id="nameInput" class="name-input" placeholder="اكتب اسمك هنا..." maxlength="30" autocomplete="off" oninput="onNameInput(this)">
         <span class="name-counter" id="nameCounter">0/30</span>
       </div>
       <div class="name-error" id="nameError">
-        <span>⚠️</span>
-        <span id="nameErrorText">الاسم قصير جداً</span>
+        <span>⚠️</span><span id="nameErrorText">الاسم قصير جداً</span>
       </div>
-
       <button class="btn-start" id="btnStart" onclick="saveName()" disabled>
         <span id="btnStartText">ابدأ الآن</span>
-        <svg id="btnStartIcon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
-
       <div class="setup-progress" id="setupProgress">
         <div class="bar"><div class="fill" id="setupProgressFill"></div></div>
-        <div class="text" id="setupProgressText">جارٍ تجهيز حسابك...</div>
+        <div class="text" id="setupProgressText">جارٍ التجهيز...</div>
       </div>
     </div>
 
@@ -680,54 +462,38 @@ body.light .msg .audio-bubble audio{filter:none}
   </div>
 </div>
 
-<!-- التطبيق الرئيسي -->
+<!-- التطبيق -->
 <div id="app" class="screen">
   <div class="wa-header">
     <div class="wa-logo">Nexus</div>
     <div class="wa-actions">
-      <button onclick="openMainMenu(event)" title="القائمة">
-        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
-      </button>
+      <button onclick="openMainMenu(event)"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
     </div>
   </div>
-
   <div class="wa-search">
     <div class="search-box">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="searchInput" placeholder="بحث..." oninput="renderChats(this.value)">
     </div>
   </div>
-
   <div class="wa-chat-list" id="chatList"></div>
-
-  <button class="wa-fab" onclick="openNewChat()">
-    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-  </button>
-
+  <button class="wa-fab" onclick="openNewChat()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   <nav class="wa-bottom-nav">
     <div class="wa-nav-item active" onclick="switchNav('chats',this)">
-      <div class="nav-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-      </div>
+      <div class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
       <div class="nav-label">الدردشات</div>
       <span class="nav-badge" id="navChatsBadge" style="display:none">0</span>
     </div>
     <div class="wa-nav-item" onclick="switchNav('status',this)">
-      <div class="nav-icon-wrap">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
+      <div class="nav-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
       <div class="nav-label">الحالة</div>
     </div>
     <div class="wa-nav-item" onclick="switchNav('calls',this)">
-      <div class="nav-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </div>
+      <div class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
       <div class="nav-label">المكالمات</div>
     </div>
     <div class="wa-nav-item" onclick="switchNav('settings',this)">
-      <div class="nav-icon-wrap">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </div>
+      <div class="nav-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
       <div class="nav-label">الإعدادات</div>
     </div>
   </nav>
@@ -737,94 +503,59 @@ body.light .msg .audio-bubble audio{filter:none}
 <div id="chatScreen" class="chat-screen">
   <div id="chatBg"></div>
   <div class="chat-header">
-    <button class="back-btn" onclick="closeChat()">
-      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <button class="back-btn" onclick="closeChat()"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
     <div class="chat-avatar" id="chatAvatar" onclick="openPeerProfile()"></div>
     <div class="chat-info" onclick="openPeerProfile()">
       <div class="chat-name" id="chatName">-</div>
       <div class="chat-status" id="chatStatus"></div>
     </div>
     <div class="header-actions">
-      <button onclick="startCall('video')" title="مكالمة فيديو">
-        <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-      </button>
-      <button onclick="startCall('voice')" title="مكالمة صوتية">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </button>
-      <button onclick="toggleMsgSearch()" title="بحث">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </button>
-      <button onclick="openPeerMenu(event)" title="خيارات">
-        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
-      </button>
+      <button onclick="startCall('video')"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+      <button onclick="startCall('voice')"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+      <button onclick="toggleMsgSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button onclick="openPeerMenu(event)"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
     </div>
   </div>
-
   <div class="pinned-bar" id="pinnedBar">
-    <div class="pin-content" onclick="scrollToPinned()">
-      <strong>📌 رسالة مثبتة</strong>
-      <span id="pinnedText">-</span>
-    </div>
-    <div class="pin-actions">
-      <button onclick="unpinMessage()" title="إلغاء التثبيت">✕</button>
-    </div>
+    <div class="pin-content" onclick="scrollToPinned()"><strong>📌 رسالة مثبتة</strong><span id="pinnedText">-</span></div>
+    <div class="pin-actions"><button onclick="unpinMessage()">✕</button></div>
   </div>
-
   <div class="msg-search" id="msgSearch">
-    <input id="msgSearchInput" placeholder="ابحث في الرسائل..." oninput="searchInMessages(this.value)">
+    <input id="msgSearchInput" placeholder="ابحث..." oninput="searchInMessages(this.value)">
     <div class="nav-btns">
       <button onclick="navSearch(-1)">▲</button>
       <button onclick="navSearch(1)">▼</button>
       <button onclick="toggleMsgSearch()">✕</button>
     </div>
   </div>
-
   <div class="messages" id="messages"></div>
-
   <div class="upload-progress" id="uploadProgress">
     <span>📤</span>
     <div class="bar"><div class="bar-fill" id="uploadBar"></div></div>
     <span class="pct" id="uploadPct">0%</span>
   </div>
-
   <div class="reply-bar" id="replyBar">
-    <div class="reply-content">
-      <strong id="replyName">-</strong>
-      <span id="replyText">-</span>
-    </div>
+    <div class="reply-content"><strong id="replyName">-</strong><span id="replyText">-</span></div>
     <button class="close-reply" onclick="cancelReply()">✕</button>
   </div>
-
   <form class="chat-input-bar" onsubmit="sendMessage(event)">
     <div class="input-wrap" id="inputWrap">
-      <button type="button" class="icon-btn" onclick="pickImage()">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      </button>
-      <button type="button" class="icon-btn" onclick="pickFile()">
-        <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-      </button>
+      <button type="button" class="icon-btn" onclick="pickImage()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></button>
+      <button type="button" class="icon-btn" onclick="pickFile()"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
       <input id="textInput" placeholder="رسالة" autocomplete="off">
     </div>
-    <button type="button" class="icon-btn" id="micBtn" onclick="startRecording()">
-      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-    </button>
-    <button type="submit" class="send-btn" id="sendBtn">
-      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-    </button>
+    <button type="button" class="icon-btn" id="micBtn" onclick="startRecording()"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
+    <button type="submit" class="send-btn" id="sendBtn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
   </form>
-
   <div class="rec-bar" id="recBar">
     <span class="dot"></span>
     <span class="timer" id="recTimer">0:00</span>
     <button type="button" class="cancel" onclick="cancelRecording()">إلغاء</button>
-    <button type="button" class="send-btn" onclick="sendRecording()" style="width:36px;height:36px">
-      <svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-    </button>
+    <button type="button" class="send-btn" onclick="sendRecording()" style="width:36px;height:36px"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
   </div>
 </div>
 
-<!-- Call screen -->
+<!-- Call Screen -->
 <div id="callScreen" class="call-screen">
   <video id="remoteVideo" autoplay playsinline></video>
   <video id="localVideo" autoplay playsinline muted onclick="toggleLocalFullscreen()"></video>
@@ -832,26 +563,18 @@ body.light .msg .audio-bubble audio{filter:none}
     <div class="call-top" id="callTopInfo">
       <div class="call-avatar" id="callAvatar">📞</div>
       <div class="call-name" id="callName">-</div>
-      <div class="call-status connecting" id="callStatus">جارٍ الاتصال...</div>
+      <div class="call-status" id="callStatus">جارٍ الاتصال...</div>
     </div>
     <div class="call-controls">
-      <button class="call-btn" id="btnMute" onclick="toggleMute()" title="كتم">
-        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-      </button>
-      <button class="call-btn" id="btnVideo" onclick="toggleVideo()" title="فيديو">
-        <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-      </button>
-      <button class="call-btn" id="btnSwitch" onclick="switchCamera()" title="تبديل">
-        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-      </button>
-      <button class="call-btn end" onclick="endCall()">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/></svg>
-      </button>
+      <button class="call-btn" id="btnMute" onclick="toggleMute()"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
+      <button class="call-btn" id="btnVideo" onclick="toggleVideo()"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+      <button class="call-btn" id="btnSwitch" onclick="switchCamera()"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+      <button class="call-btn end" onclick="endCall()"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/></svg></button>
     </div>
   </div>
 </div>
 
-<!-- Incoming call -->
+<!-- Incoming Call -->
 <div id="incomingCall" class="incoming-call">
   <div class="info">
     <div class="pulse-ring" id="incomingAvatar">📞</div>
@@ -860,15 +583,11 @@ body.light .msg .audio-bubble audio{filter:none}
   </div>
   <div class="controls">
     <div class="ctrl reject">
-      <button onclick="rejectCall()">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/></svg>
-      </button>
+      <button onclick="rejectCall()"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/></svg></button>
       <span>رفض</span>
     </div>
     <div class="ctrl accept">
-      <button onclick="acceptCall()">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </button>
+      <button onclick="acceptCall()"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
       <span>قبول</span>
     </div>
   </div>
@@ -877,9 +596,7 @@ body.light .msg .audio-bubble audio{filter:none}
 <!-- Status -->
 <div id="statusScreen" class="status-screen">
   <div class="status-header">
-    <button class="back" onclick="closeStatusScreen()">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <button class="back" onclick="closeStatusScreen()"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg></button>
     <div class="title">الحالة</div>
     <button class="add" onclick="openStatusComposer()">+</button>
   </div>
@@ -890,10 +607,7 @@ body.light .msg .audio-bubble audio{filter:none}
   <div class="progress-bars" id="statusProgressBars"></div>
   <div class="header">
     <div class="avatar" id="svAvatar"></div>
-    <div class="info">
-      <div class="name" id="svName">-</div>
-      <div class="time" id="svTime">-</div>
-    </div>
+    <div class="info"><div class="name" id="svName">-</div><div class="time" id="svTime">-</div></div>
     <button class="close" onclick="closeStatusViewer()">✕</button>
   </div>
   <div class="content" id="svContent"></div>
@@ -901,18 +615,14 @@ body.light .msg .audio-bubble audio{filter:none}
   <div class="nav next" onclick="nextStatus()"></div>
   <div class="footer">
     <input id="svReplyInput" placeholder="رد على الحالة...">
-    <button class="send-btn" onclick="sendStatusReply()" style="width:38px;height:38px">
-      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-    </button>
+    <button class="send-btn" onclick="sendStatusReply()" style="width:38px;height:38px"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
   </div>
 </div>
 
 <!-- BG Picker -->
 <div id="bgPickerScreen" class="bg-picker-screen">
   <div class="bg-picker-header">
-    <button class="back" onclick="closeBgPicker()">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <button class="back" onclick="closeBgPicker()"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg></button>
     <div class="title">خلفية المحادثة</div>
   </div>
   <div class="bg-picker-content">
@@ -920,13 +630,8 @@ body.light .msg .audio-bubble audio{filter:none}
     <div class="bg-grid" id="bgGrid"></div>
     <div class="bg-picker-section-title">صورة خاصة</div>
     <div class="upload-bg-card" onclick="pickBgImage()">
-      <div class="icon">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      </div>
-      <div class="text">
-        <strong>رفع صورة من الجهاز</strong>
-        <small>اختر صورة من معرضك</small>
-      </div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div class="text"><strong>رفع صورة من الجهاز</strong><small>اختر صورة من معرضك</small></div>
     </div>
   </div>
   <div class="bg-actions-bottom">
@@ -939,12 +644,9 @@ body.light .msg .audio-bubble audio{filter:none}
 <div class="modal" id="newChatModal">
   <div class="mc">
     <h2><span class="ico">✚</span> محادثة جديدة</h2>
-    <p>الصق معرّف الشخص الذي تريد محادثته</p>
+    <p>الصق معرّف الشخص</p>
     <input id="peerIdInput" placeholder="XXXXXX" maxlength="10" style="text-align:center;font-family:monospace;letter-spacing:5px;text-transform:uppercase;font-size:16px;">
-    <div class="ma">
-      <button class="bc" onclick="closeModal('newChatModal')">إلغاء</button>
-      <button class="bk" onclick="startChatWithPeer()">ابدأ</button>
-    </div>
+    <div class="ma"><button class="bc" onclick="closeModal('newChatModal')">إلغاء</button><button class="bk" onclick="startChatWithPeer()">ابدأ</button></div>
   </div>
 </div>
 
@@ -955,10 +657,7 @@ body.light .msg .audio-bubble audio{filter:none}
     <input id="groupNameInput" placeholder="اسم المجموعة..." maxlength="40">
     <label>الأعضاء</label>
     <div class="member-list" id="groupMemberList"></div>
-    <div class="ma">
-      <button class="bc" onclick="closeModal('newGroupModal')">إلغاء</button>
-      <button class="bk" onclick="createGroup()">إنشاء</button>
-    </div>
+    <div class="ma"><button class="bc" onclick="closeModal('newGroupModal')">إلغاء</button><button class="bk" onclick="createGroup()">إنشاء</button></div>
   </div>
 </div>
 
@@ -967,12 +666,10 @@ body.light .msg .audio-bubble audio{filter:none}
     <h2><span class="ico">👤</span> الملف الشخصي</h2>
     <div class="profile-avatar-preview" id="profileAvatarPreview" onclick="pickProfileImage()">
       <span id="profileAvatarContent">😎</span>
-      <div class="edit-overlay">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      </div>
+      <div class="edit-overlay"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
     </div>
     <label>اختر إيموجي</label>
-    <div class="emoji-picker-row" id="profileAvatarPicker" style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:16px"></div>
+    <div id="profileAvatarPicker" style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:16px"></div>
     <label>الاسم</label>
     <input id="profileName" maxlength="30">
     <label>معرّفك (ID)</label>
@@ -981,10 +678,7 @@ body.light .msg .audio-bubble audio{filter:none}
       <input type="checkbox" id="autoThemeCheck" style="width:auto;margin:0;" onchange="toggleAutoTheme(this.checked)">
       <span>الوضع الليلي التلقائي</span>
     </label>
-    <div class="ma">
-      <button class="bc" onclick="closeModal('profileModal')">إلغاء</button>
-      <button class="bk" onclick="saveProfile()">حفظ</button>
-    </div>
+    <div class="ma"><button class="bc" onclick="closeModal('profileModal')">إلغاء</button><button class="bk" onclick="saveProfile()">حفظ</button></div>
   </div>
 </div>
 
@@ -1013,20 +707,35 @@ body.light .msg .audio-bubble audio{filter:none}
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
   getDatabase, ref, push, onChildAdded, onValue, get, set, remove, update,
-  query, orderByChild, limitToLast, onDisconnect, enableIndexedDbPersistence, onChildChanged, onChildRemoved
+  query, orderByChild, limitToLast, onDisconnect, onChildChanged, onChildRemoved
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-// ==================== Firebase ====================
-const firebaseConfig = { databaseURL: "https://deepseek-a7c50-default-rtdb.firebaseio.com/" };
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-enableIndexedDbPersistence(db).catch(()=>{});
+// ============================================================
+// Firebase Configuration
+// ============================================================
+const firebaseConfig = {
+  databaseURL: "https://deepseek-a7c50-default-rtdb.firebaseio.com/"
+};
 
-// ==================== APIs ====================
+let app, db;
+try {
+  app = initializeApp(firebaseConfig);
+  db = getDatabase(app);
+  console.log('✅ Firebase initialized');
+} catch(e) {
+  console.error('❌ Firebase init failed:', e);
+  alert('فشل تهيئة Firebase: ' + e.message);
+}
+
+// ============================================================
+// APIs
+// ============================================================
 const IMGBB_API_KEY = 'c282c73f9ede0238bca640b4296be69a';
 const CATBOX_API = 'https://catbox.moe/user/api.php';
 
-// ==================== TURN ====================
+// ============================================================
+// TURN Servers
+// ============================================================
 const ICE_SERVERS = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' },
@@ -1039,13 +748,15 @@ const ICE_SERVERS = {
   bundlePolicy: 'max-bundle'
 };
 
-// ==================== State ====================
+// ============================================================
+// State
+// ============================================================
 let me = null, peerId = null, peerData = null, chats = {};
 let unsubMessages, unsubPresence, unsubTyping, unsubChats, unsubPinned, unsubReactions;
 let typingTimeout = null;
 let selectedAvatar = '😎';
 let selectedAvatarImage = null;
-let blocked = [], mutedChats = [], archivedChats = [];
+let blocked = [], mutedChats = [];
 let mediaRecorder = null, audioChunks = [];
 let recording = false, recTimer = null, recSeconds = 0;
 let tempProfileAvatar = null;
@@ -1068,7 +779,6 @@ let isMuted = false, isVideoOff = false, isFrontCamera = true;
 let ringInterval = null, ringVibrate = null;
 let audioCtx = null;
 let iceRestarting = false;
-let statsInterval = null;
 
 const EMOJIS = ['😀','😁','😂','🤣','😊','😍','😎','🤔','😴','😭','😡','🥳','👍','👎','👏','🙏','💪','✌️','🤝','❤️','💔','🔥','⭐','✨','🎉','🎁','🚀','⚡','💡','🍕','☕','🌙','☀️','🌈','🎵','⚽','🏆','💯','✅','❌'];
 
@@ -1087,31 +797,79 @@ function fmtTime(ts){
   if(diff<604800) return d.toLocaleDateString('ar-EG',{weekday:'long'});
   return d.toLocaleDateString('ar-EG',{month:'short',day:'numeric'});
 }
-function fmtDur(seconds){
-  const m=Math.floor(seconds/60), s=seconds%60;
-  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
+function fmtDur(s){ const m=Math.floor(s/60), x=s%60; return `${String(m).padStart(2,'0')}:${String(x).padStart(2,'0')}`; }
 function toast(msg){
   const t = $('toast');
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(t._t);
-  t._t = setTimeout(()=>t.classList.remove('show'), 2400);
+  t._t = setTimeout(()=>t.classList.remove('show'), 2800);
 }
-function scrollBottom(){
-  const m = $('messages');
-  if(m) setTimeout(()=>m.scrollTop = m.scrollHeight, 50);
-}
+function scrollBottom(){ const m = $('messages'); if(m) setTimeout(()=>m.scrollTop = m.scrollHeight, 50); }
 function fileToBase64(file){
-  return new Promise((resolve, reject)=>{
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+  return new Promise((res, rej)=>{
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
   });
 }
 
-// ==================== Upload (ImgBB + Catbox) ====================
+// ============================================================
+// Diagnostic
+// ============================================================
+async function runDiagnostics(){
+  const bar = $('diagBar');
+  const txt = $('diagText');
+  bar.classList.add('show');
+  bar.classList.remove('ok');
+
+  // 1. فحص Firebase
+  txt.textContent = '🔍 اختبار Firebase...';
+  try {
+    const testRef = ref(db, '_diag/' + Date.now());
+    await set(testRef, { ok: true, t: Date.now() });
+    await remove(testRef);
+    console.log('✅ Firebase write OK');
+  } catch(err) {
+    console.error('❌ Firebase write FAILED:', err);
+    bar.classList.add('show');
+    bar.classList.remove('ok');
+    txt.textContent = '❌ Firebase فشل — ' + (err.message || err.code || 'unknown') + ' — افتح Console (F12)';
+    return false;
+  }
+
+  // 2. فحص ImgBB
+  txt.textContent = '🖼️ اختبار ImgBB...';
+  try {
+    const testBlob = await (await fetch('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==')).blob();
+    const fd = new FormData();
+    fd.append('image', testBlob, 'test.png');
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.success) {
+      console.log('✅ ImgBB OK:', data.data.url);
+    } else {
+      console.warn('⚠️ ImgBB returned non-success:', data);
+      bar.classList.remove('ok');
+      txt.textContent = '⚠️ ImgBB فشل — تحقق من مفتاح API';
+    }
+  } catch(err) {
+    console.warn('⚠️ ImgBB error:', err);
+  }
+
+  bar.classList.add('ok');
+  bar.classList.remove('show');
+  txt.textContent = '✅ كل شيء يعمل!';
+  bar.classList.add('show');
+  setTimeout(()=>bar.classList.remove('show'), 2500);
+  console.log('✅ Diagnostics passed');
+  return true;
+}
+
+// ============================================================
+// Upload functions
+// ============================================================
 async function uploadImageToImgBB(file, onProgress){
   const formData = new FormData();
   formData.append('image', file);
@@ -1126,11 +884,11 @@ async function uploadImageToImgBB(file, onProgress){
         try {
           const res = JSON.parse(xhr.responseText);
           if (res.success && res.data && res.data.url) resolve(res.data.url);
-          else reject(new Error('ImgBB response invalid'));
+          else reject(new Error('ImgBB: ' + (res.error?.message || 'unknown')));
         } catch(e){ reject(e); }
-      } else reject(new Error('ImgBB failed: '+xhr.status));
+      } else reject(new Error('ImgBB HTTP ' + xhr.status));
     };
-    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.onerror = () => reject(new Error('ImgBB network error'));
     xhr.send(formData);
   });
 }
@@ -1148,57 +906,52 @@ async function uploadFileToCatbox(file, onProgress){
     xhr.onload = () => {
       if (xhr.status === 200 && xhr.responseText.startsWith('https://')) {
         resolve(xhr.responseText.trim());
-      } else reject(new Error('Catbox failed'));
+      } else reject(new Error('Catbox: ' + xhr.responseText.substring(0,100)));
     };
-    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.onerror = () => reject(new Error('Catbox network error'));
     xhr.send(formData);
   });
 }
 
 async function uploadToStorage(path, file, onProgress){
   const isImage = file.type && file.type.startsWith('image/');
-  const isSmall = file.size < 200 * 1024;
-
-  // للصور: ImgBB
   if (isImage){
-    try {
-      return await uploadImageToImgBB(file, onProgress);
-    } catch(e){
-      console.warn('ImgBB failed, trying Catbox:', e);
-      return await uploadFileToCatbox(file, onProgress);
-    }
+    try { return await uploadImageToImgBB(file, onProgress); }
+    catch(e){ console.warn('ImgBB failed, trying Catbox:', e); }
   }
-
-  // للصوت والملفات: Catbox (يدعم حتى 200MB، مجاني بدون تسجيل)
-  try {
-    return await uploadFileToCatbox(file, onProgress);
-  } catch(e){
-    console.warn('Catbox failed, fallback to base64:', e);
-    if (isSmall){
+  try { return await uploadFileToCatbox(file, onProgress); }
+  catch(e){
+    console.warn('Catbox failed:', e);
+    if (file.size < 200 * 1024){
       if (onProgress) onProgress(100);
       return await fileToBase64(file);
     }
-    throw e;
+    throw new Error('فشل رفع الملف: ' + e.message);
   }
 }
 
-// ==================== PWA ====================
+// ============================================================
+// PWA
+// ============================================================
 if('serviceWorker' in navigator){
   const swCode = `self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());`;
   const blob = new Blob([swCode], {type:'application/javascript'});
   navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
 }
 
-// ==================== Theme ====================
+// ============================================================
+// Theme
+// ============================================================
 function applyAutoTheme(){
   if(!isDarkAuto) return;
-  const hour = new Date().getHours();
-  const isNight = hour < 6 || hour >= 18;
-  document.body.classList.toggle('light', !isNight);
+  const h = new Date().getHours();
+  document.body.classList.toggle('light', !(h < 6 || h >= 18));
 }
 setInterval(applyAutoTheme, 60000);
 
-// ==================== Ringtone ====================
+// ============================================================
+// Ringtone
+// ============================================================
 function playRingtone(){
   try {
     if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
@@ -1217,7 +970,7 @@ function playRingtone(){
     ringInterval = setInterval(beep, 1800);
     if(navigator.vibrate) navigator.vibrate([400,200,400,200,400]);
     ringVibrate = setInterval(()=>{ if(navigator.vibrate) navigator.vibrate([400,200,400,200,400]); }, 3000);
-  } catch(e){ console.log('Ring error:', e); }
+  } catch(e){}
 }
 function stopRingtone(){
   if(ringInterval){ clearInterval(ringInterval); ringInterval = null; }
@@ -1225,16 +978,18 @@ function stopRingtone(){
   if(navigator.vibrate) navigator.vibrate(0);
 }
 
-// ==================== Setup Screen ====================
+// ============================================================
+// Setup Screen
+// ============================================================
 window.pickAvatar = function(el, emoji){
   document.querySelectorAll('#avatarPicker .emoji-opt').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
   selectedAvatar = emoji;
   selectedAvatarImage = null;
-  const preview = $('avatarPreviewBig');
-  preview.textContent = emoji;
-  preview.classList.add('pulse');
-  setTimeout(()=>preview.classList.remove('pulse'), 500);
+  const p = $('avatarPreviewBig');
+  p.textContent = emoji;
+  p.classList.add('pulse');
+  setTimeout(()=>p.classList.remove('pulse'), 500);
 };
 
 window.onNameInput = function(el){
@@ -1243,37 +998,22 @@ window.onNameInput = function(el){
   const error = $('nameError');
   const btn = $('btnStart');
   const len = el.value.length;
-
-  // Counter
   counter.textContent = `${len}/30`;
   counter.classList.remove('warn','full');
   if(len >= 28) counter.classList.add('full');
   else if(len >= 25) counter.classList.add('warn');
-
-  // Validation
-  if(len === 0){
-    el.classList.remove('error');
-    error.classList.remove('show');
-    btn.disabled = true;
-    return;
-  }
+  if(len === 0){ el.classList.remove('error'); error.classList.remove('show'); btn.disabled = true; return; }
   if(val.length < 2){
-    el.classList.add('error');
-    error.classList.add('show');
-    $('nameErrorText').textContent = 'الاسم قصير جداً (حرفان على الأقل)';
-    btn.disabled = true;
-    return;
+    el.classList.add('error'); error.classList.add('show');
+    $('nameErrorText').textContent = 'الاسم قصير جداً';
+    btn.disabled = true; return;
   }
-  // كشف الأحرف المكررة
   if(/^(.)\1+$/.test(val)){
-    el.classList.add('error');
-    error.classList.add('show');
+    el.classList.add('error'); error.classList.add('show');
     $('nameErrorText').textContent = 'الاسم غير صالح';
-    btn.disabled = true;
-    return;
+    btn.disabled = true; return;
   }
-  el.classList.remove('error');
-  error.classList.remove('show');
+  el.classList.remove('error'); error.classList.remove('show');
   btn.disabled = false;
 };
 
@@ -1282,18 +1022,17 @@ $('setupAvatarInput').addEventListener('change', async (e)=>{
   if(!file) return;
   if(!file.type.startsWith('image/')) return toast('يجب أن يكون الملف صورة');
   if(file.size > 5 * 1024 * 1024) return toast('حجم الصورة يجب أن يكون أقل من 5MB');
-  const preview = $('avatarPreviewBig');
-  preview.innerHTML = '<div style="font-size:24px;color:var(--dim)">⏳</div>';
+  const p = $('avatarPreviewBig');
+  p.innerHTML = '<div style="font-size:24px;color:var(--dim)">⏳</div>';
   try {
     const base64 = await fileToBase64(file);
-    // نعرض الصورة مؤقتاً، ونرفعها عند الحفظ
     selectedAvatarImage = base64;
-    preview.innerHTML = `<img src="${base64}">`;
+    p.innerHTML = `<img src="${base64}">`;
     document.querySelectorAll('#avatarPicker .emoji-opt').forEach(x=>x.classList.remove('sel'));
     $('setupAvatarInput').value = '';
     toast('تم اختيار الصورة');
   } catch(e){
-    preview.textContent = selectedAvatar;
+    p.textContent = selectedAvatar;
     toast('فشل تحميل الصورة');
   }
 });
@@ -1314,21 +1053,41 @@ window.saveName = async function(){
   };
 
   try {
+    setProgress(10, 'اختبار الاتصال...');
+
+    // اختبار Firebase قبل المتابعة
+    const testRef = ref(db, '_test/' + Date.now());
+    try {
+      await set(testRef, { t: Date.now() });
+      await remove(testRef);
+      console.log('✅ Firebase connection OK');
+    } catch(err){
+      console.error('❌ Firebase write failed:', err);
+      setProgress(0, '');
+      $('setupProgress').classList.remove('show');
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      $('btnStartText').textContent = 'ابدأ الآن';
+      alert('فشل الاتصال بقاعدة البيانات!\n\nالسبب: ' + (err.message || err.code || 'غير معروف') + '\n\nتحقق من:\n1. قواعد Realtime Database (يجب أن تكون .read: true, .write: true)\n2. databaseURL صحيح');
+      return;
+    }
+
+    setProgress(30, 'تجهيز الحساب...');
+
     let avatarImageUrl = null;
     if (selectedAvatarImage){
-      setProgress(20, 'جارٍ رفع الصورة...');
+      setProgress(45, 'رفع الصورة الشخصية...');
       try {
-        // تحويل base64 إلى File لرفعه
         const blob = await (await fetch(selectedAvatarImage)).blob();
         const file = new File([blob], 'avatar.jpg', { type: blob.type || 'image/jpeg' });
-        avatarImageUrl = await uploadImageToImgBB(file, (p)=>setProgress(20 + p*0.6, `رفع الصورة... ${p}%`));
+        avatarImageUrl = await uploadImageToImgBB(file, (p)=>setProgress(45 + p*0.4, `رفع الصورة... ${p}%`));
       } catch(e){
         console.warn('Avatar upload failed:', e);
         toast('فشل رفع الصورة، سيتم استخدام الإيموجي');
       }
     }
 
-    setProgress(85, 'إنشاء حسابك...');
+    setProgress(90, 'إنشاء حسابك...');
 
     let savedId = localStorage.getItem('chat_my_id') || genId();
     localStorage.setItem('chat_my_id', savedId);
@@ -1342,11 +1101,11 @@ window.saveName = async function(){
     me = {id:savedId, ...data};
 
     setProgress(100, 'مرحباً بك! 🎉');
-    await new Promise(r=>setTimeout(r, 400));
+    await new Promise(r=>setTimeout(r, 500));
     enterApp();
   } catch(err){
-    console.error(err);
-    toast('حدث خطأ، حاول مجدداً');
+    console.error('saveName error:', err);
+    toast('حدث خطأ: ' + (err.message || 'حاول مجدداً'));
     btn.classList.remove('loading');
     btn.disabled = false;
     $('btnStartText').textContent = 'ابدأ الآن';
@@ -1354,15 +1113,17 @@ window.saveName = async function(){
   }
 };
 
-// ==================== Enter App ====================
+// ============================================================
+// Enter App
+// ============================================================
 function enterApp(){
   $('setup').classList.remove('active');
   $('app').classList.add('active');
 
   const myPresence = ref(db,'presence/'+me.id);
   onDisconnect(myPresence).remove();
-  set(myPresence,{online:true, lastSeen:Date.now()});
-  setInterval(()=>set(myPresence,{online:true, lastSeen:Date.now()}), 90000);
+  set(myPresence,{online:true, lastSeen:Date.now()}).catch(()=>{});
+  setInterval(()=>set(myPresence,{online:true, lastSeen:Date.now()}).catch(()=>{}), 90000);
 
   loadChats();
   loadBlocked();
@@ -1376,15 +1137,11 @@ function enterApp(){
   requestNotifications();
 }
 
-function loadAutoTheme(){
-  isDarkAuto = localStorage.getItem('autoTheme') === '1';
-  applyAutoTheme();
-}
+function loadAutoTheme(){ isDarkAuto = localStorage.getItem('autoTheme') === '1'; applyAutoTheme(); }
 function loadBlocked(){ blocked = JSON.parse(localStorage.getItem('chat_blocked')||'[]'); }
 function loadMuted(){ mutedChats = JSON.parse(localStorage.getItem('chat_muted')||'[]'); }
 function loadChatBackgrounds(){
-  try { chatBackgrounds = JSON.parse(localStorage.getItem('chatBackgrounds')||'{}'); }
-  catch(e){ chatBackgrounds = {}; }
+  try { chatBackgrounds = JSON.parse(localStorage.getItem('chatBackgrounds')||'{}'); } catch(e){ chatBackgrounds = {}; }
 }
 function saveChatBackgrounds(){ localStorage.setItem('chatBackgrounds', JSON.stringify(chatBackgrounds)); }
 function loadBgPresets(){
@@ -1408,13 +1165,10 @@ async function requestNotifications(){
     try { await Notification.requestPermission(); } catch(e){}
   }
 }
-function showNotification(title, body, tag){
-  if(Notification.permission !== 'granted') return;
-  if(document.visibilityState === 'visible') return;
-  try { new Notification(title, { body, tag }); } catch(e){}
-}
 
-// ==================== BG Picker ====================
+// ============================================================
+// BG Picker
+// ============================================================
 window.openBgPicker = function(){
   if(!peerId) return;
   const grid = $('bgGrid');
@@ -1424,11 +1178,11 @@ window.openBgPicker = function(){
   none.onclick = ()=>selectBg(null);
   grid.appendChild(none);
   bgPresets.forEach(url=>{
-    const div = document.createElement('div');
-    div.className = 'bg-option' + (chatBackgrounds[peerId] === url ? ' selected' : '');
-    div.style.backgroundImage = `url('${url}')`;
-    div.onclick = ()=>selectBg(url);
-    grid.appendChild(div);
+    const d = document.createElement('div');
+    d.className = 'bg-option' + (chatBackgrounds[peerId] === url ? ' selected' : '');
+    d.style.backgroundImage = `url('${url}')`;
+    d.onclick = ()=>selectBg(url);
+    grid.appendChild(d);
   });
   $('bgPickerScreen').classList.add('active');
 };
@@ -1451,28 +1205,32 @@ $('bgImageInput').addEventListener('change', async (e)=>{
   if(!file.type.startsWith('image/')) return toast('يجب أن يكون الملف صورة');
   if(file.size > 5 * 1024 * 1024) return toast('حجم الصورة يجب أن يكون أقل من 5MB');
   $('bgImageInput').value = '';
-  toast('جارٍ رفع الصورة...');
-  try {
-    const url = await uploadToStorage('bg', file, ()=>{});
-    selectBg(url);
-  } catch(e){ toast('فشل رفع الصورة'); }
+  toast('جارٍ الرفع...');
+  try { const url = await uploadToStorage('bg', file, ()=>{}); selectBg(url); }
+  catch(e){ toast('فشل الرفع: ' + e.message); }
 });
 
-// ==================== Badge ====================
+// ============================================================
+// Badge
+// ============================================================
 function updateNavBadge(){
   const total = Object.values(chats).reduce((s,c)=>s+(c.unread||0),0);
-  const badge = $('navChatsBadge');
-  if(total > 0){ badge.textContent = total > 99 ? '99+' : total; badge.style.display = 'flex'; }
-  else badge.style.display = 'none';
+  const b = $('navChatsBadge');
+  if(total > 0){ b.textContent = total > 99 ? '99+' : total; b.style.display = 'flex'; }
+  else b.style.display = 'none';
 }
 
-// ==================== Chats ====================
+// ============================================================
+// Chats
+// ============================================================
 function loadChats(){
   if(unsubChats) unsubChats();
   unsubChats = onValue(ref(db,'user_chats/'+me.id),(snap)=>{
     chats = snap.val()||{};
     renderChats($('searchInput').value);
     updateNavBadge();
+  }, (err)=>{
+    console.error('loadChats error:', err);
   });
 }
 
@@ -1481,7 +1239,7 @@ window.renderChats = function(filter=''){
   let items = Object.entries(chats);
   if(filter) items = items.filter(([id,d])=>(d.username||'').toLowerCase().includes(filter.toLowerCase()));
   if(items.length===0){
-    list.innerHTML = `<div class="empty-state"><div class="icon">💬</div><h3>لا توجد محادثات</h3><p>اضغط على الزر الأخضر لبدء محادثة جديدة</p></div>`;
+    list.innerHTML = `<div class="empty-state"><div class="icon">💬</div><h3>لا توجد محادثات</h3><p>اضغط على الزر الأخضر لبدء محادثة</p></div>`;
     return;
   }
   items.sort((a,b)=>(b[1].lastTime||0)-(a[1].lastTime||0));
@@ -1489,18 +1247,18 @@ window.renderChats = function(filter=''){
   const normal = items.filter(([_,d])=>!d.pinned);
   list.innerHTML = '';
   if(pinned.length > 0){
-    const title = document.createElement('div');
-    title.className = 'wa-section-title';
-    title.textContent = '📌 المثبتة';
-    list.appendChild(title);
+    const t = document.createElement('div');
+    t.className = 'wa-section-title';
+    t.textContent = '📌 المثبتة';
+    list.appendChild(t);
     pinned.forEach(([id,d])=>list.appendChild(createChatEl(id,d,true)));
   }
   const groups = groupByDate(normal);
   for(const [label, arr] of Object.entries(groups)){
-    const title = document.createElement('div');
-    title.className = 'wa-section-title';
-    title.textContent = label;
-    list.appendChild(title);
+    const t = document.createElement('div');
+    t.className = 'wa-section-title';
+    t.textContent = label;
+    list.appendChild(t);
     arr.forEach(([id,d])=>list.appendChild(createChatEl(id,d,false)));
   }
 };
@@ -1508,15 +1266,15 @@ window.renderChats = function(filter=''){
 function groupByDate(items){
   const groups = {};
   const now = new Date();
-  const todayStr = now.toDateString();
+  const t = now.toDateString();
   const y = new Date(now); y.setDate(y.getDate()-1);
-  const yesterdayStr = y.toDateString();
+  const ys = y.toDateString();
   items.forEach(([id,d])=>{
     const dt = d.lastTime ? new Date(d.lastTime) : new Date();
     const ds = dt.toDateString();
     let label;
-    if(ds === todayStr) label = 'اليوم';
-    else if(ds === yesterdayStr) label = 'أمس';
+    if(ds === t) label = 'اليوم';
+    else if(ds === ys) label = 'أمس';
     else if((now-dt)/86400000 < 7) label = dt.toLocaleDateString('ar-EG',{weekday:'long'});
     else label = dt.toLocaleDateString('ar-EG',{month:'short', day:'numeric'});
     if(!groups[label]) groups[label] = [];
@@ -1549,7 +1307,6 @@ function createChatEl(id, d, isPinned){
   }
   const hasUnread = d.unread > 0 && !mutedChats.includes(id);
   const timeClass = hasUnread ? 'wa-time unread' : 'wa-time';
-  const isMuted = mutedChats.includes(id);
 
   div.innerHTML = `
     <div class="wa-avatar">
@@ -1573,28 +1330,32 @@ function createChatEl(id, d, isPinned){
   return div;
 }
 
-// ==================== Open Chat ====================
+// ============================================================
+// Open Chat
+// ============================================================
 window.openChat = async function(id){
   peerId = id;
   const isGroup = chats[id]?.isGroup;
-  if(isGroup){
-    const grpSnap = await get(ref(db,'groups/'+id));
-    const grp = grpSnap.val()||{};
-    peerData = {username: grp.name||'مجموعة', avatar:'👥', isGroup:true, members: grp.members||{}};
-    $('chatAvatar').innerHTML = '👥';
-    $('chatName').textContent = grp.name||'مجموعة';
-    $('chatStatus').textContent = Object.keys(grp.members||{}).length+' أعضاء';
-  } else {
-    const snap = await get(ref(db,'users/'+id));
-    peerData = snap.val()||{username:'مجهول', avatar:'?'};
-    if(peerData.avatarImage) $('chatAvatar').innerHTML = `<img src="${peerData.avatarImage}" alt="">`;
-    else $('chatAvatar').innerHTML = peerData.avatar||peerData.username.charAt(0).toUpperCase();
-    $('chatName').textContent = peerData.username;
-    subscribeToPresence();
-  }
-  const ref_ = ref(db,`user_chats/${me.id}/${id}`);
-  const s = await get(ref_);
-  if(s.exists()) await update(ref_,{unread:0});
+  try {
+    if(isGroup){
+      const grpSnap = await get(ref(db,'groups/'+id));
+      const grp = grpSnap.val()||{};
+      peerData = {username: grp.name||'مجموعة', avatar:'👥', isGroup:true, members: grp.members||{}};
+      $('chatAvatar').innerHTML = '👥';
+      $('chatName').textContent = grp.name||'مجموعة';
+      $('chatStatus').textContent = Object.keys(grp.members||{}).length+' أعضاء';
+    } else {
+      const snap = await get(ref(db,'users/'+id));
+      peerData = snap.val()||{username:'مجهول', avatar:'?'};
+      if(peerData.avatarImage) $('chatAvatar').innerHTML = `<img src="${peerData.avatarImage}" alt="">`;
+      else $('chatAvatar').innerHTML = peerData.avatar||peerData.username.charAt(0).toUpperCase();
+      $('chatName').textContent = peerData.username;
+      subscribeToPresence();
+    }
+    const ref_ = ref(db,`user_chats/${me.id}/${id}`);
+    const s = await get(ref_);
+    if(s.exists()) await update(ref_,{unread:0}).catch(()=>{});
+  } catch(e){ console.error('openChat:', e); }
   applyChatBackground();
   $('chatScreen').classList.add('active');
   subscribeToMessages();
@@ -1620,7 +1381,9 @@ window.closeChat = function(){
   renderChats($('searchInput').value);
 };
 
-// ==================== Messages ====================
+// ============================================================
+// Messages
+// ============================================================
 const MSG_BATCH = 50;
 
 function subscribeToMessages(){
@@ -1657,10 +1420,10 @@ function subscribeToMessages(){
   });
 
   onChildRemoved(ref(db,'messages/'+key), (snap)=>{
-    const key2 = snap.key;
-    allMessages = allMessages.filter(x=>x._key !== key2);
-    renderedMsgKeys.delete(key2);
-    document.querySelector(`.msg[data-key="${key2}"]`)?.remove();
+    const k = snap.key;
+    allMessages = allMessages.filter(x=>x._key !== k);
+    renderedMsgKeys.delete(k);
+    document.querySelector(`.msg[data-key="${k}"]`)?.remove();
   });
 }
 
@@ -1681,7 +1444,7 @@ async function loadMoreMessages(){
   const all = [];
   snap.forEach(s=>all.push({...s.val(), _key:s.key}));
   all.sort((a,b)=>tsOf(a)-tsOf(b));
-  const oldHeight = $('messages').scrollHeight;
+  const oldH = $('messages').scrollHeight;
   $('messages').innerHTML = '';
   renderedMsgKeys.clear();
   allMessages = all;
@@ -1691,7 +1454,7 @@ async function loadMoreMessages(){
       renderedMsgKeys.add(m._key);
     }
   });
-  $('messages').scrollTop = $('messages').scrollHeight - oldHeight;
+  $('messages').scrollTop = $('messages').scrollHeight - oldH;
 }
 
 function renderMessageEl(m, isGroup){
@@ -1700,23 +1463,19 @@ function renderMessageEl(m, isGroup){
   div.className = 'msg ' + (isMine?'mine':'theirs');
   div.dataset.key = m._key;
 
-  // Swipe to reply
   let touchStartX = 0, touchCurX = 0, swiping = false;
   div.addEventListener('touchstart', (e)=>{ touchStartX = e.touches[0].clientX; swiping = true; }, {passive:true});
   div.addEventListener('touchmove', (e)=>{
     if(!swiping) return;
     touchCurX = e.touches[0].clientX - touchStartX;
-    if(touchCurX < 0 && touchCurX > -80){
-      div.style.transform = `translateX(${touchCurX}px)`;
-    }
+    if(touchCurX < 0 && touchCurX > -80) div.style.transform = `translateX(${touchCurX}px)`;
   }, {passive:true});
   div.addEventListener('touchend', ()=>{
-    if(touchCurX < -50){ startReply(m); }
+    if(touchCurX < -50) startReply(m);
     div.style.transform = '';
     touchCurX = 0; swiping = false;
   });
 
-  // Long press
   let pressTimer = null;
   div.addEventListener('touchstart', (e)=>{
     const t = e.touches[0];
@@ -1769,14 +1528,12 @@ function renderMessageEl(m, isGroup){
     if(emojis) reactionsHtml = `<div class="reactions" onclick="showReactionPicker(event,'${m._key}')">${emojis}</div>`;
   }
 
-  const pinnedClass = (currentPinned && currentPinned.key === m._key) ? ' pinned-msg' : '';
-
   div.innerHTML = `
     ${senderLine}${replyHtml}${attachmentHtml}${m.content?esc(m.content):''}
     <div class="msg-time">${editedMark}${readMark}${time}</div>
     ${reactionsHtml}
   `;
-  if(pinnedClass) div.classList.add('pinned-msg');
+  if(currentPinned && currentPinned.key === m._key) div.classList.add('pinned-msg');
   return div;
 }
 
@@ -1785,7 +1542,9 @@ window.scrollToMsg = function(key){
   if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
 };
 
-// ==================== Reply ====================
+// ============================================================
+// Reply
+// ============================================================
 window.startReply = function(m){
   replyingTo = {
     key: m._key,
@@ -1797,12 +1556,11 @@ window.startReply = function(m){
   $('replyBar').classList.add('show');
   $('textInput').focus();
 };
-window.cancelReply = function(){
-  replyingTo = null;
-  $('replyBar').classList.remove('show');
-};
+window.cancelReply = function(){ replyingTo = null; $('replyBar').classList.remove('show'); };
 
-// ==================== Send ====================
+// ============================================================
+// Send Message
+// ============================================================
 window.sendMessage = async function(e){
   e.preventDefault();
   const content = $('textInput').value.trim();
@@ -1817,20 +1575,22 @@ window.sendMessage = async function(e){
     content, createdAt:Date.now(), read:false
   };
   if(replyingTo) msg.replyTo = replyingTo;
-  await push(ref(db,'messages/'+key), msg);
-  await updateChatPreview(content, isGroup);
+  try {
+    await push(ref(db,'messages/'+key), msg);
+    await updateChatPreview(content, isGroup);
+  } catch(e){ toast('فشل الإرسال: ' + e.message); }
   cancelReply();
 };
 
 window.editMessage = async function(key){
   const idx = allMessages.findIndex(x=>x._key === key);
   if(idx < 0) return;
-  const original = allMessages[idx];
-  const newContent = prompt('تعديل الرسالة:', original.content || '');
-  if(newContent === null || newContent.trim() === '' || newContent === original.content) return;
+  const o = allMessages[idx];
+  const nc = prompt('تعديل الرسالة:', o.content || '');
+  if(nc === null || nc.trim() === '' || nc === o.content) return;
   const isGroup = chats[peerId]?.isGroup;
   const rk = isGroup?'group_'+peerId:roomKey(me.id,peerId);
-  await update(ref(db,`messages/${rk}/${key}`), { content: newContent.trim(), edited: true, editedAt: Date.now() });
+  await update(ref(db,`messages/${rk}/${key}`), { content: nc.trim(), edited: true, editedAt: Date.now() });
   toast('تم التعديل');
 };
 
@@ -1844,45 +1604,49 @@ window.deleteForEveryone = async function(key){
 
 async function updateChatPreview(preview, isGroup, fromMe=true){
   const now = Date.now();
-  if(isGroup){
-    const grpSnap = await get(ref(db,'groups/'+peerId));
-    const grp = grpSnap.val()||{};
-    const members = Object.keys(grp.members||{});
-    for(const uid of members){
-      if(uid === me.id) continue;
-      const other = await get(ref(db,`user_chats/${uid}/${peerId}`));
-      const od = other.val()||{};
-      await set(ref(db,`user_chats/${uid}/${peerId}`),{
+  try {
+    if(isGroup){
+      const grpSnap = await get(ref(db,'groups/'+peerId));
+      const grp = grpSnap.val()||{};
+      const members = Object.keys(grp.members||{});
+      for(const uid of members){
+        if(uid === me.id) continue;
+        const other = await get(ref(db,`user_chats/${uid}/${peerId}`));
+        const od = other.val()||{};
+        await set(ref(db,`user_chats/${uid}/${peerId}`),{
+          username: grp.name||'مجموعة', isGroup:true,
+          lastMessage:(fromMe?'أنت: ':'')+preview, lastTime:now,
+          unread:(od.unread||0)+1, lastFromMe:false
+        });
+      }
+      await set(ref(db,`user_chats/${me.id}/${peerId}`),{
         username: grp.name||'مجموعة', isGroup:true,
-        lastMessage:(fromMe?'أنت: ':'')+preview, lastTime:now,
+        lastMessage:'أنت: '+preview, lastTime:now, unread:0, lastFromMe:true
+      });
+    } else {
+      await update(ref(db,`user_chats/${me.id}/${peerId}`),{
+        lastMessage:'أنت: '+preview, lastTime:now, unread:0, lastFromMe:true
+      });
+      const other = await get(ref(db,`user_chats/${peerId}/${me.id}`));
+      const od = other.val()||{};
+      await set(ref(db,`user_chats/${peerId}/${me.id}`),{
+        username:me.username, avatar:me.avatar, avatarImage:me.avatarImage||null,
+        lastMessage:preview, lastTime:now,
         unread:(od.unread||0)+1, lastFromMe:false
       });
     }
-    await set(ref(db,`user_chats/${me.id}/${peerId}`),{
-      username: grp.name||'مجموعة', isGroup:true,
-      lastMessage:'أنت: '+preview, lastTime:now, unread:0, lastFromMe:true
-    });
-  } else {
-    await update(ref(db,`user_chats/${me.id}/${peerId}`),{
-      lastMessage:'أنت: '+preview, lastTime:now, unread:0, lastFromMe:true
-    });
-    const other = await get(ref(db,`user_chats/${peerId}/${me.id}`));
-    const od = other.val()||{};
-    await set(ref(db,`user_chats/${peerId}/${me.id}`),{
-      username:me.username, avatar:me.avatar, avatarImage:me.avatarImage||null,
-      lastMessage:preview, lastTime:now,
-      unread:(od.unread||0)+1, lastFromMe:false
-    });
-  }
+  } catch(e){ console.error('updateChatPreview:', e); }
 }
 
-// ==================== Uploads & Media ====================
+// ============================================================
+// Uploads
+// ============================================================
 window.pickImage = function(){ if(!peerId) return; $('imageInput').click(); };
 $('imageInput').addEventListener('change', async (e)=>{
   const file = e.target.files[0];
   if(!file) return;
   if(!file.type.startsWith('image/')) return toast('يجب أن يكون الملف صورة');
-  if(file.size > 32 * 1024 * 1024) return toast('حجم الصورة يجب أن يكون أقل من 32MB');
+  if(file.size > 32 * 1024 * 1024) return toast('الحد 32MB');
   $('imageInput').value = '';
   await uploadAndSend(file, 'image');
 });
@@ -1891,7 +1655,7 @@ window.pickFile = function(){ if(!peerId) return; $('fileInput').click(); };
 $('fileInput').addEventListener('change', async (e)=>{
   const file = e.target.files[0];
   if(!file) return;
-  if(file.size > 200 * 1024 * 1024) return toast('حجم الملف كبير جداً (الحد 200MB)');
+  if(file.size > 200 * 1024 * 1024) return toast('الحد 200MB');
   $('fileInput').value = '';
   await uploadAndSend(file, 'file');
 });
@@ -1907,8 +1671,7 @@ async function uploadAndSend(file, type){
   try {
     const isGroup = chats[peerId]?.isGroup;
     const key = isGroup?'group_'+peerId:roomKey(me.id,peerId);
-    const path = `chats/${key}/${Date.now()}_${file.name}`;
-    const url = await uploadToStorage(path, file, (p)=>{
+    const url = await uploadToStorage(`chats/${key}/${Date.now()}_${file.name}`, file, (p)=>{
       barEl.style.width = p+'%';
       pctEl.textContent = p+'%';
     });
@@ -1922,8 +1685,7 @@ async function uploadAndSend(file, type){
       preview = '🎙️ رسالة صوتية';
     } else {
       const ext = file.name.split('.').pop().toLowerCase();
-      const icon = getFileIcon(ext);
-      attachment = { type:'file', url, name:file.name, size:Math.round(file.size/1024), icon };
+      attachment = { type:'file', url, name:file.name, size:Math.round(file.size/1024), icon:getFileIcon(ext) };
       preview = '📎 '+file.name;
     }
     const msg = { senderId:me.id, senderName:me.username, content:'', createdAt:now, read:false, attachment };
@@ -1936,7 +1698,7 @@ async function uploadAndSend(file, type){
   } catch(err){
     console.error(err);
     progressEl.classList.remove('show');
-    toast('فشل الرفع');
+    toast('فشل الرفع: ' + err.message);
   }
 }
 
@@ -1944,23 +1706,23 @@ function getFileIcon(ext){
   if(['pdf'].includes(ext)) return '📄';
   if(['doc','docx'].includes(ext)) return '📝';
   if(['xls','xlsx','csv'].includes(ext)) return '📊';
-  if(['ppt','pptx'].includes(ext)) return '📽️';
   if(['zip','rar','7z'].includes(ext)) return '🗜️';
   if(['mp3','wav','ogg','m4a'].includes(ext)) return '🎵';
   if(['mp4','avi','mov','mkv'].includes(ext)) return '🎬';
-  if(['txt'].includes(ext)) return '📃';
   if(['jpg','jpeg','png','gif','webp'].includes(ext)) return '🖼️';
   return '📎';
 }
 
-// ==================== Recording ====================
+// ============================================================
+// Recording
+// ============================================================
 window.startRecording = async function(){
   if(!peerId) return;
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioChunks = [];
     mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.ondataavailable = (event)=>{ if(event.data.size > 0) audioChunks.push(event.data); };
+    mediaRecorder.ondataavailable = (e)=>{ if(e.data.size > 0) audioChunks.push(e.data); };
     mediaRecorder.start();
     recording = true; recSeconds = 0;
     $('inputWrap').style.display='none';
@@ -1975,10 +1737,7 @@ window.startRecording = async function(){
       if(recSeconds >= 300) sendRecording();
     }, 1000);
     toast('بدأ التسجيل...');
-  } catch(err){
-    console.error(err);
-    toast('لا يمكن الوصول للميكروفون');
-  }
+  } catch(err){ toast('لا يمكن الوصول للميكروفون'); }
 };
 
 window.cancelRecording = function(){
@@ -2016,7 +1775,7 @@ window.sendRecording = function(){
       await updateChatPreview('🎙️ رسالة صوتية', isGroup);
       toast('تم إرسال التسجيل');
       cancelReply();
-    } catch(e){ console.error(e); toast('فشل رفع التسجيل'); }
+    } catch(e){ console.error(e); toast('فشل رفع التسجيل: ' + e.message); }
   };
   mediaRecorder.stop();
   recording = false;
@@ -2027,51 +1786,40 @@ window.sendRecording = function(){
   $('sendBtn').style.display='flex';
 };
 
-// ==================== WebRTC ====================
+// ============================================================
+// WebRTC
+// ============================================================
 async function getLocalStream(video){
   try {
-    const constraints = video
+    const c = video
       ? { audio:{echoCancellation:true, noiseSuppression:true}, video:{facingMode:isFrontCamera?'user':'environment', width:{ideal:1280}, height:{ideal:720}} }
-      : { audio:{echoCancellation:true, noiseSuppression:true}, video: false };
-    return await navigator.mediaDevices.getUserMedia(constraints);
+      : { audio:{echoCancellation:true, noiseSuppression:true}, video:false };
+    return await navigator.mediaDevices.getUserMedia(c);
   } catch(err){
-    console.error('getUserMedia:', err);
-    if(err.name === 'NotAllowedError') toast('الرجاء السماح بالوصول للكاميرا والميكروفون');
-    else toast('فشل الوصول: '+err.message);
+    toast('فشل الوصول للكاميرا/الميكروفون');
     return null;
   }
 }
 
 function createPeerConnection(){
   const p = new RTCPeerConnection(ICE_SERVERS);
-  p.onicecandidate = (event)=>{
-    if(event.candidate && currentCall){
+  p.onicecandidate = (e)=>{
+    if(e.candidate && currentCall){
       const role = currentCall.role === 'caller' ? 'caller' : 'callee';
-      push(ref(db, `calls/${currentCall.callId}/candidates/${role}`), event.candidate.toJSON());
+      push(ref(db, `calls/${currentCall.callId}/candidates/${role}`), e.candidate.toJSON()).catch(()=>{});
     }
   };
-  p.ontrack = (event)=>{
+  p.ontrack = (e)=>{
     const rv = $('remoteVideo');
-    if(event.streams && event.streams[0]){
-      if(rv.srcObject !== event.streams[0]){
-        rv.srcObject = event.streams[0];
-        remoteStream = event.streams[0];
-      }
+    if(e.streams && e.streams[0]){
+      if(rv.srcObject !== e.streams[0]){ rv.srcObject = e.streams[0]; remoteStream = e.streams[0]; }
     }
   };
   p.onconnectionstatechange = ()=>{
     const st = p.connectionState;
-    if(st === 'connected'){
-      $('callStatus').textContent = 'متصل';
-      $('callStatus').classList.remove('connecting');
-      startCallTimer();
-    } else if(st === 'disconnected'){
-      $('callStatus').textContent = 'إعادة الاتصال...';
-      if(!iceRestarting) tryIceRestart();
-    } else if(st === 'failed'){
-      $('callStatus').textContent = 'فشل الاتصال';
-      setTimeout(()=>endCall(), 1500);
-    }
+    if(st === 'connected'){ $('callStatus').textContent = 'متصل'; startCallTimer(); }
+    else if(st === 'disconnected'){ $('callStatus').textContent = 'إعادة الاتصال...'; if(!iceRestarting) tryIceRestart(); }
+    else if(st === 'failed'){ $('callStatus').textContent = 'فشل'; setTimeout(()=>endCall(), 1500); }
   };
   return p;
 }
@@ -2083,7 +1831,7 @@ async function tryIceRestart(){
     const offer = await pc.createOffer({ iceRestart: true });
     await pc.setLocalDescription(offer);
     await update(ref(db, `calls/${currentCall.callId}`), { offer: { type:offer.type, sdp:offer.sdp } });
-  } catch(e){ console.error('ICE restart failed:', e); }
+  } catch(e){}
   setTimeout(()=>{ iceRestarting = false; }, 5000);
 }
 
@@ -2099,11 +1847,11 @@ window.startCall = async function(type){
     fromId: me.id, fromName: me.username,
     fromAvatar: me.avatarImage || me.avatar
   };
-  toast('جارٍ تجهيز المكالمة...');
+  toast('جارٍ التجهيز...');
   localStream = await getLocalStream(type === 'video');
   if(!localStream){ currentCall = null; return; }
   pc = createPeerConnection();
-  localStream.getTracks().forEach(track=>pc.addTrack(track, localStream));
+  localStream.getTracks().forEach(t=>pc.addTrack(t, localStream));
   showCallScreen(type === 'video');
   listenToCallResponse(callId);
   await set(ref(db, `calls/${callId}`), {
@@ -2114,27 +1862,26 @@ window.startCall = async function(type){
     const offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
     await update(ref(db, `calls/${callId}`), { offer: { type:offer.type, sdp:offer.sdp } });
-  } catch(err){ console.error('createOffer:', err); }
+  } catch(e){ console.error(e); }
 };
 
 function listenToCallResponse(callId){
-  const unsub = onValue(ref(db, `calls/${callId}`), async (snap)=>{
+  const u1 = onValue(ref(db, `calls/${callId}`), async (snap)=>{
     const call = snap.val();
     if(!call) return;
     if(call.status === 'rejected'){ toast('تم رفض المكالمة'); endCall(true); return; }
     if(call.status === 'accepted' && call.answer && currentCall?.role === 'caller' && pc){
       if(pc.signalingState === 'have-local-offer'){
-        try { await pc.setRemoteDescription(new RTCSessionDescription(call.answer)); }
-        catch(e){ console.error('setRemoteDesc:', e); }
+        try { await pc.setRemoteDescription(new RTCSessionDescription(call.answer)); } catch(e){}
       }
     }
   });
-  callUnsubs.push(unsub);
-  const iceUnsub = onChildAdded(ref(db, `calls/${callId}/candidates/callee`), (s)=>{
+  callUnsubs.push(u1);
+  const u2 = onChildAdded(ref(db, `calls/${callId}/candidates/callee`), (s)=>{
     const c = s.val();
-    if(c && pc) pc.addIceCandidate(new RTCIceCandidate(c)).catch(e=>console.warn(e));
+    if(c && pc) pc.addIceCandidate(new RTCIceCandidate(c)).catch(()=>{});
   });
-  callUnsubs.push(iceUnsub);
+  callUnsubs.push(u2);
 }
 
 function listenForIncomingCalls(){
@@ -2148,8 +1895,7 @@ function listenForIncomingCalls(){
     currentCall = {
       callId, type: call.type, role:'callee',
       peerId: call.from, peerName: call.fromName,
-      peerAvatar: call.fromAvatar,
-      fromId: call.from
+      peerAvatar: call.fromAvatar, fromId: call.from
     };
     showIncomingCall();
   });
@@ -2158,11 +1904,11 @@ function listenForIncomingCalls(){
 function showIncomingCall(){
   if(!currentCall) return;
   $('incomingName').textContent = currentCall.peerName;
-  $('incomingType').textContent = currentCall.type === 'video' ? 'مكالمة فيديو واردة' : 'مكالمة صوتية واردة';
-  const avatarEl = $('incomingAvatar');
+  $('incomingType').textContent = currentCall.type === 'video' ? 'مكالمة فيديو' : 'مكالمة صوتية';
+  const el = $('incomingAvatar');
   const pa = currentCall.peerAvatar || '👤';
-  if(pa.startsWith('data:') || pa.startsWith('http')) avatarEl.innerHTML = `<img src="${pa}">`;
-  else avatarEl.textContent = pa;
+  if(pa.startsWith('data:') || pa.startsWith('http')) el.innerHTML = `<img src="${pa}">`;
+  else el.textContent = pa;
   $('incomingCall').classList.add('active');
   playRingtone();
 }
@@ -2174,11 +1920,10 @@ window.acceptCall = async function(){
   localStream = await getLocalStream(currentCall.type === 'video');
   if(!localStream){
     await update(ref(db, `calls/${currentCall.callId}`), { status: 'rejected' });
-    currentCall = null;
-    return;
+    currentCall = null; return;
   }
   pc = createPeerConnection();
-  localStream.getTracks().forEach(track=>pc.addTrack(track, localStream));
+  localStream.getTracks().forEach(t=>pc.addTrack(t, localStream));
   showCallScreen(currentCall.type === 'video');
   const callRef = ref(db, `calls/${currentCall.callId}`);
   await update(callRef, { status: 'accepted' });
@@ -2190,12 +1935,12 @@ window.acceptCall = async function(){
     const answer = await pc.createAnswer();
     await pc.setLocalDescription(answer);
     await update(callRef, { answer: { type:answer.type, sdp:answer.sdp } });
-  } catch(err){ console.error('accept:', err); }
-  const iceUnsub = onChildAdded(ref(db, `calls/${currentCall.callId}/candidates/caller`), (s)=>{
+  } catch(e){ console.error(e); }
+  const u = onChildAdded(ref(db, `calls/${currentCall.callId}/candidates/caller`), (s)=>{
     const c = s.val();
-    if(c && pc) pc.addIceCandidate(new RTCIceCandidate(c)).catch(e=>console.warn(e));
+    if(c && pc) pc.addIceCandidate(new RTCIceCandidate(c)).catch(()=>{});
   });
-  callUnsubs.push(iceUnsub);
+  callUnsubs.push(u);
 };
 
 window.rejectCall = async function(){
@@ -2211,11 +1956,10 @@ function showCallScreen(isVideo){
   $('callScreen').classList.add('active');
   $('callName').textContent = currentCall.peerName;
   $('callStatus').textContent = 'جارٍ الاتصال...';
-  $('callStatus').classList.add('connecting');
-  const avatarEl = $('callAvatar');
+  const el = $('callAvatar');
   const pa = currentCall.peerAvatar || '👤';
-  if(pa.startsWith('data:') || pa.startsWith('http')) avatarEl.innerHTML = `<img src="${pa}">`;
-  else avatarEl.textContent = pa;
+  if(pa.startsWith('data:') || pa.startsWith('http')) el.innerHTML = `<img src="${pa}">`;
+  else el.textContent = pa;
   if(isVideo){
     $('localVideo').classList.remove('hidden');
     $('localVideo').srcObject = localStream;
@@ -2234,8 +1978,8 @@ function startCallTimer(){
   if(callTimer) clearInterval(callTimer);
   callStartTime = Date.now();
   callTimer = setInterval(()=>{
-    const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
-    $('callStatus').textContent = fmtDur(elapsed);
+    const e = Math.floor((Date.now() - callStartTime) / 1000);
+    $('callStatus').textContent = fmtDur(e);
   }, 1000);
 }
 
@@ -2257,9 +2001,7 @@ window.toggleVideo = function(){
 
 async function upgradeToVideo(){
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode:'user', width:{ideal:1280}, height:{ideal:720} }
-    });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'user', width:{ideal:1280}, height:{ideal:720} } });
     const track = stream.getVideoTracks()[0];
     localStream.addTrack(track);
     pc.addTrack(track, localStream);
@@ -2275,18 +2017,16 @@ window.switchCamera = async function(){
   if(!localStream || currentCall?.type !== 'video') return;
   try {
     isFrontCamera = !isFrontCamera;
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: isFrontCamera ? 'user':'environment', width:{ideal:1280}, height:{ideal:720} }
-    });
-    const newTrack = stream.getVideoTracks()[0];
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: isFrontCamera ? 'user':'environment', width:{ideal:1280}, height:{ideal:720} } });
+    const nt = stream.getVideoTracks()[0];
     const sender = pc.getSenders().find(s=>s.track && s.track.kind === 'video');
-    if(sender) await sender.replaceTrack(newTrack);
-    const oldTrack = localStream.getVideoTracks()[0];
-    if(oldTrack){ oldTrack.stop(); localStream.removeTrack(oldTrack); }
-    localStream.addTrack(newTrack);
+    if(sender) await sender.replaceTrack(nt);
+    const ot = localStream.getVideoTracks()[0];
+    if(ot){ ot.stop(); localStream.removeTrack(ot); }
+    localStream.addTrack(nt);
     $('localVideo').srcObject = localStream;
-    toast('تم تبديل الكاميرا');
-  } catch(e){ console.error(e); }
+    toast('تم التبديل');
+  } catch(e){}
 };
 
 window.toggleLocalFullscreen = function(){ $('localVideo').classList.toggle('expanded'); };
@@ -2309,18 +2049,18 @@ window.endCall = async function(silent){
   if(!silent && duration > 0 && cur.peerId){
     const selfId = cur.fromId || me.id;
     const k = roomKey(selfId, cur.peerId);
-    const msg = {
-      senderId: selfId, senderName: me.username,
-      content:'', createdAt:Date.now(), read:false,
-      type:'call', callType: cur.type, callDuration: duration, callStatus:'ended'
-    };
-    await push(ref(db,'messages/'+k), msg);
-    await updateChatPreview(`${cur.type === 'video' ? '📹' : '📞'} مكالمة`, false);
+    const msg = { senderId: selfId, senderName: me.username, content:'', createdAt:Date.now(), read:false, type:'call', callType: cur.type, callDuration: duration, callStatus:'ended' };
+    try {
+      await push(ref(db,'messages/'+k), msg);
+      await updateChatPreview(`${cur.type === 'video' ? '📹' : '📞'} مكالمة`, false);
+    } catch(e){}
   }
   currentCall = null;
 };
 
-// ==================== Message menu ====================
+// ============================================================
+// Message menu
+// ============================================================
 function showMsgMenu(x, y, key, isMine, m){
   const menu = $('contextMenu');
   const timeSince = Date.now() - (m.createdAt||0);
@@ -2330,20 +2070,14 @@ function showMsgMenu(x, y, key, isMine, m){
       <svg viewBox="0 0 24 24"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> رد
     </button>
     <button onclick="showReactionPickerAt(event,'${key}');hideCtx()">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> تفاعل
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg> تفاعل
     </button>
     <button onclick="pinMessage('${key}');hideCtx()">
       <svg viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24z"/></svg> تثبيت
     </button>
-    ${canEdit ? `<button onclick="editMessage('${key}');hideCtx()">
-      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> تعديل
-    </button>` : ''}
-    ${isMine ? `<button onclick="deleteForEveryone('${key}');hideCtx()" class="danger">
-      <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg> حذف للجميع
-    </button>` : ''}
-    <button onclick="deleteMsg('${key}');hideCtx()" class="danger">
-      <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg> حذف
-    </button>
+    ${canEdit ? `<button onclick="editMessage('${key}');hideCtx()">تعديل</button>` : ''}
+    ${isMine ? `<button onclick="deleteForEveryone('${key}');hideCtx()" class="danger">حذف للجميع</button>` : ''}
+    <button onclick="deleteMsg('${key}');hideCtx()" class="danger">حذف</button>
   `;
   menu.style.left = Math.max(8, Math.min(x, window.innerWidth-220-8))+'px';
   menu.style.top = Math.max(8, Math.min(y, window.innerHeight-320-8))+'px';
@@ -2368,7 +2102,9 @@ window.deleteMsg = async function(key){
   toast('تم الحذف');
 };
 
-// ==================== Reactions ====================
+// ============================================================
+// Reactions
+// ============================================================
 window.showReactionPicker = function(event, key){
   event.stopPropagation();
   reactionPickerMsgKey = key;
@@ -2389,8 +2125,8 @@ window.addReaction = async function(emoji){
   const isGroup = chats[peerId]?.isGroup;
   const rk = isGroup?'group_'+peerId:roomKey(me.id,peerId);
   const rp = ref(db,`messages/${rk}/${reactionPickerMsgKey}/reactions/${me.id}`);
-  const existing = await get(rp);
-  if(existing.val() === emoji) await remove(rp);
+  const ex = await get(rp);
+  if(ex.val() === emoji) await remove(rp);
   else await set(rp, emoji);
   $('reactionPicker').classList.remove('show');
   reactionPickerMsgKey = null;
@@ -2405,23 +2141,21 @@ function subscribeToReactions(){
     Object.entries(msgs).forEach(([k,m])=>{
       const el = document.querySelector(`.msg[data-key="${k}"]`);
       if(!el) return;
-      let reactionsEl = el.querySelector('.reactions');
+      let r = el.querySelector('.reactions');
       if(m.reactions && Object.keys(m.reactions).length > 0){
-        const counts = {};
-        Object.values(m.reactions).forEach(r=>{ counts[r]=(counts[r]||0)+1; });
-        const emojis = Object.entries(counts).map(([e,c])=>c>1?`${e}${c}`:e).join(' ');
-        if(!reactionsEl){
-          reactionsEl = document.createElement('div');
-          reactionsEl.className = 'reactions';
-          el.appendChild(reactionsEl);
-        }
-        reactionsEl.textContent = emojis;
-      } else if(reactionsEl){ reactionsEl.remove(); }
+        const c = {};
+        Object.values(m.reactions).forEach(x=>{ c[x] = (c[x]||0)+1; });
+        const em = Object.entries(c).map(([e,n])=>n>1?`${e}${n}`:e).join(' ');
+        if(!r){ r = document.createElement('div'); r.className = 'reactions'; el.appendChild(r); }
+        r.textContent = em;
+      } else if(r) r.remove();
     });
   });
 }
 
-// ==================== Pin ====================
+// ============================================================
+// Pin
+// ============================================================
 window.pinMessage = async function(key){
   const m = allMessages.find(x=>x._key === key);
   if(!m) return;
@@ -2433,24 +2167,21 @@ window.pinMessage = async function(key){
     senderName: m.senderName || '',
     pinnedAt: Date.now()
   });
-  toast('تم تثبيت الرسالة');
+  toast('تم التثبيت');
 };
-
 window.unpinMessage = async function(){
   const isGroup = chats[peerId]?.isGroup;
   const rk = isGroup?'group_'+peerId:roomKey(me.id,peerId);
   await remove(ref(db,`pinned/${rk}`));
   currentPinned = null;
   $('pinnedBar').classList.remove('show');
-  toast('تم إلغاء التثبيت');
+  toast('تم الإلغاء');
 };
-
 window.scrollToPinned = function(){
   if(!currentPinned) return;
   const el = document.querySelector(`.msg[data-key="${currentPinned.key}"]`);
   if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
 };
-
 function subscribeToPinned(){
   if(unsubPinned) unsubPinned();
   const isGroup = chats[peerId]?.isGroup;
@@ -2460,13 +2191,13 @@ function subscribeToPinned(){
     if(currentPinned){
       $('pinnedText').textContent = (currentPinned.content||'مرفق').substring(0,80);
       $('pinnedBar').classList.add('show');
-    } else {
-      $('pinnedBar').classList.remove('show');
-    }
+    } else $('pinnedBar').classList.remove('show');
   });
 }
 
-// ==================== Search in messages ====================
+// ============================================================
+// Search in messages
+// ============================================================
 window.toggleMsgSearch = function(){
   const s = $('msgSearch');
   s.classList.toggle('show');
@@ -2477,9 +2208,9 @@ window.searchInMessages = function(q){
   clearSearchHighlight();
   searchResults = [];
   if(!q || q.length < 2) return;
-  const term = q.toLowerCase();
+  const t = q.toLowerCase();
   allMessages.forEach(m=>{
-    if((m.content||'').toLowerCase().includes(term)) searchResults.push(m._key);
+    if((m.content||'').toLowerCase().includes(t)) searchResults.push(m._key);
   });
   searchResults.forEach(k=>{
     const el = document.querySelector(`.msg[data-key="${k}"]`);
@@ -2488,9 +2219,9 @@ window.searchInMessages = function(q){
   searchIndex = -1;
   if(searchResults.length) navSearch(1);
 };
-window.navSearch = function(dir){
+window.navSearch = function(d){
   if(!searchResults.length) return;
-  searchIndex = (searchIndex + dir + searchResults.length) % searchResults.length;
+  searchIndex = (searchIndex + d + searchResults.length) % searchResults.length;
   const el = document.querySelector(`.msg[data-key="${searchResults[searchIndex]}"]`);
   if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
 };
@@ -2498,7 +2229,9 @@ function clearSearchHighlight(){
   document.querySelectorAll('.msg.highlight').forEach(el=>el.classList.remove('highlight'));
 }
 
-// ==================== Peer menu ====================
+// ============================================================
+// Peer menu
+// ============================================================
 window.openPeerMenu = function(event){
   if(!peerId) return;
   const m = $('peerMenu');
@@ -2506,30 +2239,14 @@ window.openPeerMenu = function(event){
   const isBlocked = blocked.includes(peerId);
   const isMuted = mutedChats.includes(peerId);
   m.innerHTML = `
-    ${!isGroup ? `<button onclick="startCall('voice');hideCtx()">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> مكالمة صوتية
-    </button>
-    <button onclick="startCall('video');hideCtx()">
-      <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> مكالمة فيديو
-    </button>` : ''}
-    <button onclick="openBgPicker();hideCtx()">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> تغيير الخلفية
-    </button>
-    <button onclick="toggleMuteChat();hideCtx()">
-      <svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> ${isMuted?'إلغاء الكتم':'كتم الإشعارات'}
-    </button>
-    <button onclick="togglePinChat();hideCtx()">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24z"/></svg> ${chats[peerId]?.pinned?'إلغاء التثبيت':'تثبيت'}
-    </button>
-    <button onclick="exportChat();hideCtx()">
-      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> تصدير المحادثة
-    </button>
-    <button onclick="clearChatMessages();hideCtx()" class="danger">
-      <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg> مسح الرسائل
-    </button>
-    ${!isGroup ? (isBlocked
-      ? `<button onclick="unblockUser('${peerId}');hideCtx()">إلغاء الحظر</button>`
-      : `<button class="danger" onclick="blockUser('${peerId}');hideCtx()">حظر</button>`) : ''}
+    ${!isGroup ? `<button onclick="startCall('voice');hideCtx()">مكالمة صوتية</button>
+    <button onclick="startCall('video');hideCtx()">مكالمة فيديو</button>` : ''}
+    <button onclick="openBgPicker();hideCtx()">تغيير الخلفية</button>
+    <button onclick="toggleMuteChat();hideCtx()">${isMuted?'إلغاء الكتم':'كتم'}</button>
+    <button onclick="togglePinChat();hideCtx()">${chats[peerId]?.pinned?'إلغاء التثبيت':'تثبيت'}</button>
+    <button onclick="exportChat();hideCtx()">تصدير</button>
+    <button onclick="clearChatMessages();hideCtx()" class="danger">مسح الرسائل</button>
+    ${!isGroup ? (isBlocked ? `<button onclick="unblockUser('${peerId}');hideCtx()">إلغاء الحظر</button>` : `<button class="danger" onclick="blockUser('${peerId}');hideCtx()">حظر</button>`) : ''}
     <button class="danger" onclick="deleteChat('${peerId}');hideCtx()">حذف المحادثة</button>
   `;
   m.style.left = Math.min(event.clientX || window.innerWidth-220, window.innerWidth-220)+'px';
@@ -2542,18 +2259,18 @@ window.toggleMuteChat = function(){
   if(mutedChats.includes(peerId)) mutedChats = mutedChats.filter(x=>x!==peerId);
   else mutedChats.push(peerId);
   localStorage.setItem('chat_muted', JSON.stringify(mutedChats));
-  toast(mutedChats.includes(peerId)?'تم كتم الإشعارات':'تم إلغاء الكتم');
+  toast(mutedChats.includes(peerId)?'تم الكتم':'تم الإلغاء');
 };
 
 window.togglePinChat = async function(){
   if(!peerId) return;
-  const current = chats[peerId]?.pinned || false;
-  await update(ref(db,`user_chats/${me.id}/${peerId}`), {pinned: !current});
-  toast(!current ? 'تم التثبيت' : 'تم إلغاء التثبيت');
+  const cur = chats[peerId]?.pinned || false;
+  await update(ref(db,`user_chats/${me.id}/${peerId}`), {pinned: !cur});
+  toast(!cur ? 'تم التثبيت' : 'تم الإلغاء');
 };
 
 window.clearChatMessages = async function(){
-  if(!confirm('مسح جميع الرسائل لك فقط؟')) return;
+  if(!confirm('مسح جميع الرسائل؟')) return;
   const isGroup = chats[peerId]?.isGroup;
   const rk = isGroup?'group_'+peerId:roomKey(me.id,peerId);
   await remove(ref(db,'messages/'+rk));
@@ -2566,21 +2283,19 @@ window.clearChatMessages = async function(){
 window.blockUser = function(id){
   if(!blocked.includes(id)) blocked.push(id);
   localStorage.setItem('chat_blocked', JSON.stringify(blocked));
-  toast('تم حظر المستخدم');
+  toast('تم الحظر');
 };
 window.unblockUser = function(id){
   blocked = blocked.filter(x=>x!==id);
   localStorage.setItem('chat_blocked', JSON.stringify(blocked));
   toast('تم إلغاء الحظر');
 };
-
 window.deleteChat = async function(id){
-  if(!confirm('حذف هذه المحادثة؟')) return;
+  if(!confirm('حذف المحادثة؟')) return;
   await remove(ref(db,`user_chats/${me.id}/${id}`));
   if(peerId===id) closeChat();
   toast('تم الحذف');
 };
-
 window.exportChat = function(){
   const data = {
     chat: chats[peerId]?.username || 'محادثة',
@@ -2597,7 +2312,7 @@ window.exportChat = function(){
   a.href = URL.createObjectURL(blob);
   a.download = `chat_${peerId}_${Date.now()}.json`;
   a.click();
-  toast('تم تصدير المحادثة');
+  toast('تم التصدير');
 };
 
 function showChatMenu(x, y, id){
@@ -2615,9 +2330,9 @@ function showChatMenu(x, y, id){
   menu.classList.add('show');
 }
 window.togglePinChatFromMenu = async function(id){
-  const current = chats[id]?.pinned || false;
-  await update(ref(db,`user_chats/${me.id}/${id}`), {pinned: !current});
-  toast(!current ? 'تم التثبيت' : 'تم إلغاء التثبيت');
+  const cur = chats[id]?.pinned || false;
+  await update(ref(db,`user_chats/${me.id}/${id}`), {pinned: !cur});
+  toast(!cur ? 'تم التثبيت' : 'تم الإلغاء');
 };
 window.toggleMuteFromMenu = function(id){
   if(mutedChats.includes(id)) mutedChats = mutedChats.filter(x=>x!==id);
@@ -2626,19 +2341,16 @@ window.toggleMuteFromMenu = function(id){
   renderChats();
 };
 
-// ==================== Main menu ====================
+// ============================================================
+// Main menu
+// ============================================================
 window.openMainMenu = function(event){
   const m = $('mainMenu');
   m.innerHTML = `
-    <button onclick="openProfile();hideCtx()">
-      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> الملف الشخصي
-    </button>
-    <button onclick="copyMyId();hideCtx()">
-      <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> نسخ معرّفي
-    </button>
-    <button onclick="openNewGroup();hideCtx()">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> مجموعة جديدة
-    </button>
+    <button onclick="openProfile();hideCtx()">الملف الشخصي</button>
+    <button onclick="copyMyId();hideCtx()">نسخ معرّفي</button>
+    <button onclick="openNewGroup();hideCtx()">مجموعة جديدة</button>
+    <button onclick="runDiagnostics();hideCtx()">🔍 فحص الاتصال</button>
   `;
   m.style.left = Math.min(event.clientX || window.innerWidth-220, window.innerWidth-220)+'px';
   m.style.top = '60px';
@@ -2650,7 +2362,9 @@ window.copyMyId = function(){
   toast('تم نسخ المعرّف: '+me.id);
 };
 
-// ==================== New Chat ====================
+// ============================================================
+// New Chat
+// ============================================================
 window.openNewChat = function(){
   $('newChatModal').classList.add('show');
   $('peerIdInput').value='';
@@ -2677,7 +2391,9 @@ window.startChatWithPeer = async function(){
   setTimeout(()=>openChat(id), 300);
 };
 
-// ==================== Groups ====================
+// ============================================================
+// Groups
+// ============================================================
 window.openNewGroup = async function(){
   $('newGroupModal').classList.add('show');
   $('groupNameInput').value = '';
@@ -2724,26 +2440,26 @@ window.createGroup = async function(){
   const groupId = 'grp_' + genId();
   const members = { [me.id]: true };
   groupMembersSelected.forEach(uid=>members[uid] = true);
-  const groupData = { name, owner: me.id, members, createdAt: Date.now() };
-  await set(ref(db,'groups/'+groupId), groupData);
+  await set(ref(db,'groups/'+groupId), { name, owner: me.id, members, createdAt: Date.now() });
   for(const uid of Object.keys(members)){
     await set(ref(db,`user_chats/${uid}/${groupId}`),{
       username: name, isGroup:true,
       lastMessage:'مجموعة جديدة', lastTime:Date.now(), unread:0
     });
   }
-  const sysMsg = {
+  await push(ref(db,'messages/group_'+groupId), {
     senderId:'system', senderName:'النظام',
     content:`تم إنشاء المجموعة بواسطة ${me.username}`,
     createdAt: Date.now(), read:true
-  };
-  await push(ref(db,'messages/group_'+groupId), sysMsg);
+  });
   closeModal('newGroupModal');
-  toast('تم إنشاء المجموعة');
+  toast('تم الإنشاء');
   setTimeout(()=>openChat(groupId), 300);
 };
 
-// ==================== Profile ====================
+// ============================================================
+// Profile
+// ============================================================
 window.openProfile = function(){
   $('profileModal').classList.add('show');
   $('profileName').value = me.username;
@@ -2754,34 +2470,31 @@ window.openProfile = function(){
   $('profileAvatarPicker').innerHTML = EMOJIS.slice(0,16).map(e=>
     `<div class="emoji-opt ${e===me.avatar && !me.avatarImage?'sel':''}" onclick="pickProfileEmoji(this,'${e}')">${e}</div>`).join('');
 };
-window.toggleAutoTheme = function(enabled){
-  isDarkAuto = enabled;
-  localStorage.setItem('autoTheme', enabled ? '1' : '0');
+window.toggleAutoTheme = function(en){
+  isDarkAuto = en;
+  localStorage.setItem('autoTheme', en ? '1' : '0');
   applyAutoTheme();
 };
-
 function updateProfileAvatarPreview(){
-  const preview = $('profileAvatarContent');
-  if(tempProfileAvatar) preview.innerHTML = `<img src="${tempProfileAvatar}">`;
-  else preview.textContent = me.avatar || '😎';
+  const p = $('profileAvatarContent');
+  if(tempProfileAvatar) p.innerHTML = `<img src="${tempProfileAvatar}">`;
+  else p.textContent = me.avatar || '😎';
 }
-
 window.pickProfileImage = function(){ $('profileImageInput').click(); };
 $('profileImageInput').addEventListener('change', async (e)=>{
   const file = e.target.files[0];
   if(!file) return;
-  if(!file.type.startsWith('image/')) return toast('يجب أن يكون الملف صورة');
-  if(file.size > 5 * 1024 * 1024) return toast('حجم الصورة يجب أن يكون أقل من 5MB');
+  if(!file.type.startsWith('image/')) return toast('يجب أن يكون صورة');
+  if(file.size > 5 * 1024 * 1024) return toast('الحد 5MB');
   $('profileImageInput').value = '';
-  toast('جارٍ رفع الصورة...');
+  toast('جارٍ الرفع...');
   try {
     const url = await uploadToStorage('avatar', file, ()=>{});
     tempProfileAvatar = url;
     updateProfileAvatarPreview();
     document.querySelectorAll('#profileAvatarPicker .emoji-opt').forEach(x=>x.classList.remove('sel'));
-  } catch(e){ toast('فشل رفع الصورة'); }
+  } catch(e){ toast('فشل الرفع: ' + e.message); }
 });
-
 window.pickProfileEmoji = function(el, e){
   document.querySelectorAll('#profileAvatarPicker .emoji-opt').forEach(x=>x.classList.remove('sel'));
   el.classList.add('sel');
@@ -2789,25 +2502,26 @@ window.pickProfileEmoji = function(el, e){
   me.avatar = e;
   updateProfileAvatarPreview();
 };
-
 window.saveProfile = async function(){
   const name = $('profileName').value.trim();
   if(!name||name.length<2) return toast('اسم غير صحيح');
-  const update_data = { username:name, avatar:me.avatar, avatarImage:tempProfileAvatar };
-  await update(ref(db,'users/'+me.id), update_data);
-  Object.assign(me, update_data);
+  const data = { username:name, avatar:me.avatar, avatarImage:tempProfileAvatar };
+  await update(ref(db,'users/'+me.id), data);
+  Object.assign(me, data);
   closeModal('profileModal');
   toast('تم الحفظ');
 };
 
-// ==================== Nav ====================
+// ============================================================
+// Nav
+// ============================================================
 window.switchNav = function(nav, el){
   document.querySelectorAll('.wa-nav-item').forEach(x=>x.classList.remove('active'));
   el.classList.add('active');
-  if(nav === 'chats'){ renderChats($('searchInput').value); }
-  else if(nav === 'status'){ openStatusScreen(); }
-  else if(nav === 'calls'){ $('chatList').innerHTML = `<div class="empty-state"><div class="icon">📞</div><h3>سجل المكالمات</h3><p>قريباً</p></div>`; }
-  else if(nav === 'settings'){ openProfile(); }
+  if(nav === 'chats') renderChats($('searchInput').value);
+  else if(nav === 'status') openStatusScreen();
+  else if(nav === 'calls') $('chatList').innerHTML = `<div class="empty-state"><div class="icon">📞</div><h3>سجل المكالمات</h3><p>قريباً</p></div>`;
+  else if(nav === 'settings') openProfile();
 };
 
 window.openPeerProfile = function(){
@@ -2819,7 +2533,9 @@ window.openPeerProfile = function(){
   }
 };
 
-// ==================== Typing ====================
+// ============================================================
+// Typing
+// ============================================================
 function stopTyping(){
   if(!peerId) return;
   if(chats[peerId]?.isGroup) return;
@@ -2842,13 +2558,13 @@ function subscribeToTyping(){
     if(v && v.typing){
       $('chatStatus').textContent = 'يكتب...';
       $('chatStatus').className = 'chat-status typing';
-    } else {
-      refreshPresenceUI();
-    }
+    } else refreshPresenceUI();
   });
 }
 
-// ==================== Presence ====================
+// ============================================================
+// Presence
+// ============================================================
 let currentPresence = null;
 function refreshPresenceUI(){
   if(!currentPresence) return;
@@ -2865,106 +2581,93 @@ function subscribeToPresence(){
   });
 }
 
-// ==================== Status ====================
+// ============================================================
+// Status
+// ============================================================
 function listenForStatus(){
   if(statusUnsub) statusUnsub();
   const cutoff = Date.now() - 24*60*60*1000;
   statusUnsub = onValue(ref(db,'status'), (snap)=>{
     const all = snap.val()||{};
     statusData = {};
-    Object.entries(all).forEach(([uid, userStatuses])=>{
+    Object.entries(all).forEach(([uid, us])=>{
       const valid = {};
-      Object.entries(userStatuses).forEach(([sid, s])=>{
-        if(s.createdAt > cutoff) valid[sid] = s;
-      });
+      Object.entries(us).forEach(([sid, s])=>{ if(s.createdAt > cutoff) valid[sid] = s; });
       if(Object.keys(valid).length) statusData[uid] = valid;
     });
     updateStatusUI();
   });
 }
-
 function updateStatusUI(){
   const list = $('statusList');
   if(!list) return;
   const entries = Object.entries(statusData);
   if(entries.length === 0){
-    list.innerHTML = `<div class="empty-state"><div class="icon">📷</div><h3>لا توجد حالات</h3><p>اضغط + لإضافة حالة جديدة</p></div>`;
+    list.innerHTML = `<div class="empty-state"><div class="icon">📷</div><h3>لا توجد حالات</h3><p>اضغط + لإضافة حالة</p></div>`;
     return;
   }
   list.innerHTML = '';
   if(statusData[me.id]){
-    const myStatuses = Object.entries(statusData[me.id]).sort((a,b)=>a[1].createdAt-b[1].createdAt);
-    list.appendChild(createStatusItem(me.id, me.username, me.avatar, me.avatarImage, myStatuses.length, myStatuses[myStatuses.length-1][1].createdAt, true));
+    const my = Object.entries(statusData[me.id]).sort((a,b)=>a[1].createdAt-b[1].createdAt);
+    list.appendChild(createStatusItem(me.id, me.username, me.avatar, me.avatarImage, my.length, my[my.length-1][1].createdAt, true));
   }
-  entries.forEach(([uid, statuses])=>{
+  entries.forEach(([uid, s])=>{
     if(uid === me.id) return;
-    const sorted = Object.entries(statuses).sort((a,b)=>a[1].createdAt-b[1].createdAt);
+    const sorted = Object.entries(s).sort((a,b)=>a[1].createdAt-b[1].createdAt);
     const latest = sorted[sorted.length-1][1];
     list.appendChild(createStatusItem(uid, latest.senderName || 'مستخدم', latest.senderAvatar || '👤', null, sorted.length, latest.createdAt, false));
   });
 }
-
 function createStatusItem(uid, name, avatar, avatarImage, count, time, isMe){
   const div = document.createElement('div');
   div.className = 'status-item';
   const av = avatarImage ? `<img src="${avatarImage}">` : avatar;
   div.innerHTML = `
     <div class="ring"><div class="inner">${av}</div></div>
-    <div class="info">
-      <div class="name">${esc(name)}${isMe?' (أنت)':''}</div>
-      <div class="time">${fmtTime(time)}</div>
-    </div>
+    <div class="info"><div class="name">${esc(name)}${isMe?' (أنت)':''}</div><div class="time">${fmtTime(time)}</div></div>
     ${count > 1 ? `<div class="count">${count}</div>` : ''}
   `;
   div.onclick = ()=>openStatusViewer(uid);
   return div;
 }
-
-window.openStatusScreen = function(){
-  $('statusScreen').classList.add('active');
-  updateStatusUI();
-};
+window.openStatusScreen = function(){ $('statusScreen').classList.add('active'); updateStatusUI(); };
 window.closeStatusScreen = function(){ $('statusScreen').classList.remove('active'); };
-
 window.openStatusComposer = function(){
-  const choice = confirm('إضافة صورة كحالة؟ (إلغاء = نص)');
-  if(choice) $('statusImageInput').click();
+  const c = confirm('إضافة صورة كحالة؟ (إلغاء = نص)');
+  if(c) $('statusImageInput').click();
   else {
-    const text = prompt('اكتب حالتك:');
-    if(!text || text.trim().length < 1) return;
-    addTextStatus(text.trim());
+    const t = prompt('اكتب حالتك:');
+    if(!t || t.trim().length < 1) return;
+    addTextStatus(t.trim());
   }
 };
-
 $('statusImageInput').addEventListener('change', async (e)=>{
   const file = e.target.files[0];
   if(!file) return;
-  if(!file.type.startsWith('image/')) return toast('يجب أن يكون الملف صورة');
-  if(file.size > 10 * 1024 * 1024) return toast('حجم الصورة كبير جداً');
+  if(!file.type.startsWith('image/')) return toast('يجب أن يكون صورة');
+  if(file.size > 10 * 1024 * 1024) return toast('الحد 10MB');
   $('statusImageInput').value = '';
-  toast('جارٍ رفع الحالة...');
+  toast('جارٍ الرفع...');
   try {
     const url = await uploadToStorage('status', file, ()=>{});
     const sid = push(ref(db,'status/'+me.id)).key;
     await set(ref(db,`status/${me.id}/${sid}`), {
-      type: 'image', url,
+      type:'image', url,
       senderName: me.username, senderAvatar: me.avatar,
       createdAt: Date.now()
     });
-    toast('تم نشر الحالة');
-  } catch(e){ toast('فشل رفع الصورة'); }
+    toast('تم النشر');
+  } catch(e){ toast('فشل الرفع: ' + e.message); }
 });
-
 async function addTextStatus(text){
   const sid = push(ref(db,'status/'+me.id)).key;
   await set(ref(db,`status/${me.id}/${sid}`), {
-    type: 'text', text,
+    type:'text', text,
     senderName: me.username, senderAvatar: me.avatar,
     createdAt: Date.now()
   });
-  toast('تم نشر الحالة');
+  toast('تم النشر');
 }
-
 window.openStatusViewer = function(uid){
   if(!statusData[uid]) return;
   const statuses = Object.entries(statusData[uid]).sort((a,b)=>a[1].createdAt-b[1].createdAt);
@@ -2972,7 +2675,6 @@ window.openStatusViewer = function(uid){
   $('statusViewer').classList.add('active');
   showStatusAt(0);
 };
-
 function showStatusAt(i){
   if(!currentStatusView) return;
   const { statuses } = currentStatusView;
@@ -2984,9 +2686,9 @@ function showStatusAt(i){
   $('svTime').textContent = fmtTime(s.createdAt);
   const av = s.senderAvatar || '👤';
   $('svAvatar').innerHTML = av.startsWith('data:')||av.startsWith('http')?`<img src="${av}">`:av;
-  const content = $('svContent');
-  if(s.type === 'image') content.innerHTML = `<img src="${s.url}" alt="">`;
-  else content.innerHTML = `<div class="text-status">${esc(s.text||'')}</div>`;
+  const c = $('svContent');
+  if(s.type === 'image') c.innerHTML = `<img src="${s.url}" alt="">`;
+  else c.innerHTML = `<div class="text-status">${esc(s.text||'')}</div>`;
   const bars = $('statusProgressBars');
   bars.innerHTML = statuses.map((_, idx)=>{
     const cls = idx < i ? 'done' : idx === i ? 'active' : '';
@@ -2995,23 +2697,22 @@ function showStatusAt(i){
   if(statusTimer) clearTimeout(statusTimer);
   statusTimer = setTimeout(()=>nextStatus(), 5000);
 }
-
 window.nextStatus = function(){
   if(!currentStatusView) return;
-  const nextIdx = currentStatusView.index + 1;
-  if(nextIdx >= currentStatusView.statuses.length){
+  const n = currentStatusView.index + 1;
+  if(n >= currentStatusView.statuses.length){
     const uids = Object.keys(statusData);
-    const curIdx = uids.indexOf(currentStatusView.uid);
-    if(curIdx >= 0 && curIdx < uids.length - 1) openStatusViewer(uids[curIdx + 1]);
+    const ci = uids.indexOf(currentStatusView.uid);
+    if(ci >= 0 && ci < uids.length - 1) openStatusViewer(uids[ci + 1]);
     else closeStatusViewer();
-  } else showStatusAt(nextIdx);
+  } else showStatusAt(n);
 };
 window.prevStatus = function(){
   if(!currentStatusView) return;
   if(currentStatusView.index === 0){
     const uids = Object.keys(statusData);
-    const curIdx = uids.indexOf(currentStatusView.uid);
-    if(curIdx > 0) openStatusViewer(uids[curIdx - 1]);
+    const ci = uids.indexOf(currentStatusView.uid);
+    if(ci > 0) openStatusViewer(uids[ci - 1]);
   } else showStatusAt(currentStatusView.index - 1);
 };
 window.closeStatusViewer = function(){
@@ -3020,14 +2721,14 @@ window.closeStatusViewer = function(){
   if(statusTimer){ clearTimeout(statusTimer); statusTimer = null; }
 };
 window.sendStatusReply = async function(){
-  const text = $('svReplyInput').value.trim();
-  if(!text || !currentStatusView) return;
+  const t = $('svReplyInput').value.trim();
+  if(!t || !currentStatusView) return;
   const uid = currentStatusView.uid;
   if(uid === me.id){ toast('لا يمكنك الرد على حالتك'); return; }
-  const myChatSnap = await get(ref(db,`user_chats/${me.id}/${uid}`));
-  if(!myChatSnap.exists()){
-    const userSnap = await get(ref(db,'users/'+uid));
-    const ud = userSnap.val()||{username:'مستخدم', avatar:'?'};
+  const s = await get(ref(db,`user_chats/${me.id}/${uid}`));
+  if(!s.exists()){
+    const us = await get(ref(db,'users/'+uid));
+    const ud = us.val()||{username:'مستخدم', avatar:'?'};
     await set(ref(db,`user_chats/${me.id}/${uid}`),{
       username:ud.username, avatar:ud.avatar, avatarImage:ud.avatarImage||null,
       lastMessage:'رد على الحالة', lastTime:Date.now(), unread:0
@@ -3037,23 +2738,24 @@ window.sendStatusReply = async function(){
       lastMessage:'رد على الحالة', lastTime:Date.now(), unread:1
     });
   }
-  const key = roomKey(me.id, uid);
-  await push(ref(db,'messages/'+key), {
+  await push(ref(db,'messages/'+roomKey(me.id,uid)), {
     senderId:me.id, senderName:me.username,
-    content: `↩️ رد على حالتك: ${text}`,
+    content: `↩️ رد على حالتك: ${t}`,
     createdAt: Date.now(), read:false
   });
   $('svReplyInput').value = '';
-  toast('تم إرسال الرد');
+  toast('تم الإرسال');
 };
 
-// ==================== Image/File utilities ====================
+// ============================================================
+// Utilities
+// ============================================================
 window.openImage = function(url){
   const w = window.open('', '_blank');
   w.document.write(`<html dir="rtl"><head><title>صورة</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh}img{max-width:100%;max-height:100vh;object-fit:contain}</style></head><body><img src="${url}"></body></html>`);
 };
 window.downloadFile = function(url, name){
-  if(!url){ toast('الملف غير متوفر'); return; }
+  if(!url){ toast('غير متوفر'); return; }
   const a = document.createElement('a');
   a.href = url;
   a.download = name || 'file';
@@ -3061,8 +2763,16 @@ window.downloadFile = function(url, name){
   a.click();
 };
 
-// ==================== Boot ====================
+// ============================================================
+// Boot
+// ============================================================
 (async function boot(){
+  // شغل الاختبار التلقائي
+  const ok = await runDiagnostics();
+  if(!ok){
+    console.warn('⚠️ التشخيص فشل، لكن سنحاول المتابعة...');
+  }
+
   const savedId = localStorage.getItem('chat_my_id');
   if(savedId){
     try {
@@ -3075,7 +2785,9 @@ window.downloadFile = function(url, name){
   }
 })();
 
-// ==================== Close menus ====================
+// ============================================================
+// Cleanup
+// ============================================================
 document.addEventListener('click', (e)=>{
   if(!e.target.closest('.cm') && !e.target.closest('.reaction-picker') && !e.target.closest('button')){
     hideCtx();
@@ -3084,7 +2796,6 @@ document.addEventListener('click', (e)=>{
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape'){ hideCtx(); closeStatusViewer(); }
 });
-
 window.addEventListener('beforeunload', ()=>{
   if(currentCall){ try { remove(ref(db, `calls/${currentCall.callId}`)); } catch(e){} }
   stopTyping();
